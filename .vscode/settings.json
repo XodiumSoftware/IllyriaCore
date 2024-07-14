@@ -40,5 +40,6 @@
   "terminal.integrated.enableMultiLinePasteWarning": "never",
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "automatic"
 }
