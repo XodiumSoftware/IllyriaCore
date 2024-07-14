@@ -37,5 +37,8 @@
   "material-icon-theme.folders.associations": { "illyriautils": "src" },
 
   // Terminal Settings
-  "terminal.integrated.enableMultiLinePasteWarning": "never"
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  }
 }
