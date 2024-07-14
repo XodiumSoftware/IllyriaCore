@@ -1,0 +1,29 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/java",
+  "remoteUser": "root",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "formulahendry.code-runner",
+        "github.copilot",
+        "github.vscode-github-actions",
+        "pkief.material-icon-theme",
+        "usernamehw.errorlens",
+        "vscjava.vscode-maven",
+        "vsls-contrib.gistfs"
+      ]
+    }
+  },
+  "shutdownAction": "stopContainer"
+}
