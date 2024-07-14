@@ -25,7 +25,9 @@ import net.kyori.adventure.text.format.TextColor;
 public class CustomItem {
 
     public static String namespace = "IllyrionUtils";
+    private static final String CONDENSED_POTATO_NAME = "Condensed Potato";
     private static final String ORANGE_HEX = "#FFA500";
+    private static final String CONDENSED_POTATO_LORE = "This is a condensed potato made from 9 potatoes";
     private static final String WHITE_HEX = "#FFFFFF";
 
     /**
@@ -49,9 +51,9 @@ public class CustomItem {
 
         if (meta != null) {
             meta.setDisplayName(
-                    Component.text("Condensed Potato").color(TextColor.fromHexString(ORANGE_HEX)).toString());
+                    Component.text(CONDENSED_POTATO_NAME).color(TextColor.fromHexString(ORANGE_HEX)).toString());
             List<String> lore = Arrays.asList(
-                    Component.text("This is a condensed potato made from 9 potatoes")
+                    Component.text(CONDENSED_POTATO_LORE)
                             .color(TextColor.fromHexString(WHITE_HEX)))
                     .stream()
                     .map(Component::toString)
