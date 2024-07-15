@@ -47,7 +47,7 @@ public class Plugin extends JavaPlugin {
    * @param version the version to check
    * @return true if the version is compatible, false otherwise
    */
-  private boolean isCompatible(String version) {
+  boolean isCompatible(String version) {
     String[] parts = version.split("\\.");
     int major = Integer.parseInt(parts[0]);
     int minor = Integer.parseInt(parts[1]);

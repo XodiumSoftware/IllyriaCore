@@ -11,6 +11,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import eu.illyrion.utils.Utils;
+
 public class CustomItem {
     public static String namespace = "IllyrionUtils";
 
@@ -41,11 +43,11 @@ public class CustomItem {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName(ColorUtil.parseColor(name));
+            meta.setDisplayName(Utils.parseColor(name));
             if (lores != null) {
                 List<String> parsedLores = new ArrayList<>();
                 for (String lore : lores) {
-                    parsedLores.add(ColorUtil.parseColor(lore));
+                    parsedLores.add(Utils.parseColor(lore));
                 }
                 meta.setLore(parsedLores);
             }

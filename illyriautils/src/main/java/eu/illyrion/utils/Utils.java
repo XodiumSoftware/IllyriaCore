@@ -1,4 +1,4 @@
-package eu.illyrion.items;
+package eu.illyrion.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
-public class ColorUtil {
+public class Utils {
     /**
      * Parses a text string and replaces color placeholders with formatted text
      * components.
