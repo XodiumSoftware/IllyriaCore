@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import eu.illyrion.items.CustomItem;
+import eu.illyrion.workbenches.Recycler;
 
 /*
  * illyriautils java plugin
@@ -26,6 +27,7 @@ public class Plugin extends JavaPlugin {
       return;
     }
 
+    getServer().getPluginManager().registerEvents(new Recycler(), this);
     CustomItem.init();
 
     LOGGER.info("illyriautils enabled");
