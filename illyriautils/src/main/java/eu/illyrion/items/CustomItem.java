@@ -3,62 +3,52 @@ package eu.illyrion.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-
-/**
- * Represents a custom item in the game.
- * This class provides methods to initialize and create a condensed potato item.
- */
 public class CustomItem {
-
     public static String namespace = "IllyrionUtils";
-    private static final String CONDENSED_POTATO_NAME = "Condensed Potato";
-    private static final String ORANGE_HEX = "#FFA500";
-    private static final String CONDENSED_POTATO_LORE = "This is a condensed potato made from 9 potatoes";
-    private static final String WHITE_HEX = "#FFFFFF";
 
     /**
-     * Initializes the custom items by giving each online player a condensed potato.
+     * Initializes the custom items by creating the necessary recipes.
      */
     public static void init() {
-        ItemStack condensedPotato = createCondensedPotato();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            givePlayerCondensedPotato(player, condensedPotato);
-        }
+        ItemStack condensedPotato = createCustomItem(Material.POTATO, "{#FFA500}Condensed Potato",
+                Arrays.asList("{#FFFFFF}This is a condensed potato made from 9 potatoes",
+                        "{#FFFFFF}Another line of lore"));
+
+        createRecipe(
+                new RecipeShaped(new ItemStack(Material.POTATO), condensedPotato, 1,
+                        Arrays.asList("PPP", "PPP", "PPP")),
+                new RecipeShapeless(condensedPotato, new ItemStack(Material.POTATO), 9));
     }
 
     /**
-     * Creates a condensed potato item.
+     * Creates a custom item.
      *
-     * @return The ItemStack representing the condensed potato.
+     * @param material The material of the item.
+     * @param name     The display name of the item.
+     * @param lores    The list of lore strings for the item.
+     * @return The ItemStack representing the custom item.
      */
-    private static ItemStack createCondensedPotato() {
-        ItemStack item = new ItemStack(Material.POTATO);
+    private static ItemStack createCustomItem(Material material, String name, List<String> lores) {
+        ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName(
-                    Component.text(CONDENSED_POTATO_NAME).color(TextColor.fromHexString(ORANGE_HEX)).toString());
-            List<String> lore = Arrays.asList(
-                    Component.text(CONDENSED_POTATO_LORE)
-                            .color(TextColor.fromHexString(WHITE_HEX)))
-                    .stream()
-                    .map(Component::toString)
-                    .collect(Collectors.toList());
-            meta.setLore(lore);
+            meta.setDisplayName(ColorUtil.parseColor(name));
+            if (lores != null) {
+                List<String> parsedLores = new ArrayList<>();
+                for (String lore : lores) {
+                    parsedLores.add(ColorUtil.parseColor(lore));
+                }
+                meta.setLore(parsedLores);
+            }
             item.setItemMeta(meta);
         }
 
@@ -66,30 +56,30 @@ public class CustomItem {
     }
 
     /**
-     * Gives the player a condensed potato item and adds the necessary recipes to
-     * convert between condensed potatoes and regular potatoes.
+     * Creates a recipe for a given item.
      *
-     * @param player The player to give the condensed potato item to.
-     * @param item   The condensed potato item to give to the player.
+     * @param shaped    The shaped recipe object.
+     * @param shapeless The shapeless recipe object.
      */
-    private static void givePlayerCondensedPotato(Player player, ItemStack item) {
-        ShapedRecipe toCondensed = new ShapedRecipe(new NamespacedKey(namespace, "condensed_potato"),
-                item);
-        toCondensed.shape("PPP", "PPP", "PPP");
-        toCondensed.setIngredient('P', Material.POTATO);
-
-        ShapelessRecipe toPotatoes = new ShapelessRecipe(new NamespacedKey(namespace, "potatoes"),
-                new ItemStack(Material.POTATO, 9));
-        toPotatoes.addIngredient(item.getData());
-
-        List<Recipe> recipes = new ArrayList<>();
-        recipes.add(toCondensed);
-        recipes.add(toPotatoes);
-
-        for (Recipe recipe : recipes) {
-            Bukkit.addRecipe(recipe);
+    private static void createRecipe(RecipeShaped shaped, RecipeShapeless shapeless) {
+        if (shaped != null) {
+            ItemStack inputItem = shaped.inputItem;
+            ItemStack outputItem = new ItemStack(shaped.outputItem.getType(), shaped.outputQuantity);
+            List<String> shape = shaped.shape;
+            ShapedRecipe shapedRecipe = new ShapedRecipe(
+                    new NamespacedKey(namespace, outputItem.getType().toString().toLowerCase()), outputItem);
+            shapedRecipe.shape(shape.toArray(new String[0]));
+            shapedRecipe.setIngredient('P', inputItem.getType());
+            Bukkit.addRecipe(shapedRecipe);
         }
 
-        player.getInventory().addItem(item);
+        if (shapeless != null) {
+            ItemStack inputItem = shapeless.inputItem;
+            ItemStack outputItem = new ItemStack(shapeless.outputItem.getType(), shapeless.outputQuantity);
+            ShapelessRecipe shapelessRecipe = new ShapelessRecipe(
+                    new NamespacedKey(namespace, outputItem.getType().toString().toLowerCase()), outputItem);
+            shapelessRecipe.addIngredient(inputItem.getType());
+            Bukkit.addRecipe(shapelessRecipe);
+        }
     }
 }
