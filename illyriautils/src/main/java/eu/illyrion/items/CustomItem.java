@@ -16,8 +16,6 @@ import eu.illyrion.utils.Utils;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionMeta;
 
 public class CustomItem {
 
