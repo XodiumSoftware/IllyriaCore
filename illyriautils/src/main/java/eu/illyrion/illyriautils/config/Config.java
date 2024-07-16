@@ -8,6 +8,7 @@ import org.bstats.bukkit.Metrics;
 
 public class Config {
 
+    public static final String CHAT_PREFIX = "prefix";
     public static final String DEBUG = "debug";
     public static final String CHECK_FOR_UPDATES = "check-for-updates";
     public static final String CHECK_FOR_UPDATES_INTERVAL = "check-interval";
@@ -17,8 +18,9 @@ public class Config {
     public static void init() {
         Plugin plugin = Plugin.getInstance();
         FileConfiguration conf = plugin.getConfig();
+        conf.addDefault(CHAT_PREFIX, "[IllyriaUtils] ");
         conf.addDefault(DEBUG, false);
-        conf.addDefault(CHECK_FOR_UPDATES, "true");
+        conf.addDefault(CHECK_FOR_UPDATES, true);
         conf.addDefault(CHECK_FOR_UPDATES_INTERVAL, 4);
 
         new Metrics(plugin, SERVICE_ID);
