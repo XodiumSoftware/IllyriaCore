@@ -10,5 +10,9 @@ load: POSTWORLD
 commands:
   iutils:
     description: Reloads the configuration
-    permission: iutils.reload
+    permission: illyriautils.reload
     usage: /<command>
+permissions:
+  illyriautils.reload:
+    description: Allows the player to reload the configuration
+    default: op

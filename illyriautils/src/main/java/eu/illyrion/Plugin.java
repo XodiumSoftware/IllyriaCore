@@ -1,16 +1,18 @@
 package eu.illyrion;
 
 import java.io.File;
-
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import eu.illyrion.config.Config;
 import eu.illyrion.handlers.CustomItemHandler;
 import eu.illyrion.utils.Utils;
 
 public class Plugin extends JavaPlugin {
+
+  private static Plugin instance;
 
   private static final String CUSTOM_ITEM_HANDLER_ENABLED = "CustomItemHandler.enabled";
   private static final String MODULE_YML = "module.yml";
@@ -22,16 +24,45 @@ public class Plugin extends JavaPlugin {
   private static final String VERSION = Bukkit.getBukkitVersion();
 
   /**
+   * Returns the instance of the Plugin.
+   *
+   * @return the instance of the Plugin
+   */
+  public static Plugin getInstance() {
+    return instance;
+  }
+
+  /**
+   * Prints the specified debug text to the console if the debug mode is enabled.
+   *
+   * @param text the debug text to print
+   */
+  public void debug(String text) {
+    if (getConfig().getBoolean(Config.DEBUG)) {
+      getLogger().warning("[DEBUG] " + text);
+    }
+  }
+
+  /**
+   * Returns whether the plugin is in debug mode.
+   *
+   * @return true if the plugin is in debug mode, false otherwise.
+   */
+  public boolean isDebug() {
+    return getConfig().getBoolean(Config.DEBUG);
+  }
+
+  /**
    * Called when the plugin is enabled.
    * Checks if the server version is compatible and initializes custom items.
    * If the server version is not compatible, the plugin is disabled.
    */
   @Override
   public void onEnable() {
-    this.getLogger().info(SERVER_VERSION_MSG + VERSION);
+    getLogger().info(SERVER_VERSION_MSG + VERSION);
     if (!Utils.isCompatible(VERSION)) {
-      this.getLogger().severe(COMP_VERSION_MSG);
-      this.getServer().getPluginManager().disablePlugin(this);
+      getLogger().severe(COMP_VERSION_MSG);
+      getServer().getPluginManager().disablePlugin(this);
       return;
     }
 
@@ -41,10 +72,20 @@ public class Plugin extends JavaPlugin {
       CustomItemHandler.init();
     }
 
-    this.saveResource(CONFIG_FILE, isEnabled());
-    this.saveDefaultConfig();
+    saveResource(CONFIG_FILE, isEnabled());
+    saveDefaultConfig();
 
-    this.getLogger().info(ENABLED_MSG);
+    getLogger().info(ENABLED_MSG);
+  }
+
+  /**
+   * Reloads the plugin configuration.
+   * This method saves the default configuration and reloads the configuration
+   * from file.
+   */
+  public void reload() {
+    saveDefaultConfig();
+    reloadConfig();
   }
 
   /**
