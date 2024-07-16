@@ -75,12 +75,7 @@ public class Plugin extends JavaPlugin {
       return;
     }
     registerCommands();
-
-    FileConfiguration moduleConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), MODULE_YML));
-    boolean customItemsEnabled = moduleConfig.getBoolean(CUSTOM_ITEM_HANDLER_ENABLED, true);
-    if (customItemsEnabled) {
-      CustomItemHandler.init();
-    }
+    loadModule();
 
     saveResource(CONFIG_FILE, isEnabled());
     saveDefaultConfig();
@@ -108,13 +103,26 @@ public class Plugin extends JavaPlugin {
     getLogger().info(DISABLED_MSG);
   }
 
+  /**
+   * Loads the modules if enabled.
+   */
+  public void loadModule() {
+    FileConfiguration moduleConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), MODULE_YML));
+    boolean customItemsEnabled = moduleConfig.getBoolean(CUSTOM_ITEM_HANDLER_ENABLED, true);
+    if (customItemsEnabled) {
+      CustomItemHandler.init();
+    }
+  }
+
+  /**
+   * Registers the commands for the plugin.
+   */
   private void registerCommands() {
     @NotNull
     LifecycleEventManager<org.bukkit.plugin.Plugin> manager = getLifecycleManager();
-    manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
-      final Commands commands = event.registrar();
-
-      commands.register(
+    manager.registerEventHandler(LifecycleEvents.COMMANDS, e -> {
+      final Commands cmds = e.registrar();
+      cmds.register(
           Commands.literal("hello")
               .executes(ctx -> {
                 ctx.getSource().getSender().sendPlainMessage("Hello, world!");
