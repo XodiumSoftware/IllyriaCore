@@ -19,6 +19,7 @@
         "github.copilot",
         "github.vscode-github-actions",
         "pkief.material-icon-theme",
+        "redhat.vscode-xml",
         "usernamehw.errorlens",
         "vscjava.vscode-maven",
         "vsls-contrib.gistfs"
