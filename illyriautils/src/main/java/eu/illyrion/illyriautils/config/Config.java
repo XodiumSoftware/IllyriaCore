@@ -1,9 +1,10 @@
-package eu.illyrion.config;
+package eu.illyrion.illyriautils.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bstats.bukkit.Metrics;
 
-import eu.illyrion.Plugin;
+import eu.illyrion.illyriautils.Plugin;
+
+import org.bstats.bukkit.Metrics;
 
 public class Config {
 

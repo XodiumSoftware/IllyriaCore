@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Build JAR",
+      "request": "launch",
+      "mainClass": "eu.illyrion.illyriautils.Plugin",
+      "preLaunchTask": "buildJar"
+    }
+  ]
+}

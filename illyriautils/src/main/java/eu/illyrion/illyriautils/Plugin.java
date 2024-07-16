@@ -1,4 +1,4 @@
-package eu.illyrion;
+package eu.illyrion.illyriautils;
 
 import java.io.File;
 import org.bukkit.Bukkit;
@@ -6,9 +6,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.illyrion.config.Config;
-import eu.illyrion.handlers.CustomItemHandler;
-import eu.illyrion.utils.Utils;
+import eu.illyrion.illyriautils.config.Config;
+import eu.illyrion.illyriautils.handlers.CustomItemHandler;
+import eu.illyrion.illyriautils.utils.Utils;
 
 public class Plugin extends JavaPlugin {
 

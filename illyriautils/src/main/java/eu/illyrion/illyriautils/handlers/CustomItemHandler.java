@@ -1,11 +1,12 @@
-package eu.illyrion.handlers;
+package eu.illyrion.illyriautils.handlers;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import eu.illyrion.utils.Utils;
+
+import eu.illyrion.illyriautils.utils.Utils;
 import net.kyori.adventure.text.Component;
 
 import java.io.File;
