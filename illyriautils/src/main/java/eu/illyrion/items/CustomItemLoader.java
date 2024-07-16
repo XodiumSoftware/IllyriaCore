@@ -8,8 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import eu.illyrion.utils.Utils;
 import net.kyori.adventure.text.Component;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,24 +17,57 @@ import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.configuration.file.YamlConfiguration;
 
-public class CustomItem {
+public class CustomItemLoader {
+
+    private static final String ITEM_DURABILITY = "durability";
+    private static final String ITEM_FLAGS = "itemFlags";
+    private static final String ITEM_CUSTOM_MODEL_DATA = "customModelData";
+    private static final String ITEM_UNBREAKABLE = "unbreakable";
+    private static final String ITEM_ENCHANTMENT = "enchantments";
+    private static final String ITEM_LORE = "lores";
+    private static final String ITEM_NAME = "name";
+    private static final String ITEM_MATERIAL = "material";
+    private static final String ITEMS = "items";
+    private static final String ITEMS_YML = "items.yml";
 
     /**
      * Initializes the custom items.
      */
     public static void init() {
-        new CustomItemBuilder(Material.POTATO)
-                .name("{#FFA500}Condensed Potato")
-                .lores(Arrays.asList("{#FFFFFF}This is a condensed potato made from 9 potatoes"))
-                .build();
+        File file = new File(ITEMS_YML);
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        List<?> items = config.getList(ITEMS);
+        if (items != null) {
+            for (Object itemObj : items) {
+                if (itemObj instanceof Map) {
+                    Map<String, Object> itemData = Utils.castMap(itemObj, String.class, Object.class);
 
-        new CustomItemBuilder(Material.CARROT)
-                .name("{#FFA500}Condensed Carrot")
-                .lores(Arrays.asList("{#FFFFFF}This is a condensed carrot made from 9 carrots"))
-                .build();
+                    Material material = Material.valueOf((String) itemData.get(ITEM_MATERIAL));
+                    String name = (String) itemData.get(ITEM_NAME);
+                    List<String> lores = Utils.castList(itemData.get(ITEM_LORE), String.class);
+                    Map<Enchantment, Integer> enchantments = Utils.castMap(itemData.get(ITEM_ENCHANTMENT),
+                            Enchantment.class,
+                            Integer.class);
+                    boolean unbreakable = (boolean) itemData.get(ITEM_UNBREAKABLE);
+                    int customModelData = (int) itemData.get(ITEM_CUSTOM_MODEL_DATA);
+                    List<ItemFlag> itemFlags = Utils.castList(itemData.get(ITEM_FLAGS), ItemFlag.class);
+                    int durability = (int) itemData.get(ITEM_DURABILITY);
+
+                    new CustomItemBuilder(material)
+                            .name(name)
+                            .lores(lores)
+                            .enchantments(enchantments)
+                            .unbreakable(unbreakable)
+                            .customModelData(customModelData)
+                            .itemFlags(itemFlags)
+                            .durability(durability)
+                            .build();
+                }
+            }
+        }
     }
-
 }
 
 class CustomItemBuilder {
@@ -181,7 +214,6 @@ class CustomItemBuilder {
             }
             item.setItemMeta(meta);
         }
-
         return item;
     }
 }

@@ -2,7 +2,7 @@ package eu.illyrion;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import eu.illyrion.items.CustomItem;
+import eu.illyrion.items.CustomItemLoader;
 
 public class Plugin extends JavaPlugin {
   private static final String INVALID_VERSION_FORMAT_MSG = "Invalid version format: ";
@@ -36,7 +36,7 @@ public class Plugin extends JavaPlugin {
     saveResource(CONFIG_FILE, isEnabled());
     saveDefaultConfig();
 
-    CustomItem.init();
+    CustomItemLoader.init();
 
     this.getLogger().info(ENABLED_MSG);
   }
