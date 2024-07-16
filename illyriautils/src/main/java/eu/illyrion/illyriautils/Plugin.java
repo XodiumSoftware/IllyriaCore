@@ -1,14 +1,23 @@
 package eu.illyrion.illyriautils;
 
 import java.io.File;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
+import com.mojang.brigadier.Command;
 
 import eu.illyrion.illyriautils.config.Config;
 import eu.illyrion.illyriautils.handlers.CustomItemHandler;
 import eu.illyrion.illyriautils.utils.Utils;
+
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
 public class Plugin extends JavaPlugin {
 
@@ -65,6 +74,7 @@ public class Plugin extends JavaPlugin {
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
+    registerCommands();
 
     FileConfiguration moduleConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), MODULE_YML));
     boolean customItemsEnabled = moduleConfig.getBoolean(CUSTOM_ITEM_HANDLER_ENABLED, true);
@@ -95,6 +105,24 @@ public class Plugin extends JavaPlugin {
    */
   @Override
   public void onDisable() {
-    this.getLogger().info(DISABLED_MSG);
+    getLogger().info(DISABLED_MSG);
+  }
+
+  private void registerCommands() {
+    @NotNull
+    LifecycleEventManager<org.bukkit.plugin.Plugin> manager = getLifecycleManager();
+    manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+      final Commands commands = event.registrar();
+
+      commands.register(
+          Commands.literal("hello")
+              .executes(ctx -> {
+                ctx.getSource().getSender().sendPlainMessage("Hello, world!");
+                return Command.SINGLE_SUCCESS;
+              })
+              .build(),
+          "This is a sample command description",
+          List.of("hi", "hey"));
+    });
   }
 }
