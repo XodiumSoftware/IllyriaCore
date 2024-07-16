@@ -1,91 +1,183 @@
 package eu.illyrion.items;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import eu.illyrion.utils.Utils;
+import net.kyori.adventure.text.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 
 public class CustomItem {
 
     /**
-     * Initializes the custom item.
+     * Initializes the custom items.
      */
     public static void init() {
-        createCustomItem(Material.POTATO, "{#FFA500}Condensed Potato",
-                Arrays.asList("{#FFFFFF}This is a condensed potato made from 9 potatoes",
-                        "{#FFFFFF}Another line of lore"),
-                null, false, 0, null, 0, null);
+        new CustomItemBuilder(Material.POTATO)
+                .name("{#FFA500}Condensed Potato")
+                .lores(Arrays.asList("{#FFFFFF}This is a condensed potato made from 9 potatoes"))
+                .build();
+
+        new CustomItemBuilder(Material.CARROT)
+                .name("{#FFA500}Condensed Carrot")
+                .lores(Arrays.asList("{#FFFFFF}This is a condensed carrot made from 9 carrots"))
+                .build();
+    }
+
+}
+
+class CustomItemBuilder {
+    private final Material material;
+    private String name;
+    private List<String> lores = Collections.emptyList();
+    private Map<Enchantment, Integer> enchantments = Collections.emptyMap();
+    private boolean unbreakable;
+    private int customModelData;
+    private List<ItemFlag> itemFlags = Collections.emptyList();
+    private int durability;
+    private Map<Attribute, AttributeModifier> attributeModifiers = Collections.emptyMap();
+
+    /**
+     * Constructs a new CustomItemBuilder with the specified material.
+     *
+     * @param material the material of the custom item
+     */
+    public CustomItemBuilder(Material material) {
+        this.material = material;
     }
 
     /**
-     * Creates a custom ItemStack with the specified properties.
+     * Sets the name of the custom item.
      *
-     * @param material           The material of the item.
-     * @param name               The display name of the item.
-     * @param lores              The list of lore lines for the item.
-     * @param enchantments       The map of enchantments and their levels for the
-     *                           item.
-     * @param unbreakable        Whether the item should be unbreakable.
-     * @param customModelData    The custom model data for the item.
-     * @param itemFlags          The list of item flags for the item.
-     * @param durability         The durability of the item.
-     * @param attributeModifiers The map of attribute modifiers for the item.
-     * @return The created custom ItemStack.
+     * @param name the name of the custom item
+     * @return the CustomItemBuilder instance
      */
-    private static ItemStack createCustomItem(Material material, String name, List<String> lores,
-            Map<Enchantment, Integer> enchantments, boolean unbreakable,
-            int customModelData, List<ItemFlag> itemFlags, int durability,
-            Map<Attribute, AttributeModifier> attributeModifiers) {
+    public CustomItemBuilder name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * Sets the list of lores for the custom item.
+     *
+     * @param lores the list of lores to set
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder lores(List<String> lores) {
+        this.lores = lores;
+        return this;
+    }
+
+    /**
+     * Sets the enchantments for the custom item.
+     *
+     * @param enchantments a map containing the enchantments and their corresponding
+     *                     levels
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder enchantments(Map<Enchantment, Integer> enchantments) {
+        this.enchantments = enchantments;
+        return this;
+    }
+
+    /**
+     * Sets the unbreakable status of the custom item.
+     *
+     * @param unbreakable true if the item should be unbreakable, false otherwise
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder unbreakable(boolean unbreakable) {
+        this.unbreakable = unbreakable;
+        return this;
+    }
+
+    /**
+     * Sets the custom model data for the custom item.
+     *
+     * @param customModelData the custom model data to set
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder customModelData(int customModelData) {
+        this.customModelData = customModelData;
+        return this;
+    }
+
+    /**
+     * Sets the item flags for this custom item.
+     *
+     * @param itemFlags the list of item flags to set
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder itemFlags(List<ItemFlag> itemFlags) {
+        this.itemFlags = itemFlags;
+        return this;
+    }
+
+    /**
+     * Sets the durability of the custom item.
+     *
+     * @param durability the durability value to set
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder durability(int durability) {
+        this.durability = durability;
+        return this;
+    }
+
+    /**
+     * Sets the attribute modifiers for the custom item.
+     *
+     * @param attributeModifiers a map of attribute modifiers to be applied to the
+     *                           custom item
+     * @return the CustomItemBuilder instance
+     */
+    public CustomItemBuilder attributeModifiers(Map<Attribute, AttributeModifier> attributeModifiers) {
+        this.attributeModifiers = attributeModifiers;
+        return this;
+    }
+
+    /**
+     * Builds and returns an ItemStack with the specified properties.
+     *
+     * @return The built ItemStack.
+     */
+    public ItemStack build() {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName(Utils.parseColor(name));
-            if (lores != null) {
-                List<String> parsedLores = new ArrayList<>();
-                for (String lore : lores) {
-                    parsedLores.add(Utils.parseColor(lore));
-                }
-                meta.setLore(parsedLores);
+            meta.displayName(Component.text(Utils.parseColor(name)));
+            List<Component> parsedLores = new ArrayList<>();
+            for (String lore : lores) {
+                parsedLores.add(Component.text(Utils.parseColor(lore)));
             }
-            if (enchantments != null) {
-                for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
-                    meta.addEnchant(enchantment.getKey(), enchantment.getValue(), true);
-                }
+            meta.lore(parsedLores);
+            for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
+                meta.addEnchant(enchantment.getKey(), enchantment.getValue(), true);
             }
             meta.setUnbreakable(unbreakable);
             if (customModelData != 0) {
                 meta.setCustomModelData(customModelData);
             }
-            if (itemFlags != null) {
-                for (ItemFlag flag : itemFlags) {
-                    meta.addItemFlags(flag);
-                }
+            for (ItemFlag flag : itemFlags) {
+                meta.addItemFlags(flag);
             }
             if (durability > 0) {
-                ItemMeta itemMeta = item.getItemMeta();
-                if (itemMeta instanceof Damageable) {
-                    Damageable damageable = (Damageable) itemMeta;
-                    damageable.setDamage(durability);
-                    item.setItemMeta(itemMeta);
-                }
+                ((Damageable) meta).setDamage(durability);
             }
-            if (attributeModifiers != null) {
-                for (Map.Entry<Attribute, AttributeModifier> entry : attributeModifiers.entrySet()) {
-                    meta.addAttributeModifier(entry.getKey(), entry.getValue());
-                }
+            for (Map.Entry<Attribute, AttributeModifier> entry : attributeModifiers.entrySet()) {
+                meta.addAttributeModifier(entry.getKey(), entry.getValue());
             }
             item.setItemMeta(meta);
         }

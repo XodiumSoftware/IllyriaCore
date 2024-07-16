@@ -3,11 +3,11 @@ package eu.illyrion.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eu.illyrion.constants.UtilsConstants;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
 public class Utils {
+    private static final Pattern PATTERN = Pattern.compile("\\{(#[a-fA-F0-9]{6})\\}([^\\{]*)");
 
     /**
      * Parses a text string and replaces color placeholders with formatted text
@@ -18,9 +18,8 @@ public class Utils {
      *         components
      */
     public static String parseColor(String text) {
-        Pattern pattern = Pattern.compile(UtilsConstants.REGEX);
-        Matcher matcher = pattern.matcher(text);
-        StringBuffer sb = new StringBuffer();
+        Matcher matcher = PATTERN.matcher(text);
+        StringBuilder sb = new StringBuilder();
 
         while (matcher.find()) {
             String color = matcher.group(1);
