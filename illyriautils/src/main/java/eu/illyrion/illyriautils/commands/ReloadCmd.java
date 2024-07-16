@@ -8,21 +8,21 @@ import org.jetbrains.annotations.NotNull;
 import eu.illyrion.illyriautils.config.Permissions;
 import eu.illyrion.illyriautils.Plugin;
 
-public class ReloadCommand implements CommandExecutor {
+public class ReloadCmd implements CommandExecutor {
 
     private static final String HAS_RELOADED_MSG = "IllyriaUtils configuration has been reloaded.";
 
     private final Plugin plugin;
 
-    public ReloadCommand() {
+    public ReloadCmd() {
         plugin = Plugin.getInstance();
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias,
+    public boolean onCommand(@NotNull CommandSender cs, @NotNull Command cmd, @NotNull String alias,
             @NotNull String[] args) {
-        if (!sender.hasPermission(Permissions.RELOAD)) {
-            sender.sendMessage(cmd.getPermission());
+        if (!cs.hasPermission(Permissions.RELOAD)) {
+            cs.sendMessage(cmd.getPermission());
             return true;
         }
         plugin.reload();
@@ -31,7 +31,7 @@ public class ReloadCommand implements CommandExecutor {
                 Plugin.getInstance().getLogger().info(key + " -> " + plugin.getConfig().getString(key));
             }
         }
-        sender.sendMessage(HAS_RELOADED_MSG);
+        cs.sendMessage(HAS_RELOADED_MSG);
         return true;
     }
 
