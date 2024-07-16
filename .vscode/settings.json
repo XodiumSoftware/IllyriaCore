@@ -1,5 +1,7 @@
 {
-  "code-runner.executorMap": { "python": "$pythonPath -u $fullFileName" },
+  "code-runner.executorMap": {
+    "python": "$pythonPath -u $fullFileName"
+  },
   "code-runner.runInTerminal": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -8,22 +10,34 @@
   "extensions.ignoreRecommendations": true,
   "git.autofetch": true,
   "git.enableSmartCommit": true,
-  "github.copilot.enable": { "*": true },
+  "github.copilot.enable": {
+    "*": true
+  },
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "automatic",
-  "[java]": { "editor.defaultFormatter": "redhat.java" },
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
   "json.schemas": [
     {
-      "fileMatch": ["*.json", "*.jsonc"],
+      "fileMatch": [
+        "*.json",
+        "*.jsonc"
+      ],
       "url": "https://json.schemastore.org/package"
     }
   ],
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
   "material-icon-theme.files.color": "#ef5350",
-  "material-icon-theme.folders.associations": { "illyriautils": "src" },
+  "material-icon-theme.folders.associations": {
+    "illyriautils": "src"
+  },
   "material-icon-theme.folders.color": "#ef5350",
   "scm.experimental.showHistoryGraph": true,
   "terminal.integrated.enableMultiLinePasteWarning": "never",
   "workbench.colorTheme": "Monokai Dimmed",
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
 }
