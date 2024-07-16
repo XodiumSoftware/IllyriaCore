@@ -1,4 +1,4 @@
-package eu.illyrion.items;
+package eu.illyrion.handlers;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -19,7 +19,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class CustomItemLoader {
+public class CustomItemHandler {
 
     private static final String ITEM_DURABILITY = "durability";
     private static final String ITEM_FLAGS = "itemFlags";
