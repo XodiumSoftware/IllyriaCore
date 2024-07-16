@@ -12,7 +12,36 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
 public class Utils {
+
     private static final Pattern PATTERN = Pattern.compile("\\{(#[a-fA-F0-9]{6})\\}([^\\{]*)");
+
+    private static final String REGEX_0 = "\\.";
+    private static final String REGEX_1 = "-";
+    private static final String INVALID_VERSION_FORMAT_MSG = "Invalid version format: ";
+
+    private static final int COMP_MAJOR = 1;
+    private static final int COMP_MINOR = 20;
+    private static final int COMP_PATCH = 6;
+
+    /**
+     * Checks if the given version is compatible with the plugin.
+     *
+     * @param version the version to check
+     * @return true if the version is compatible, false otherwise
+     */
+    public static boolean isCompatible(String version) {
+        try {
+            String[] parts = version.split(REGEX_0);
+            int major = Integer.parseInt(parts[0]);
+            int minor = Integer.parseInt(parts[1]);
+            int patch = Integer.parseInt(parts[2].split(REGEX_1)[0]);
+
+            return (major > COMP_MAJOR) || (major == COMP_MAJOR && minor > COMP_MINOR)
+                    || (major == COMP_MAJOR && minor == COMP_MINOR && patch >= COMP_PATCH);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(INVALID_VERSION_FORMAT_MSG + version, e);
+        }
+    }
 
     /**
      * Parses a text string and replaces color placeholders with formatted text
