@@ -1,12 +1,9 @@
-name: IllyriaUtils
-main: eu.illyrion.illyriautils.Plugin
-version: 0.0.1-SNAPSHOT
-api-version: 1.15
-authors:
-  - gaia-03
-  - IllyrionSoftware
-database: false
-load: POSTWORLD
+name: ${project.name}
+main: ${project.main}
+version: ${project.version}
+api-version: ${project.api.version}
+authors: ${project.authors}
+load: ${project.load}
 commands:
   iutils:
     description: Reloads the configuration

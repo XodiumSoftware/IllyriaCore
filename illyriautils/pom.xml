@@ -7,10 +7,16 @@
 
 	<groupId>eu.illyrion.illyriautils</groupId>
 	<artifactId>illyriautils</artifactId>
+	<name>IllyriaUtils</name>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
+		<project.api.version>1.15</project.api.version>
+		<project.authors>gaia-03, IllyrionSoftware</project.authors>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.load>POSTWORLD</project.load>
+		<project.main>${project.groupId}.${project.name}</project.main>
+
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
@@ -49,6 +55,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>
