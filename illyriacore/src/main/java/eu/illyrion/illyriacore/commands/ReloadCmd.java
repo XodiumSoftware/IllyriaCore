@@ -12,12 +12,6 @@ public class ReloadCmd implements CommandExecutor {
 
     private static final String HAS_RELOADED_MSG = "IllyriaUtils configuration has been reloaded.";
 
-    private final IllyriaCore plugin;
-
-    public ReloadCmd() {
-        plugin = IllyriaCore.getInstance();
-    }
-
     // TODO: Refactor to use the papermc CommandAPI.
     @Override
     public boolean onCommand(@NotNull CommandSender cs, @NotNull Command cmd, @NotNull String alias,
@@ -26,10 +20,11 @@ public class ReloadCmd implements CommandExecutor {
             cs.sendMessage(cmd.getPermission());
             return true;
         }
+        IllyriaCore plugin = IllyriaCore.getInstance();
         plugin.reload();
-        if (IllyriaCore.getInstance().isDebug()) {
+        if (plugin.isDebug()) {
             for (String key : plugin.getConfig().getKeys(true)) {
-                IllyriaCore.getInstance().getLogger().info(key + " -> " + plugin.getConfig().getString(key));
+                plugin.getLogger().info(key + " -> " + plugin.getConfig().getString(key));
             }
         }
         cs.sendMessage(HAS_RELOADED_MSG);

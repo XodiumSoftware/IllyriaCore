@@ -203,10 +203,11 @@ class CustomItemBuilder {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.displayName(MiniMessage.miniMessage().deserialize(name));
+            MiniMessage mm = MiniMessage.miniMessage();
+            meta.displayName(mm.deserialize(name));
             List<Component> parsedLores = new ArrayList<>();
             for (String lore : lores) {
-                parsedLores.add(MiniMessage.miniMessage().deserialize(lore));
+                parsedLores.add(mm.deserialize(lore));
             }
             meta.lore(parsedLores);
             for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
