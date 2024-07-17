@@ -18,7 +18,7 @@ public class Config {
     private static final String DEVELOPMENT_PREFIX = "development.";
     public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";
 
-    private static final int METRICS_SERVICE_ID = 22667;
+    private static final int METRICS_SERVICE_ID = 22676;
 
     /**
      * Initializes the configuration for the IllyriaUtils plugin.

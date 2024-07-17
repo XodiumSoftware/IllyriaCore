@@ -95,19 +95,20 @@
 				<plugin>
 					<artifactId>maven-shade-plugin</artifactId>
 					<version>3.3.0</version>
+					<configuration>
+						<relocations>
+							<relocation>
+								<pattern>org.bstats</pattern>
+								<shadedPattern>${project.groupId}</shadedPattern>
+							</relocation>
+						</relocations>
+					</configuration>
 					<executions>
 						<execution>
 							<phase>package</phase>
 							<goals>
 								<goal>shade</goal>
 							</goals>
-							<configuration>
-								<artifactSet>
-									<includes>
-										<include>org.bstats:bstats-bukkit</include>
-									</includes>
-								</artifactSet>
-							</configuration>
 						</execution>
 					</executions>
 				</plugin>
