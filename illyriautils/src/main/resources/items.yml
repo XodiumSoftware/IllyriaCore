@@ -3,7 +3,7 @@
 # ============================================================ #
 # Text Formatting:
 # To apply color and style to item names and lore, use the hex color code format:
-#   - "<#RRGGBB>Your Text Here"
+#   - "<MiniMessageTag>Your Text Here"
 # This allows for a wide range of colors to be applied to your text.
 # ============================================================ #
 # Item Definition Format:
@@ -11,10 +11,10 @@
 #
 # items:
 #   - material: MATERIAL_NAME_HERE (e.g., DIAMOND_SWORD)
-#     name: "<#HexColorCode>Item Name"
+#     name: "<MiniMessageTag>Item Name"
 #     lores:
-#       - "<#HexColorCode>Line 1 of description"
-#       - "<#HexColorCode>Line 2 of description"
+#       - "<MiniMessageTag>Line 1 of description"
+#       - "<MiniMessageTag>Line 2 of description"
 #     enchantments:
 #       ENCHANTMENT_NAME: Level (e.g., DAMAGE_ALL: 5)
 #     unbreakable: true/false (Defines if the item is unbreakable)

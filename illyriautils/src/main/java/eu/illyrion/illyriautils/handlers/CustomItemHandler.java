@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import eu.illyrion.illyriautils.IllyriaUtils;
 import eu.illyrion.illyriautils.utils.Utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -76,15 +77,22 @@ public class CustomItemHandler {
 }
 
 class CustomItemBuilder {
-    private final Material material;
+
+    private static final String KEY = "custom_model_data";
     private String name;
+
     private List<String> lores = Collections.emptyList();
-    private Map<Enchantment, Integer> enchantments = Collections.emptyMap();
-    private boolean unbreakable;
-    private int customModelData;
     private List<ItemFlag> itemFlags = Collections.emptyList();
-    private int durability;
+
+    private Map<Enchantment, Integer> enchantments = Collections.emptyMap();
     private Map<Attribute, AttributeModifier> attributeModifiers = Collections.emptyMap();
+
+    private boolean unbreakable;
+
+    private int customModelData;
+    private int durability;
+
+    private final Material material;
 
     /**
      * Constructs a new CustomItemBuilder with the specified material.
@@ -218,8 +226,8 @@ class CustomItemBuilder {
                 meta.addAttributeModifier(entry.getKey(), entry.getValue());
             }
             PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-            NamespacedKey key = new NamespacedKey("your_plugin", "custom_model_data");
-            dataContainer.set(key, PersistentDataType.INTEGER, customModelData);
+            NamespacedKey nkey = new NamespacedKey(IllyriaUtils.NAMESPACE, KEY);
+            dataContainer.set(nkey, PersistentDataType.INTEGER, customModelData);
             item.setItemMeta(meta);
         }
         return item;

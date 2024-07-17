@@ -6,16 +6,16 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import eu.illyrion.illyriautils.config.Permissions;
-import eu.illyrion.illyriautils.Plugin;
+import eu.illyrion.illyriautils.IllyriaUtils;
 
 public class ReloadCmd implements CommandExecutor {
 
     private static final String HAS_RELOADED_MSG = "IllyriaUtils configuration has been reloaded.";
 
-    private final Plugin plugin;
+    private final IllyriaUtils plugin;
 
     public ReloadCmd() {
-        plugin = Plugin.getInstance();
+        plugin = IllyriaUtils.getInstance();
     }
 
     @Override
@@ -26,9 +26,9 @@ public class ReloadCmd implements CommandExecutor {
             return true;
         }
         plugin.reload();
-        if (Plugin.getInstance().isDebug()) {
+        if (IllyriaUtils.getInstance().isDebug()) {
             for (String key : plugin.getConfig().getKeys(true)) {
-                Plugin.getInstance().getLogger().info(key + " -> " + plugin.getConfig().getString(key));
+                IllyriaUtils.getInstance().getLogger().info(key + " -> " + plugin.getConfig().getString(key));
             }
         }
         cs.sendMessage(HAS_RELOADED_MSG);

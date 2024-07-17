@@ -19,7 +19,9 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
-public class Plugin extends JavaPlugin {
+public class IllyriaUtils extends JavaPlugin {
+
+  public static final String NAMESPACE = "illyriautils";
 
   private static final String DEBUG_PREFIX = "[DEBUG] ";
   private static final String CUSTOM_ITEM_HANDLER_ENABLED = "CustomItemHandler.enabled";
@@ -31,14 +33,14 @@ public class Plugin extends JavaPlugin {
   private static final String COMP_VERSION_MSG = "This plugin is only compatible with Minecraft version 1.20.6";
   private static final String VERSION = Bukkit.getBukkitVersion();
 
-  private static Plugin instance;
+  private static IllyriaUtils instance;
 
   /**
    * Returns the instance of the Plugin.
    *
    * @return the instance of the Plugin
    */
-  public static Plugin getInstance() {
+  public static IllyriaUtils getInstance() {
     return instance;
   }
 
