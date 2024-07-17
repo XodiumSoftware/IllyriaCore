@@ -5,6 +5,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import eu.illyrion.illyriautils.utils.Utils;
 import net.kyori.adventure.text.Component;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -214,6 +217,9 @@ class CustomItemBuilder {
             for (Map.Entry<Attribute, AttributeModifier> entry : attributeModifiers.entrySet()) {
                 meta.addAttributeModifier(entry.getKey(), entry.getValue());
             }
+            PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
+            NamespacedKey key = new NamespacedKey("your_plugin", "custom_model_data");
+            dataContainer.set(key, PersistentDataType.INTEGER, customModelData);
             item.setItemMeta(meta);
         }
         return item;

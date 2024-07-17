@@ -3,7 +3,7 @@
 # ============================================================ #
 # Text Formatting:
 # To apply color and style to item names and lore, use the hex color code format:
-#   - "{#RRGGBB}Your Text Here"
+#   - "<#RRGGBB>Your Text Here"
 # This allows for a wide range of colors to be applied to your text.
 # ============================================================ #
 # Item Definition Format:
@@ -11,10 +11,10 @@
 #
 # items:
 #   - material: MATERIAL_NAME_HERE (e.g., DIAMOND_SWORD)
-#     name: "{#HexColorCode}Item Name"
+#     name: "<#HexColorCode>Item Name"
 #     lores:
-#       - "{#HexColorCode}Line 1 of description"
-#       - "{#HexColorCode}Line 2 of description"
+#       - "<#HexColorCode>Line 1 of description"
+#       - "<#HexColorCode>Line 2 of description"
 #     enchantments:
 #       ENCHANTMENT_NAME: Level (e.g., DAMAGE_ALL: 5)
 #     unbreakable: true/false (Defines if the item is unbreakable)
@@ -28,10 +28,10 @@
 # Example Items:
 items:
   - material: POTATO
-    name: "{#FFA500}Condensed Potato"
+    name: "<#FFA500>Condensed Potato"
     lores:
-      - "{#FFFFFF}This is a condensed potato made from 9 potatoes"
+      - "<#FFFFFF>This is a condensed potato made from 9 potatoes"
   - material: CARROT
-    name: "{#FFA500}Condensed Carrot"
+    name: "<#FFA500>Condensed Carrot"
     lores:
-      - "{#FFFFFF}This is a condensed carrot made from 9 carrots"
+      - "<#FFFFFF>This is a condensed carrot made from 9 carrots"
