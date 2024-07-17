@@ -1,45 +1,43 @@
 package eu.illyrion.illyriacore.utils;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import eu.illyrion.illyriacore.IllyriaCore;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class UpdateChecker {
 
-    private final IllyriaCore plugin;
-    private final String resourceUrl;
+    // TODO: Make these constants dynamic.
+    private static final String REPO = "";
+    private static final String CURRENT_VERSION = "";
 
-    public UpdateChecker(IllyriaCore plugin, String resourceUrl) {
-        this.plugin = plugin;
-        this.resourceUrl = resourceUrl;
-    }
-
-    public void checkForUpdates() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+    // TODO: Implement UpdateChecker.
+    // TODO: Add logic that checks if there are releases available on the GitHub...
+    // repository first otherwise it skip.
+    public void init() {
+        Bukkit.getScheduler().runTaskAsynchronously(IllyriaCore.getInstance(), () -> {
             try {
-                HttpURLConnection connection = (HttpURLConnection) new URL(resourceUrl).openConnection();
+                URI uri = new URI("https://api.github.com/repos/" + REPO + "/releases/latest");
+                HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
                 connection.setRequestMethod("GET");
 
-                String latestVersion = new BufferedReader(new InputStreamReader(connection.getInputStream()))
-                        .readLine();
-                PluginDescriptionFile pdf = plugin.getDescription();
-                String currentVersion = pdf.getVersion();
+                InputStream is = connection.getInputStream();
+                JsonElement el = JsonParser.parseReader(new InputStreamReader(is));
+                String latestVersion = el.getAsJsonObject().get("tag_name").getAsString();
 
-                if (!currentVersion.equalsIgnoreCase(latestVersion)) {
-                    plugin.getLogger().info("There is a new update available.");
-                    plugin.getLogger()
-                            .info("Current version: " + currentVersion + ", Latest version: " + latestVersion);
-                } else {
-                    plugin.getLogger().info("Your version is up to date.");
+                if (!CURRENT_VERSION.equalsIgnoreCase(latestVersion)) {
+                    Bukkit.getConsoleSender().sendMessage("A new version is available: " + latestVersion);
                 }
+
             } catch (Exception e) {
-                plugin.getLogger().severe("Update check failed: " + e.getMessage());
+                Bukkit.getConsoleSender().sendMessage("Update checker failed! Stack trace:");
+                e.printStackTrace();
             }
         });
     }
