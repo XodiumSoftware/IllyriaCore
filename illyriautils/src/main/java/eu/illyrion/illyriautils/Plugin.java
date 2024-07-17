@@ -21,8 +21,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
 public class Plugin extends JavaPlugin {
 
-  private static Plugin instance;
-
+  private static final String DEBUG_PREFIX = "[DEBUG] ";
   private static final String CUSTOM_ITEM_HANDLER_ENABLED = "CustomItemHandler.enabled";
   private static final String MODULE_YML = "module.yml";
   private static final String SERVER_VERSION_MSG = "Server version: ";
@@ -31,6 +30,8 @@ public class Plugin extends JavaPlugin {
   private static final String ENABLED_MSG = "illyriautils enabled";
   private static final String COMP_VERSION_MSG = "This plugin is only compatible with Minecraft version 1.20.6";
   private static final String VERSION = Bukkit.getBukkitVersion();
+
+  private static Plugin instance;
 
   /**
    * Returns the instance of the Plugin.
@@ -48,7 +49,7 @@ public class Plugin extends JavaPlugin {
    */
   public void debug(String text) {
     if (getConfig().getBoolean(Config.DEBUG)) {
-      getLogger().warning("[DEBUG] " + text);
+      getLogger().warning(DEBUG_PREFIX + text);
     }
   }
 

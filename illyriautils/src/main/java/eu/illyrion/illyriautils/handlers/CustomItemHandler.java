@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import eu.illyrion.illyriautils.utils.Utils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -191,10 +192,10 @@ class CustomItemBuilder {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.displayName(Component.text(Utils.parseColor(name)));
+            meta.displayName(MiniMessage.miniMessage().deserialize(name));
             List<Component> parsedLores = new ArrayList<>();
             for (String lore : lores) {
-                parsedLores.add(Component.text(Utils.parseColor(lore)));
+                parsedLores.add(MiniMessage.miniMessage().deserialize(lore));
             }
             meta.lore(parsedLores);
             for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
