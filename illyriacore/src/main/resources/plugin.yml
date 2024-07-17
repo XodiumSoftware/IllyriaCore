@@ -8,9 +8,9 @@ load: ${project.load}
 commands:
   iutils:
     description: Reloads the configuration
-    permission: illyriautils.reload
+    permission: illyriacore.reload
     usage: /<command>
 permissions:
-  illyriautils.reload:
+  illyriacore.reload:
     description: Allows the player to reload the configuration
     default: op

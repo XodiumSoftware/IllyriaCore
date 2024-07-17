@@ -1,9 +1,9 @@
-package eu.illyrion.illyriautils.config;
-
-import eu.illyrion.illyriautils.IllyriaUtils;
+package eu.illyrion.illyriacore.config;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import eu.illyrion.illyriacore.IllyriaCore;
 
 public class Config {
 
@@ -26,7 +26,7 @@ public class Config {
      * initializes metrics.
      */
     public static void init() {
-        IllyriaUtils plugin = IllyriaUtils.getInstance();
+        IllyriaCore plugin = IllyriaCore.getInstance();
         FileConfiguration conf = plugin.getConfig();
 
         conf.addDefault(CHAT_PREFIX, "[IllyriaUtils]");

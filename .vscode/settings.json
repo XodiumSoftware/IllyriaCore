@@ -32,7 +32,7 @@
   },
   "material-icon-theme.files.color": "#ef5350",
   "material-icon-theme.folders.associations": {
-    "illyriautils": "src"
+    "illyriacore": "src"
   },
   "material-icon-theme.folders.color": "#ef5350",
   "scm.experimental.showHistoryGraph": true,

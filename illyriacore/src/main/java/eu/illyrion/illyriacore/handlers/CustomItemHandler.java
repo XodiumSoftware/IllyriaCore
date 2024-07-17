@@ -1,4 +1,4 @@
-package eu.illyrion.illyriautils.handlers;
+package eu.illyrion.illyriacore.handlers;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -8,8 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import eu.illyrion.illyriautils.IllyriaUtils;
-import eu.illyrion.illyriautils.utils.Utils;
+import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.utils.Utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -226,7 +226,7 @@ class CustomItemBuilder {
                 meta.addAttributeModifier(entry.getKey(), entry.getValue());
             }
             PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-            NamespacedKey nkey = new NamespacedKey(IllyriaUtils.NAMESPACE, KEY);
+            NamespacedKey nkey = new NamespacedKey(IllyriaCore.NAMESPACE, KEY);
             dataContainer.set(nkey, PersistentDataType.INTEGER, customModelData);
             item.setItemMeta(meta);
         }

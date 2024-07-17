@@ -1,4 +1,4 @@
-package eu.illyrion.illyriautils.utils;
+package eu.illyrion.illyriacore.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;

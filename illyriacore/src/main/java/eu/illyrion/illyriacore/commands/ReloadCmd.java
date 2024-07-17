@@ -1,23 +1,24 @@
-package eu.illyrion.illyriautils.commands;
+package eu.illyrion.illyriacore.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import eu.illyrion.illyriautils.config.Permissions;
-import eu.illyrion.illyriautils.IllyriaUtils;
+import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.config.Permissions;
 
 public class ReloadCmd implements CommandExecutor {
 
     private static final String HAS_RELOADED_MSG = "IllyriaUtils configuration has been reloaded.";
 
-    private final IllyriaUtils plugin;
+    private final IllyriaCore plugin;
 
     public ReloadCmd() {
-        plugin = IllyriaUtils.getInstance();
+        plugin = IllyriaCore.getInstance();
     }
 
+    // TODO: Refactor to use the papermc CommandAPI.
     @Override
     public boolean onCommand(@NotNull CommandSender cs, @NotNull Command cmd, @NotNull String alias,
             @NotNull String[] args) {
@@ -26,9 +27,9 @@ public class ReloadCmd implements CommandExecutor {
             return true;
         }
         plugin.reload();
-        if (IllyriaUtils.getInstance().isDebug()) {
+        if (IllyriaCore.getInstance().isDebug()) {
             for (String key : plugin.getConfig().getKeys(true)) {
-                IllyriaUtils.getInstance().getLogger().info(key + " -> " + plugin.getConfig().getString(key));
+                IllyriaCore.getInstance().getLogger().info(key + " -> " + plugin.getConfig().getString(key));
             }
         }
         cs.sendMessage(HAS_RELOADED_MSG);
