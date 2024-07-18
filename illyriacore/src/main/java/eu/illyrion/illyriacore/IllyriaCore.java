@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.illyrion.illyriacore.commands.UpdateCustomItems;
 import eu.illyrion.illyriacore.config.Config;
+import eu.illyrion.illyriacore.events.PlayerImmunityOnJoin;
 import eu.illyrion.illyriacore.handlers.CustomItemHandler;
 import eu.illyrion.illyriacore.utils.Utils;
 
@@ -63,13 +64,14 @@ public class IllyriaCore extends JavaPlugin {
   @Override
   public void onEnable() {
     getLogger().info(SERVER_VERSION_MSG + VERSION);
+
     if (!Utils.isCompatible(VERSION)) {
       getLogger().severe(COMP_VERSION_MSG);
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
+
     loadModule();
-    UpdateCustomItems.init(getLifecycleManager());
 
     saveResource(CONFIG_FILE, isEnabled());
     saveDefaultConfig();
@@ -102,8 +104,14 @@ public class IllyriaCore extends JavaPlugin {
    */
   public void loadModule() {
     FileConfiguration module = YamlConfiguration.loadConfiguration(new File(getDataFolder(), MODULE_YML));
+
     if (module.getBoolean(Config.CUSTOM_ITEM_HANDLER, true)) {
       CustomItemHandler.init();
+      UpdateCustomItems.init(getLifecycleManager());
+    }
+
+    if (module.getBoolean(Config.PLAYER_IMMUNITY_ON_JOIN, true)) {
+      getServer().getPluginManager().registerEvents(new PlayerImmunityOnJoin(), this);
     }
   }
 

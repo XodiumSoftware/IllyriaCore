@@ -14,6 +14,7 @@ public class Config {
 
     private static final String MODULES_PREFIX = "modules.";
     public static final String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItemHandler";
+    public static final String PLAYER_IMMUNITY_ON_JOIN = MODULES_PREFIX + "PlayerImmunityOnJoin";
 
     private static final String DEVELOPMENT_PREFIX = "development.";
     public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";
@@ -34,6 +35,7 @@ public class Config {
         conf.addDefault(CHECK_FOR_UPDATES_INTERVAL, 4);
 
         conf.addDefault(CUSTOM_ITEM_HANDLER, true);
+        conf.addDefault(PLAYER_IMMUNITY_ON_JOIN, true);
 
         conf.addDefault(DEBUG, false);
 
