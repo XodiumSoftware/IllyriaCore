@@ -10,34 +10,48 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.utils.Utils;
 import io.papermc.paper.util.Tick;
 
 public class PlayerImmunityOnJoin implements Listener {
+
+    private static final String INVULNERABILITY_DISABLED_MSG = "<red>You are no longer invulnerable!";
+    private static final String INVULNERABILITY_ENABLED_MSG = "<green>You are now invulnerable!";
 
     private static final int DURATION_SECONDS = 10;
 
     /**
      * Handles the player join event.
-     * Applies a potion effect to the player, making them invincible for a certain
-     * duration.
+     * This method is called when a player joins the server.
      *
-     * @param e The PlayerJoinEvent object representing the player join event.
+     * @param e The PlayerJoinEvent object containing information about the event.
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+        invulnerableOnJoin(p);
+    }
+
+    /**
+     * Makes the player invulnerable upon joining the server for a specific
+     * duration.
+     * The player will be set as invulnerable and a title message will be displayed.
+     * After the specified duration, the player's invulnerability will be disabled
+     * and
+     * another title message will be displayed.
+     *
+     * @param p The player to make invulnerable on join.
+     */
+    private void invulnerableOnJoin(Player p) {
         IllyriaCore plugin = IllyriaCore.getInstance();
-        // MiniMessage mm = MiniMessage.miniMessage();
         int tick = Tick.tick().fromDuration(Duration.ofSeconds(DURATION_SECONDS));
         p.setInvulnerable(true);
-        // TODO: implement this correctly
-        // p.showTitle(mm.deserialize(""));
+        Utils.showTitle(p, INVULNERABILITY_ENABLED_MSG, null);
         new BukkitRunnable() {
             @Override
             public void run() {
                 p.setInvulnerable(false);
-                // TODO: implement this correctly
-                // mm.deserialize("");
+                Utils.showTitle(p, INVULNERABILITY_DISABLED_MSG, null);
             }
         }.runTaskLater(plugin, tick);
     };
