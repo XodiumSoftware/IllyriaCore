@@ -1,0 +1,16 @@
+name: ${project.name}
+description: ${project.description}
+main: ${project.main}
+version: ${project.version}
+api-version: ${project.api.version}
+authors: ${project.authors}
+load: ${project.load}
+commands:
+  iutils:
+    description: Reloads the configuration
+    permission: illyriacore.reload
+    usage: /<command>
+permissions:
+  illyriacore.reload:
+    description: Allows the player to reload the configuration
+    default: op

@@ -1,22 +1,20 @@
-package eu.illyrion.utils;
+package eu.illyrion.illyriacore.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.title.Title;
 
 public class Utils {
 
-    private static final Pattern PATTERN = Pattern.compile("\\{(#[a-fA-F0-9]{6})\\}([^\\{]*)");
-
-    private static final String REGEX_0 = "\\.";
-    private static final String REGEX_1 = "-";
     private static final String INVALID_VERSION_FORMAT_MSG = "Invalid version format: ";
 
     private static final int COMP_MAJOR = 1;
@@ -29,40 +27,18 @@ public class Utils {
      * @param version the version to check
      * @return true if the version is compatible, false otherwise
      */
-    public static boolean isCompatible(String version) {
+    public static boolean isCompatible(@NonNull String version) {
         try {
-            String[] parts = version.split(REGEX_0);
+            String[] parts = version.split("\\.");
             int major = Integer.parseInt(parts[0]);
             int minor = Integer.parseInt(parts[1]);
-            int patch = Integer.parseInt(parts[2].split(REGEX_1)[0]);
+            int patch = Integer.parseInt(parts[2].split("-")[0]);
 
             return (major > COMP_MAJOR) || (major == COMP_MAJOR && minor > COMP_MINOR)
                     || (major == COMP_MAJOR && minor == COMP_MINOR && patch >= COMP_PATCH);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException(INVALID_VERSION_FORMAT_MSG + version, e);
         }
-    }
-
-    /**
-     * Parses a text string and replaces color placeholders with formatted text
-     * components.
-     *
-     * @param text the text string to parse
-     * @return the parsed text with color placeholders replaced by formatted text
-     *         components
-     */
-    public static String parseColor(String text) {
-        Matcher matcher = PATTERN.matcher(text);
-        StringBuilder sb = new StringBuilder();
-
-        while (matcher.find()) {
-            String color = matcher.group(1);
-            String content = matcher.group(2);
-            matcher.appendReplacement(sb, Component.text(content).color(TextColor.fromHexString(color)).toString());
-        }
-        matcher.appendTail(sb);
-
-        return sb.toString();
     }
 
     /**
@@ -106,5 +82,21 @@ public class Utils {
             }
         }
         return typedMap;
+    }
+
+    /**
+     * Displays a title to the specified audience.
+     *
+     * @param target    the audience to display the title to
+     * @param maintitle the main title text (can be null or empty for no main title)
+     * @param subtitle  the subtitle text (can be null or empty for no subtitle)
+     */
+    public static void showTitle(final @NonNull Audience target, String maintitle, String subtitle) {
+        final MiniMessage mm = MiniMessage.miniMessage();
+        final Component maintitle_component = (maintitle == null || maintitle.isEmpty()) ? Component.empty()
+                : mm.deserialize(maintitle);
+        final Component subtitle_component = (subtitle == null || subtitle.isEmpty()) ? Component.empty()
+                : mm.deserialize(subtitle);
+        target.showTitle(Title.title(maintitle_component, subtitle_component));
     }
 }

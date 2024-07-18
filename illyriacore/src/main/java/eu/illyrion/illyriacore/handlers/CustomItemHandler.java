@@ -1,12 +1,17 @@
-package eu.illyrion.items;
+package eu.illyrion.illyriacore.handlers;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import eu.illyrion.utils.Utils;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
+import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.utils.Utils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,11 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class CustomItemLoader {
+public class CustomItemHandler {
 
     private static final String ITEM_DURABILITY = "durability";
     private static final String ITEM_FLAGS = "itemFlags";
@@ -71,15 +77,22 @@ public class CustomItemLoader {
 }
 
 class CustomItemBuilder {
-    private final Material material;
+
+    private static final String KEY = "custom_model_data";
     private String name;
+
     private List<String> lores = Collections.emptyList();
-    private Map<Enchantment, Integer> enchantments = Collections.emptyMap();
-    private boolean unbreakable;
-    private int customModelData;
     private List<ItemFlag> itemFlags = Collections.emptyList();
-    private int durability;
+
+    private Map<Enchantment, Integer> enchantments = Collections.emptyMap();
     private Map<Attribute, AttributeModifier> attributeModifiers = Collections.emptyMap();
+
+    private boolean unbreakable;
+
+    private int customModelData;
+    private int durability;
+
+    private final Material material;
 
     /**
      * Constructs a new CustomItemBuilder with the specified material.
@@ -190,10 +203,11 @@ class CustomItemBuilder {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.displayName(Component.text(Utils.parseColor(name)));
+            MiniMessage mm = MiniMessage.miniMessage();
+            meta.displayName(mm.deserialize(name));
             List<Component> parsedLores = new ArrayList<>();
             for (String lore : lores) {
-                parsedLores.add(Component.text(Utils.parseColor(lore)));
+                parsedLores.add(mm.deserialize(lore));
             }
             meta.lore(parsedLores);
             for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
@@ -212,6 +226,9 @@ class CustomItemBuilder {
             for (Map.Entry<Attribute, AttributeModifier> entry : attributeModifiers.entrySet()) {
                 meta.addAttributeModifier(entry.getKey(), entry.getValue());
             }
+            PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
+            NamespacedKey nkey = new NamespacedKey(IllyriaCore.NAMESPACE, KEY);
+            dataContainer.set(nkey, PersistentDataType.INTEGER, customModelData);
             item.setItemMeta(meta);
         }
         return item;

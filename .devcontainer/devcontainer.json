@@ -19,11 +19,13 @@
         "github.copilot",
         "github.vscode-github-actions",
         "pkief.material-icon-theme",
+        "redhat.vscode-xml",
         "usernamehw.errorlens",
         "vscjava.vscode-maven",
         "vsls-contrib.gistfs"
       ]
     }
   },
+  "onCreateCommand": "sudo apt update && sudo apt install maven -y",
   "shutdownAction": "stopContainer"
 }

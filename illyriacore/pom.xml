@@ -5,12 +5,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eu.illyrion</groupId>
-	<artifactId>illyriautils</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<groupId>eu.illyrion.illyriacore</groupId>
+	<artifactId>illyriacore</artifactId>
+	<name>IllyriaCore</name>
+	<description>Core plugin for the IllyriaRPG private server.</description>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
+		<project.api.version>1.15</project.api.version>
+		<project.authors>gaia-03, IllyrionSoftware</project.authors>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.load>POSTWORLD</project.load>
+		<project.main>${project.groupId}.${project.name}</project.main>
+
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
@@ -35,14 +42,26 @@
 			<version>1.20.6-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-    	<dependency>
+		<dependency>
 			<groupId>net.kyori</groupId>
 			<artifactId>adventure-api</artifactId>
 			<version>4.17.0</version>
-    	</dependency>
+		</dependency>
+		<dependency>
+			<groupId>org.bstats</groupId>
+			<artifactId>bstats-bukkit</artifactId>
+			<version>3.0.2</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -72,6 +91,26 @@
 				<plugin>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.8.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.3.0</version>
+					<configuration>
+						<relocations>
+							<relocation>
+								<pattern>org.bstats</pattern>
+								<shadedPattern>${project.groupId}</shadedPattern>
+							</relocation>
+						</relocations>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
