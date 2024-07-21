@@ -27,6 +27,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class CustomItemHandler {
 
+    // TODO: make the items.yml be generated without having it in the resources
+    // folder
+
     private static final String ITEM_DURABILITY = "durability";
     private static final String ITEM_FLAGS = "itemFlags";
     private static final String ITEM_CUSTOM_MODEL_DATA = "customModelData";

@@ -1,11 +1,18 @@
 package eu.illyrion.illyriacore.config;
 
-import org.bstats.bukkit.Metrics;
-import org.bukkit.configuration.file.FileConfiguration;
+import java.io.File;
+import java.io.IOException;
 
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import eu.illyrion.illyriacore.IllyriaCore;
 
 public class Config {
+
+    // TODO: make the config.yml be generated without having it in the resources
+    // folder
+
+    private static final String CONFIG_FILE = "config.yml";
     // General
     public static final String GENERAL_PREFIX = "general.";
     public static final String CHAT_PREFIX = GENERAL_PREFIX + "prefix";
@@ -19,17 +26,25 @@ public class Config {
     // Development
     private static final String DEVELOPMENT_PREFIX = "development.";
     public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";
-    // Metrics
-    private static final int METRICS_SERVICE_ID = 22676;
 
     /**
      * Initializes the configuration for the IllyriaUtils plugin.
      * This method sets default values for various configuration options and
      * initializes metrics.
      */
-    public static void init() {
+    public static FileConfiguration init() {
         IllyriaCore plugin = IllyriaCore.getInstance();
-        FileConfiguration conf = plugin.getConfig();
+        File confFile = new File(plugin.getDataFolder(), CONFIG_FILE);
+        if (!confFile.exists()) {
+            try {
+                confFile.getParentFile().mkdirs();
+                confFile.createNewFile();
+                IllyriaCore.getInstance().saveResource(CONFIG_FILE, false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        FileConfiguration conf = YamlConfiguration.loadConfiguration(confFile);
 
         conf.addDefault(CHAT_PREFIX, "[IllyriaUtils]");
         conf.addDefault(CHECK_FOR_UPDATES, true);
@@ -41,6 +56,15 @@ public class Config {
 
         conf.addDefault(DEBUG, false);
 
-        new Metrics(plugin, METRICS_SERVICE_ID);
+        if (conf.getKeys(false).isEmpty()) {
+            conf.options().copyDefaults(true);
+            try {
+                conf.save(confFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return conf;
     }
 }

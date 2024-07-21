@@ -1,9 +1,7 @@
 package eu.illyrion.illyriacore;
 
-import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.illyrion.illyriacore.commands.UpdateCustomItemsCmd;
@@ -15,14 +13,12 @@ import eu.illyrion.illyriacore.utils.Utils;
 
 public class IllyriaCore extends JavaPlugin {
 
-  public static final String NAMESPACE = "illyriautils";
+  public static final String NAMESPACE = "illyriacore";
 
   private static final String DEBUG_PREFIX = "[DEBUG] ";
-  private static final String MODULE_YML = "module.yml";
   private static final String SERVER_VERSION_MSG = "Server version: ";
-  private static final String CONFIG_FILE = "config.yml";
-  private static final String DISABLED_MSG = "illyriautils disabled";
-  private static final String ENABLED_MSG = "illyriautils enabled";
+  private static final String DISABLED_MSG = "Plugin successfully Disabled";
+  private static final String ENABLED_MSG = "Plugin successfully Enabled";
   private static final String COMP_VERSION_MSG = "This plugin is only compatible with Minecraft version 1.20.6";
   private static final String VERSION = Bukkit.getBukkitVersion();
 
@@ -64,6 +60,8 @@ public class IllyriaCore extends JavaPlugin {
    */
   @Override
   public void onEnable() {
+    instance = this;
+
     getLogger().info(SERVER_VERSION_MSG + VERSION);
 
     if (!Utils.isCompatible(VERSION)) {
@@ -74,10 +72,41 @@ public class IllyriaCore extends JavaPlugin {
 
     loadModule();
 
-    saveResource(CONFIG_FILE, isEnabled());
     saveDefaultConfig();
 
     getLogger().info(ENABLED_MSG);
+  }
+
+  /**
+   * Loads the modules if enabled.
+   */
+  public void loadModule() {
+    FileConfiguration conf = Config.init();
+    int modulesLoaded = 0;
+
+    if (conf.getBoolean(Config.CUSTOM_ITEM_HANDLER)) {
+      getLogger().info("Initializing CustomItemHandler");
+      CustomItemHandler.init();
+      UpdateCustomItemsCmd.init(getLifecycleManager());
+      getLogger().info("CustomItemHandler initialized");
+      modulesLoaded++;
+    }
+
+    if (conf.getBoolean(Config.PLAYER_IMMUNITY_ON_JOIN)) {
+      getLogger().info("Initializing PlayerImmunityOnJoin");
+      getServer().getPluginManager().registerEvents(new PlayerImmunityOnJoin(), this);
+      getLogger().info("PlayerImmunityOnJoin initialized");
+      modulesLoaded++;
+    }
+
+    if (conf.getBoolean(Config.CUSTOM_ANVIL_OPERATIONS)) {
+      getLogger().info("Initializing CustomAnvilOperations");
+      getServer().getPluginManager().registerEvents(new CustomAnvilOperations(), this);
+      getLogger().info("CustomAnvilOperations initialized");
+      modulesLoaded++;
+    }
+
+    getLogger().info("[" + modulesLoaded + "] module(s) loaded.");
   }
 
   /**
@@ -98,26 +127,6 @@ public class IllyriaCore extends JavaPlugin {
   @Override
   public void onDisable() {
     getLogger().info(DISABLED_MSG);
-  }
-
-  /**
-   * Loads the modules if enabled.
-   */
-  public void loadModule() {
-    FileConfiguration module = YamlConfiguration.loadConfiguration(new File(getDataFolder(), MODULE_YML));
-
-    if (module.getBoolean(Config.CUSTOM_ITEM_HANDLER, true)) {
-      CustomItemHandler.init();
-      UpdateCustomItemsCmd.init(getLifecycleManager());
-    }
-
-    if (module.getBoolean(Config.PLAYER_IMMUNITY_ON_JOIN, true)) {
-      getServer().getPluginManager().registerEvents(new PlayerImmunityOnJoin(), this);
-    }
-
-    if (module.getBoolean(Config.CUSTOM_ANVIL_OPERATIONS, true)) {
-      getServer().getPluginManager().registerEvents(new CustomAnvilOperations(), this);
-    }
   }
 
 }
