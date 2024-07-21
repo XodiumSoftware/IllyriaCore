@@ -6,8 +6,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.illyrion.illyriacore.commands.UpdateCustomItems;
+import eu.illyrion.illyriacore.commands.UpdateCustomItemsCmd;
 import eu.illyrion.illyriacore.config.Config;
+import eu.illyrion.illyriacore.events.CustomAnvilOperations;
 import eu.illyrion.illyriacore.events.PlayerImmunityOnJoin;
 import eu.illyrion.illyriacore.handlers.CustomItemHandler;
 import eu.illyrion.illyriacore.utils.Utils;
@@ -107,11 +108,15 @@ public class IllyriaCore extends JavaPlugin {
 
     if (module.getBoolean(Config.CUSTOM_ITEM_HANDLER, true)) {
       CustomItemHandler.init();
-      UpdateCustomItems.init(getLifecycleManager());
+      UpdateCustomItemsCmd.init(getLifecycleManager());
     }
 
     if (module.getBoolean(Config.PLAYER_IMMUNITY_ON_JOIN, true)) {
       getServer().getPluginManager().registerEvents(new PlayerImmunityOnJoin(), this);
+    }
+
+    if (module.getBoolean(Config.CUSTOM_ANVIL_OPERATIONS, true)) {
+      getServer().getPluginManager().registerEvents(new CustomAnvilOperations(), this);
     }
   }
 

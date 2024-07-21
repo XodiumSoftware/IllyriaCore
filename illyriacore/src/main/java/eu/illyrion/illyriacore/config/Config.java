@@ -6,19 +6,20 @@ import org.bukkit.configuration.file.FileConfiguration;
 import eu.illyrion.illyriacore.IllyriaCore;
 
 public class Config {
-
+    // General
     public static final String GENERAL_PREFIX = "general.";
     public static final String CHAT_PREFIX = GENERAL_PREFIX + "prefix";
     public static final String CHECK_FOR_UPDATES = GENERAL_PREFIX + "check-for-updates";
     public static final String CHECK_FOR_UPDATES_INTERVAL = GENERAL_PREFIX + "check-interval";
-
+    // Modules
     private static final String MODULES_PREFIX = "modules.";
     public static final String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItemHandler";
     public static final String PLAYER_IMMUNITY_ON_JOIN = MODULES_PREFIX + "PlayerImmunityOnJoin";
-
+    public static final String CUSTOM_ANVIL_OPERATIONS = MODULES_PREFIX + "CustomAnvilOperations";
+    // Development
     private static final String DEVELOPMENT_PREFIX = "development.";
     public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";
-
+    // Metrics
     private static final int METRICS_SERVICE_ID = 22676;
 
     /**
@@ -34,8 +35,9 @@ public class Config {
         conf.addDefault(CHECK_FOR_UPDATES, true);
         conf.addDefault(CHECK_FOR_UPDATES_INTERVAL, 4);
 
-        conf.addDefault(CUSTOM_ITEM_HANDLER, true);
-        conf.addDefault(PLAYER_IMMUNITY_ON_JOIN, true);
+        conf.addDefault(CUSTOM_ITEM_HANDLER, false);
+        conf.addDefault(PLAYER_IMMUNITY_ON_JOIN, false);
+        conf.addDefault(CUSTOM_ANVIL_OPERATIONS, false);
 
         conf.addDefault(DEBUG, false);
 

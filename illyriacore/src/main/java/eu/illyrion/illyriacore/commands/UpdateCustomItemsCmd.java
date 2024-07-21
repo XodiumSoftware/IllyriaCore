@@ -6,7 +6,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
-public class UpdateCustomItems {
+public class UpdateCustomItemsCmd {
 
     /**
      * Initializes the command registration for custom items.
