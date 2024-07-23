@@ -7,7 +7,7 @@ import eu.illyrion.illyriacore.configs.Messages;
 import eu.illyrion.illyriacore.handlers.ModuleHandler;
 import eu.illyrion.illyriacore.utils.Utils;
 
-public class IllyriaCore extends JavaPlugin {
+public class IllyriaCore extends JavaPlugin implements Messages {
 
   private final boolean IS_DEBUG = getConfig().getBoolean(Config.DEBUG);
 
@@ -50,16 +50,16 @@ public class IllyriaCore extends JavaPlugin {
   @Override
   public void onEnable() {
     instance = this;
-    getLogger().info(Messages.SERVER_VERSION_MSG + Messages.VERSION);
+    getLogger().info(SERVER_VERSION_MSG + VERSION);
 
-    if (!Utils.isCompatible(Messages.VERSION)) {
-      getLogger().severe(Messages.COMP_VERSION_MSG);
+    if (!Utils.isCompatible(VERSION)) {
+      getLogger().severe(COMP_VERSION_MSG);
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
     ModuleHandler.init();
     saveDefaultConfig();
-    getLogger().info(Messages.ENABLED_MSG);
+    getLogger().info(ENABLED_MSG);
   }
 
   /**
@@ -79,7 +79,7 @@ public class IllyriaCore extends JavaPlugin {
    */
   @Override
   public void onDisable() {
-    getLogger().info(Messages.DISABLED_MSG);
+    getLogger().info(DISABLED_MSG);
   }
 
 }

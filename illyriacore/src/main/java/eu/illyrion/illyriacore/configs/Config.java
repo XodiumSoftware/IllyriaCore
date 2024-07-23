@@ -6,33 +6,14 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.interfaces.ConfigInferface;
 
-public class Config {
+public class Config implements ConfigInferface {
 
     // TODO: make the config.yml be generated without having it in the resources
-    // folder
-    public static final String CONFIG_FILE = "config.yml";
-    // General
-    private static final String GENERAL_PREFIX = "general.";
-    public static final String CHAT_PREFIX = GENERAL_PREFIX + "chatPrefix";
-    // Modules
-    private static final String MODULES_PREFIX = "modules.";
-    public static final String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItems";
-    public static final String IMMUNITY_HANDLER = MODULES_PREFIX + "OnJoinImmunity";
-    public static final String CUSTOM_ANVIL_HANDLER = MODULES_PREFIX + "CustomAnvil";
-    // Localization
-    private static final String LOCALIZATION_PREFIX = "localization.";
-    public static final String IMMUNITY_TIMER = LOCALIZATION_PREFIX + "ImmunityTimer";
-    public static final String IMMUNITY_TIMER_DURATION = LOCALIZATION_PREFIX + "ImmunityTimerDuration";
-    // Development
-    private static final String DEV_PREFIX = "development.";
-    public static final String DEBUG = DEV_PREFIX + "Debug";
-    public static final String DEBUG_PREFIX = DEV_PREFIX + "debugPrefix";
-
     /**
      * Initializes the configuration for the IllyriaUtils plugin.
-     * This method sets default values for various configuration options and
-     * initializes metrics.
+     * This method sets default values for various configuration options.
      */
     public static FileConfiguration init() {
         IllyriaCore plugin = IllyriaCore.getInstance();

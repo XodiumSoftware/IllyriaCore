@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import eu.illyrion.illyriacore.configs.Items;
+import eu.illyrion.illyriacore.configs.ItemsInterface;
 import eu.illyrion.illyriacore.configs.Messages;
 import eu.illyrion.illyriacore.utils.Utils;
 import net.kyori.adventure.text.Component;
@@ -26,30 +26,30 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class CustomItemHandler {
+public class CustomItemHandler implements ItemsInterface {
 
     /**
      * Initializes the custom items.
      */
     public static void init() {
-        File file = new File(Items.ITEMS_YML);
+        File file = new File(ITEMS_YML);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        List<?> items = config.getList(Items.ITEMS);
+        List<?> items = config.getList(ITEMS);
         if (items != null) {
             for (Object itemObj : items) {
                 if (itemObj instanceof Map) {
                     Map<String, Object> itemData = Utils.castMap(itemObj, String.class, Object.class);
 
-                    Material material = Material.valueOf((String) itemData.get(Items.ITEM_MATERIAL));
-                    String name = (String) itemData.get(Items.ITEM_NAME);
-                    List<String> lores = Utils.castList(itemData.get(Items.ITEM_LORE), String.class);
-                    Map<Enchantment, Integer> enchantments = Utils.castMap(itemData.get(Items.ITEM_ENCHANTMENT),
+                    Material material = Material.valueOf((String) itemData.get(ITEM_MATERIAL));
+                    String name = (String) itemData.get(ITEM_NAME);
+                    List<String> lores = Utils.castList(itemData.get(ITEM_LORE), String.class);
+                    Map<Enchantment, Integer> enchantments = Utils.castMap(itemData.get(ITEM_ENCHANTMENT),
                             Enchantment.class,
                             Integer.class);
-                    boolean unbreakable = (boolean) itemData.get(Items.ITEM_UNBREAKABLE);
-                    int customModelData = (int) itemData.get(Items.ITEM_CUSTOM_MODEL_DATA);
-                    List<ItemFlag> itemFlags = Utils.castList(itemData.get(Items.ITEM_FLAGS), ItemFlag.class);
-                    int durability = (int) itemData.get(Items.ITEM_DURABILITY);
+                    boolean unbreakable = (boolean) itemData.get(ITEM_UNBREAKABLE);
+                    int customModelData = (int) itemData.get(ITEM_CUSTOM_MODEL_DATA);
+                    List<ItemFlag> itemFlags = Utils.castList(itemData.get(ITEM_FLAGS), ItemFlag.class);
+                    int durability = (int) itemData.get(ITEM_DURABILITY);
 
                     new CustomItemBuilder(material)
                             .name(name)
