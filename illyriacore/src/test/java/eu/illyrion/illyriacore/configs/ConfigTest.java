@@ -2,6 +2,7 @@ package eu.illyrion.illyriacore.configs;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,11 @@ public class ConfigTest {
         MockBukkit.mock();
         plugin = MockBukkit.load(IllyriaCore.class);
         fileConfiguration = plugin.getConfig();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        MockBukkit.unmock();
     }
 
     @Test
