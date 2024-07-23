@@ -27,7 +27,7 @@ public class Utils {
      * @param version the version to check
      * @return true if the version is compatible, false otherwise
      */
-    public static boolean isCompatible(@NonNull String version) {
+    public static boolean isCompatible(String version) {
         try {
             String[] parts = version.split("\\.");
             int major = Integer.parseInt(parts[0]);

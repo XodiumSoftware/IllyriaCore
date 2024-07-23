@@ -27,6 +27,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class CustomItemHandler {
 
+    // TODO: make the items.yml be generated without having it in the resources
+    // folder
+
     private static final String ITEM_DURABILITY = "durability";
     private static final String ITEM_FLAGS = "itemFlags";
     private static final String ITEM_CUSTOM_MODEL_DATA = "customModelData";
@@ -203,11 +206,10 @@ class CustomItemBuilder {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            MiniMessage mm = MiniMessage.miniMessage();
-            meta.displayName(mm.deserialize(name));
+            meta.displayName(MiniMessage.miniMessage().deserialize(name));
             List<Component> parsedLores = new ArrayList<>();
             for (String lore : lores) {
-                parsedLores.add(mm.deserialize(lore));
+                parsedLores.add(MiniMessage.miniMessage().deserialize(lore));
             }
             meta.lore(parsedLores);
             for (Map.Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
