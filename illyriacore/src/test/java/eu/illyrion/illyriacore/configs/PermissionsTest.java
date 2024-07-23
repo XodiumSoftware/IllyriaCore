@@ -2,13 +2,15 @@ package eu.illyrion.illyriacore.configs;
 
 import org.junit.jupiter.api.Test;
 
+import eu.illyrion.illyriacore.interfaces.PermissionsInterface;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PermissionsTest {
+public class PermissionsTest implements PermissionsInterface {
 
     @Test
     public void testPermissions() {
-        assertEquals("illyriautils.", Permissions.PERM_PREFIX);
-        assertEquals("illyriautils.reload", Permissions.RELOAD);
+        assertEquals("illyriautils.", PERM_PREFIX);
+        assertEquals("illyriautils.reload", RELOAD);
     }
 }

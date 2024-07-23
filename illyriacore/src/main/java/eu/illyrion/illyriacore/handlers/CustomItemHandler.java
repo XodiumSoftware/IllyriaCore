@@ -27,7 +27,6 @@ public class CustomItemHandler implements ItemsInterface {
             for (Object itemObj : items) {
                 if (itemObj instanceof Map) {
                     Map<String, Object> itemData = Utils.castMap(itemObj, String.class, Object.class);
-
                     Material material = Material.valueOf((String) itemData.get(ITEM_MATERIAL));
                     String name = (String) itemData.get(ITEM_NAME);
                     List<String> lores = Utils.castList(itemData.get(ITEM_LORE), String.class);
@@ -38,7 +37,6 @@ public class CustomItemHandler implements ItemsInterface {
                     int customModelData = (int) itemData.get(ITEM_CUSTOM_MODEL_DATA);
                     List<ItemFlag> itemFlags = Utils.castList(itemData.get(ITEM_FLAGS), ItemFlag.class);
                     int durability = (int) itemData.get(ITEM_DURABILITY);
-
                     new CustomItemBuilder(material)
                             .name(name)
                             .lores(lores)

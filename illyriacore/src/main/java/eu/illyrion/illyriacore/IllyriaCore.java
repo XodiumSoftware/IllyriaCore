@@ -51,7 +51,6 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
   public void onEnable() {
     instance = this;
     getLogger().info(SERVER_VERSION_MSG + VERSION);
-
     if (!Utils.isCompatible(VERSION)) {
       getLogger().severe(COMP_VERSION_MSG);
       getServer().getPluginManager().disablePlugin(this);
@@ -81,5 +80,4 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
   public void onDisable() {
     getLogger().info(DISABLED_MSG);
   }
-
 }

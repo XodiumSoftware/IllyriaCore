@@ -7,11 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.interfaces.ConfigInferface;
 
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ConfigTest {
+public class ConfigTest implements ConfigInferface {
 
     private IllyriaCore plugin;
     private FileConfiguration fileConfiguration;
@@ -30,10 +31,10 @@ public class ConfigTest {
 
     @Test
     public void testInit() {
-        File confFile = new File(plugin.getDataFolder(), Config.CONFIG_FILE);
+        File confFile = new File(plugin.getDataFolder(), CONFIG_FILE);
 
         if (!confFile.exists()) {
-            plugin.saveResource(Config.CONFIG_FILE, false);
+            plugin.saveResource(CONFIG_FILE, false);
         }
 
         FileConfiguration result = Config.init();
