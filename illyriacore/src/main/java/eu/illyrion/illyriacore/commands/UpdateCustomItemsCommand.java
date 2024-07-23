@@ -2,11 +2,12 @@ package eu.illyrion.illyriacore.commands;
 
 import com.mojang.brigadier.Command;
 
+import eu.illyrion.illyriacore.interfaces.MessagesInterface;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
-public class UpdateCustomItemsCmd {
+public class UpdateCustomItemsCommand implements MessagesInterface {
 
     /**
      * Initializes the command registration for custom items.
@@ -20,7 +21,7 @@ public class UpdateCustomItemsCmd {
                     Commands.literal("customitems")
                             .executes(ctx -> {
                                 // TODO: Implement the command logic here
-                                ctx.getSource().getSender().sendPlainMessage("Updating custom items...");
+                                ctx.getSource().getSender().sendPlainMessage(UPDATING_CUSTOM_ITEMS);
                                 // Add code to update custom items here
                                 return Command.SINGLE_SUCCESS;
                             })
