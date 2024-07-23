@@ -10,7 +10,8 @@ import eu.illyrion.illyriacore.interfaces.ConfigInferface;
 
 public class Config implements ConfigInferface {
 
-    // TODO: make the config.yml be generated without having it in the resources
+    // TODO: make the config.yml be generated without having it in the resources.
+    // TODO: move init to utils.
     /**
      * Initializes the configuration for the IllyriaUtils plugin.
      * This method sets default values for various configuration options.
