@@ -1,8 +1,8 @@
-package eu.illyrion.illyriacore.configs;
+package eu.illyrion.illyriacore.interfaces;
 
 import org.bukkit.Bukkit;
 
-public interface Messages {
+public interface MessagesInterface {
     // General
     String NAMESPACE = "illyriacore";
     String SERVER_VERSION_MSG = "For PaperMC version: ";

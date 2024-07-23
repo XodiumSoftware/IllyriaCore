@@ -3,11 +3,11 @@ package eu.illyrion.illyriacore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.illyrion.illyriacore.configs.Config;
-import eu.illyrion.illyriacore.configs.Messages;
 import eu.illyrion.illyriacore.handlers.ModuleHandler;
+import eu.illyrion.illyriacore.interfaces.MessagesInterface;
 import eu.illyrion.illyriacore.utils.Utils;
 
-public class IllyriaCore extends JavaPlugin implements Messages {
+public class IllyriaCore extends JavaPlugin implements MessagesInterface {
 
   private final boolean IS_DEBUG = getConfig().getBoolean(Config.DEBUG);
 

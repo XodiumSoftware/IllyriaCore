@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.configs;
+package eu.illyrion.illyriacore.interfaces;
 
 public interface ItemsInterface {
     // folder
