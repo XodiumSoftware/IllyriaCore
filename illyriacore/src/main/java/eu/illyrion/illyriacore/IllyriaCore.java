@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import eu.illyrion.illyriacore.configs.Config;
 import eu.illyrion.illyriacore.handlers.ModuleHandler;
 import eu.illyrion.illyriacore.interfaces.MessagesInterface;
-import eu.illyrion.illyriacore.utils.Utils;
+import eu.illyrion.illyriacore.utils.IllyriaUtils;
 
 public class IllyriaCore extends JavaPlugin implements MessagesInterface {
 
@@ -51,7 +51,7 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
   public void onEnable() {
     instance = this;
     getLogger().info(SERVER_VERSION_MSG + VERSION);
-    if (!Utils.isCompatible(VERSION)) {
+    if (!IllyriaUtils.isCompatible(VERSION)) {
       getLogger().severe(COMP_VERSION_MSG);
       getServer().getPluginManager().disablePlugin(this);
       return;

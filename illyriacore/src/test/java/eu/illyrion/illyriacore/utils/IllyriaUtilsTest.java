@@ -19,20 +19,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UtilsTest {
+public class IllyriaUtilsTest {
 
     @Test
     public void testIsCompatible() {
-        assertTrue(Utils.isCompatible("2.21.7"));
-        assertTrue(Utils.isCompatible("1.21.6"));
-        assertFalse(Utils.isCompatible("1.19.6"));
-        assertThrows(IllegalArgumentException.class, () -> Utils.isCompatible("1.21"));
+        assertTrue(IllyriaUtils.isCompatible("2.21.7"));
+        assertTrue(IllyriaUtils.isCompatible("1.21.6"));
+        assertFalse(IllyriaUtils.isCompatible("1.19.6"));
+        assertThrows(IllegalArgumentException.class, () -> IllyriaUtils.isCompatible("1.21"));
     }
 
     @Test
     public void testCastList() {
         List<Object> rawList = Arrays.asList("test", 123, true);
-        List<String> stringList = Utils.castList(rawList, String.class);
+        List<String> stringList = IllyriaUtils.castList(rawList, String.class);
         assertEquals(1, stringList.size());
         assertEquals("test", stringList.get(0));
     }
@@ -44,7 +44,7 @@ public class UtilsTest {
         rawMap.put("key2", 123);
         rawMap.put(123, "value3");
 
-        Map<String, String> stringMap = Utils.castMap(rawMap, String.class, String.class);
+        Map<String, String> stringMap = IllyriaUtils.castMap(rawMap, String.class, String.class);
         assertEquals(1, stringMap.size());
         assertEquals("value1", stringMap.get("key1"));
     }
@@ -55,7 +55,7 @@ public class UtilsTest {
         String mainTitle = "<red>Main Title";
         String subTitle = "<blue>Sub Title";
 
-        Utils.showTitle(mockAudience, mainTitle, subTitle);
+        IllyriaUtils.showTitle(mockAudience, mainTitle, subTitle);
 
         verify(mockAudience).showTitle(argThat(title -> {
             Component mainTitleComponent = MiniMessage.miniMessage().deserialize(mainTitle);

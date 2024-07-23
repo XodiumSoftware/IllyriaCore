@@ -13,7 +13,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 
-public class Utils {
+public class IllyriaUtils {
 
     private static final String INVALID_VERSION_FORMAT_MSG = "Invalid version format: ";
 

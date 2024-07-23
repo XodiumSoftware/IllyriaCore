@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemFlag;
 
 import eu.illyrion.illyriacore.builders.CustomItemBuilder;
 import eu.illyrion.illyriacore.interfaces.ItemsInterface;
-import eu.illyrion.illyriacore.utils.Utils;
+import eu.illyrion.illyriacore.utils.IllyriaUtils;
 
 import java.io.File;
 import java.util.List;
@@ -26,16 +26,16 @@ public class CustomItemHandler implements ItemsInterface {
         if (items != null) {
             for (Object itemObj : items) {
                 if (itemObj instanceof Map) {
-                    Map<String, Object> itemData = Utils.castMap(itemObj, String.class, Object.class);
+                    Map<String, Object> itemData = IllyriaUtils.castMap(itemObj, String.class, Object.class);
                     Material material = Material.valueOf((String) itemData.get(ITEM_MATERIAL));
                     String name = (String) itemData.get(ITEM_NAME);
-                    List<String> lores = Utils.castList(itemData.get(ITEM_LORE), String.class);
-                    Map<Enchantment, Integer> enchantments = Utils.castMap(itemData.get(ITEM_ENCHANTMENT),
+                    List<String> lores = IllyriaUtils.castList(itemData.get(ITEM_LORE), String.class);
+                    Map<Enchantment, Integer> enchantments = IllyriaUtils.castMap(itemData.get(ITEM_ENCHANTMENT),
                             Enchantment.class,
                             Integer.class);
                     boolean unbreakable = (boolean) itemData.get(ITEM_UNBREAKABLE);
                     int customModelData = (int) itemData.get(ITEM_CUSTOM_MODEL_DATA);
-                    List<ItemFlag> itemFlags = Utils.castList(itemData.get(ITEM_FLAGS), ItemFlag.class);
+                    List<ItemFlag> itemFlags = IllyriaUtils.castList(itemData.get(ITEM_FLAGS), ItemFlag.class);
                     int durability = (int) itemData.get(ITEM_DURABILITY);
                     new CustomItemBuilder(material)
                             .name(name)
