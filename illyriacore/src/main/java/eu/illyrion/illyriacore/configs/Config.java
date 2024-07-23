@@ -11,11 +11,10 @@ public class Config {
 
     // TODO: make the config.yml be generated without having it in the resources
     // folder
-
     public static final String CONFIG_FILE = "config.yml";
     // General
     private static final String GENERAL_PREFIX = "general.";
-    public static final String CHAT_PREFIX = GENERAL_PREFIX + "prefix";
+    public static final String CHAT_PREFIX = GENERAL_PREFIX + "chatPrefix";
     // Modules
     private static final String MODULES_PREFIX = "modules.";
     public static final String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItems";
@@ -26,8 +25,9 @@ public class Config {
     public static final String IMMUNITY_TIMER = LOCALIZATION_PREFIX + "ImmunityTimer";
     public static final String IMMUNITY_TIMER_DURATION = LOCALIZATION_PREFIX + "ImmunityTimerDuration";
     // Development
-    private static final String DEVELOPMENT_PREFIX = "development.";
-    public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";
+    private static final String DEV_PREFIX = "development.";
+    public static final String DEBUG = DEV_PREFIX + "Debug";
+    public static final String DEBUG_PREFIX = DEV_PREFIX + "debugPrefix";
 
     /**
      * Initializes the configuration for the IllyriaUtils plugin.
@@ -58,6 +58,7 @@ public class Config {
         conf.addDefault(IMMUNITY_TIMER_DURATION, 10);
 
         conf.addDefault(DEBUG, false);
+        conf.addDefault(DEBUG_PREFIX, "[DEBUG] ");
 
         if (conf.getKeys(false).isEmpty()) {
             conf.options().copyDefaults(true);

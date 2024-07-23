@@ -8,7 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import eu.illyrion.illyriacore.IllyriaCore;
+import eu.illyrion.illyriacore.configs.Items;
+import eu.illyrion.illyriacore.configs.Messages;
 import eu.illyrion.illyriacore.utils.Utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -27,42 +28,28 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class CustomItemHandler {
 
-    // TODO: make the items.yml be generated without having it in the resources
-    // folder
-
-    private static final String ITEM_DURABILITY = "durability";
-    private static final String ITEM_FLAGS = "itemFlags";
-    private static final String ITEM_CUSTOM_MODEL_DATA = "customModelData";
-    private static final String ITEM_UNBREAKABLE = "unbreakable";
-    private static final String ITEM_ENCHANTMENT = "enchantments";
-    private static final String ITEM_LORE = "lores";
-    private static final String ITEM_NAME = "name";
-    private static final String ITEM_MATERIAL = "material";
-    private static final String ITEMS = "items";
-    private static final String ITEMS_YML = "items.yml";
-
     /**
      * Initializes the custom items.
      */
     public static void init() {
-        File file = new File(ITEMS_YML);
+        File file = new File(Items.ITEMS_YML);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        List<?> items = config.getList(ITEMS);
+        List<?> items = config.getList(Items.ITEMS);
         if (items != null) {
             for (Object itemObj : items) {
                 if (itemObj instanceof Map) {
                     Map<String, Object> itemData = Utils.castMap(itemObj, String.class, Object.class);
 
-                    Material material = Material.valueOf((String) itemData.get(ITEM_MATERIAL));
-                    String name = (String) itemData.get(ITEM_NAME);
-                    List<String> lores = Utils.castList(itemData.get(ITEM_LORE), String.class);
-                    Map<Enchantment, Integer> enchantments = Utils.castMap(itemData.get(ITEM_ENCHANTMENT),
+                    Material material = Material.valueOf((String) itemData.get(Items.ITEM_MATERIAL));
+                    String name = (String) itemData.get(Items.ITEM_NAME);
+                    List<String> lores = Utils.castList(itemData.get(Items.ITEM_LORE), String.class);
+                    Map<Enchantment, Integer> enchantments = Utils.castMap(itemData.get(Items.ITEM_ENCHANTMENT),
                             Enchantment.class,
                             Integer.class);
-                    boolean unbreakable = (boolean) itemData.get(ITEM_UNBREAKABLE);
-                    int customModelData = (int) itemData.get(ITEM_CUSTOM_MODEL_DATA);
-                    List<ItemFlag> itemFlags = Utils.castList(itemData.get(ITEM_FLAGS), ItemFlag.class);
-                    int durability = (int) itemData.get(ITEM_DURABILITY);
+                    boolean unbreakable = (boolean) itemData.get(Items.ITEM_UNBREAKABLE);
+                    int customModelData = (int) itemData.get(Items.ITEM_CUSTOM_MODEL_DATA);
+                    List<ItemFlag> itemFlags = Utils.castList(itemData.get(Items.ITEM_FLAGS), ItemFlag.class);
+                    int durability = (int) itemData.get(Items.ITEM_DURABILITY);
 
                     new CustomItemBuilder(material)
                             .name(name)
@@ -229,7 +216,7 @@ class CustomItemBuilder {
                 meta.addAttributeModifier(entry.getKey(), entry.getValue());
             }
             PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
-            NamespacedKey nkey = new NamespacedKey(IllyriaCore.NAMESPACE, KEY);
+            NamespacedKey nkey = new NamespacedKey(Messages.NAMESPACE, KEY);
             dataContainer.set(nkey, PersistentDataType.INTEGER, customModelData);
             item.setItemMeta(meta);
         }
