@@ -1,7 +1,15 @@
 package eu.illyrion.illyriacore.utils;
 
 import org.junit.jupiter.api.Test;
+
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +46,18 @@ public class UtilsTest {
         assertEquals("value1", stringMap.get("key1"));
     }
 
-    // Note: Testing `showTitle` method might require a mock `Audience` object and
-    // is not included here.
+    @Test
+    public void testShowTitle() {
+        Audience mockAudience = mock(Audience.class);
+        String mainTitle = "<red>Main Title";
+        String subTitle = "<blue>Sub Title";
+
+        Utils.showTitle(mockAudience, mainTitle, subTitle);
+
+        verify(mockAudience).showTitle(argThat(title -> {
+            Component mainTitleComponent = MiniMessage.miniMessage().deserialize(mainTitle);
+            Component subTitleComponent = MiniMessage.miniMessage().deserialize(subTitle);
+            return title.title().equals(mainTitleComponent) && title.subtitle().equals(subTitleComponent);
+        }));
+    }
 }
