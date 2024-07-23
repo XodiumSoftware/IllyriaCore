@@ -2,7 +2,7 @@ package eu.illyrion.illyriacore.handlers;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import eu.illyrion.illyriacore.IllyriaCore;
-import eu.illyrion.illyriacore.commands.UpdateCustomItemsCmd;
+import eu.illyrion.illyriacore.commands.UpdateCustomItemsCommand;
 import eu.illyrion.illyriacore.configs.Config;
 
 public class ModuleHandler {
@@ -20,7 +20,7 @@ public class ModuleHandler {
         if (conf.getBoolean(Config.CUSTOM_ITEM_HANDLER)) {
             plugin.getLogger().info(INITIALIZING + Config.CUSTOM_ITEM_HANDLER);
             CustomItemHandler.init();
-            UpdateCustomItemsCmd.init(plugin.getLifecycleManager());
+            UpdateCustomItemsCommand.init(plugin.getLifecycleManager());
             plugin.getLogger().info(Config.CUSTOM_ITEM_HANDLER + INITIALIZED);
             modulesLoaded++;
         }
