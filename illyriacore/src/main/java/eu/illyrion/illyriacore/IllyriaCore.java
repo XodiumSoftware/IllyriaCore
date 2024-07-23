@@ -6,9 +6,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.illyrion.illyriacore.commands.UpdateCustomItemsCmd;
 import eu.illyrion.illyriacore.config.Config;
-import eu.illyrion.illyriacore.events.CustomAnvilOperations;
-import eu.illyrion.illyriacore.events.PlayerImmunityOnJoin;
+import eu.illyrion.illyriacore.handlers.CustomAnvilHandler;
 import eu.illyrion.illyriacore.handlers.CustomItemHandler;
+import eu.illyrion.illyriacore.handlers.ImmunityHandler;
 import eu.illyrion.illyriacore.utils.Utils;
 
 public class IllyriaCore extends JavaPlugin {
@@ -85,24 +85,24 @@ public class IllyriaCore extends JavaPlugin {
     int modulesLoaded = 0;
 
     if (conf.getBoolean(Config.CUSTOM_ITEM_HANDLER)) {
-      getLogger().info("Initializing CustomItemHandler");
+      getLogger().info(Config.INITIALIZING + Config.CUSTOM_ITEM_HANDLER);
       CustomItemHandler.init();
       UpdateCustomItemsCmd.init(getLifecycleManager());
-      getLogger().info("CustomItemHandler initialized");
+      getLogger().info(Config.CUSTOM_ITEM_HANDLER + Config.INITIALIZED);
       modulesLoaded++;
     }
 
-    if (conf.getBoolean(Config.PLAYER_IMMUNITY_ON_JOIN)) {
-      getLogger().info("Initializing PlayerImmunityOnJoin");
-      getServer().getPluginManager().registerEvents(new PlayerImmunityOnJoin(), this);
-      getLogger().info("PlayerImmunityOnJoin initialized");
+    if (conf.getBoolean(Config.IMMUNITY_HANDLER)) {
+      getLogger().info(Config.INITIALIZING + Config.IMMUNITY_HANDLER);
+      getServer().getPluginManager().registerEvents(new ImmunityHandler(), this);
+      getLogger().info(Config.IMMUNITY_HANDLER + Config.INITIALIZED);
       modulesLoaded++;
     }
 
-    if (conf.getBoolean(Config.CUSTOM_ANVIL_OPERATIONS)) {
-      getLogger().info("Initializing CustomAnvilOperations");
-      getServer().getPluginManager().registerEvents(new CustomAnvilOperations(), this);
-      getLogger().info("CustomAnvilOperations initialized");
+    if (conf.getBoolean(Config.CUSTOM_ANVIL_HANDLER)) {
+      getLogger().info(Config.INITIALIZING + Config.CUSTOM_ANVIL_HANDLER);
+      getServer().getPluginManager().registerEvents(new CustomAnvilHandler(), this);
+      getLogger().info(Config.CUSTOM_ANVIL_HANDLER + Config.INITIALIZED);
       modulesLoaded++;
     }
 

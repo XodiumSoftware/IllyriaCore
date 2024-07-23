@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.events;
+package eu.illyrion.illyriacore.handlers;
 
 import java.util.Iterator;
 
@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 
-public class CustomAnvilOperations implements Listener {
+public class CustomAnvilHandler implements Listener {
 
     /**
      * Handles the PrepareAnvilEvent.

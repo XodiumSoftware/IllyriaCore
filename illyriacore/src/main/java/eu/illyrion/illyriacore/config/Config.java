@@ -14,15 +14,19 @@ public class Config {
 
     private static final String CONFIG_FILE = "config.yml";
     // General
-    public static final String GENERAL_PREFIX = "general.";
+    private static final String GENERAL_PREFIX = "general.";
     public static final String CHAT_PREFIX = GENERAL_PREFIX + "prefix";
-    public static final String CHECK_FOR_UPDATES = GENERAL_PREFIX + "check-for-updates";
-    public static final String CHECK_FOR_UPDATES_INTERVAL = GENERAL_PREFIX + "check-interval";
     // Modules
     private static final String MODULES_PREFIX = "modules.";
-    public static final String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItemHandler";
-    public static final String PLAYER_IMMUNITY_ON_JOIN = MODULES_PREFIX + "PlayerImmunityOnJoin";
-    public static final String CUSTOM_ANVIL_OPERATIONS = MODULES_PREFIX + "CustomAnvilOperations";
+    public static final String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItems";
+    public static final String IMMUNITY_HANDLER = MODULES_PREFIX + "OnJoinImmunity";
+    public static final String CUSTOM_ANVIL_HANDLER = MODULES_PREFIX + "CustomAnvil";
+    // Localization
+    private static final String LOCALIZATION_PREFIX = "localization.";
+    public static final String INITIALIZING = "Initializing";
+    public static final String INITIALIZED = "Initialized";
+    public static final String IMMUNITY_TIMER = LOCALIZATION_PREFIX + "ImmunityTimer";
+    public static final String IMMUNITY_TIMER_DURATION = "ImmunityTimerDuration";
     // Development
     private static final String DEVELOPMENT_PREFIX = "development.";
     public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";
@@ -47,12 +51,13 @@ public class Config {
         FileConfiguration conf = YamlConfiguration.loadConfiguration(confFile);
 
         conf.addDefault(CHAT_PREFIX, "[IllyriaUtils]");
-        conf.addDefault(CHECK_FOR_UPDATES, true);
-        conf.addDefault(CHECK_FOR_UPDATES_INTERVAL, 4);
 
         conf.addDefault(CUSTOM_ITEM_HANDLER, false);
-        conf.addDefault(PLAYER_IMMUNITY_ON_JOIN, false);
-        conf.addDefault(CUSTOM_ANVIL_OPERATIONS, false);
+        conf.addDefault(IMMUNITY_HANDLER, false);
+        conf.addDefault(CUSTOM_ANVIL_HANDLER, false);
+
+        conf.addDefault(IMMUNITY_TIMER, "Immunity Timer");
+        conf.addDefault(IMMUNITY_TIMER_DURATION, 10);
 
         conf.addDefault(DEBUG, false);
 
