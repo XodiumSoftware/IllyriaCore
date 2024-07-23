@@ -23,10 +23,8 @@ public class Config {
     public static final String CUSTOM_ANVIL_HANDLER = MODULES_PREFIX + "CustomAnvil";
     // Localization
     private static final String LOCALIZATION_PREFIX = "localization.";
-    public static final String INITIALIZING = "Initializing";
-    public static final String INITIALIZED = "Initialized";
     public static final String IMMUNITY_TIMER = LOCALIZATION_PREFIX + "ImmunityTimer";
-    public static final String IMMUNITY_TIMER_DURATION = "ImmunityTimerDuration";
+    public static final String IMMUNITY_TIMER_DURATION = LOCALIZATION_PREFIX + "ImmunityTimerDuration";
     // Development
     private static final String DEVELOPMENT_PREFIX = "development.";
     public static final String DEBUG = DEVELOPMENT_PREFIX + "debug";

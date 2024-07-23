@@ -16,10 +16,12 @@ public class IllyriaCore extends JavaPlugin {
   public static final String NAMESPACE = "illyriacore";
 
   private static final String DEBUG_PREFIX = "[DEBUG] ";
-  private static final String SERVER_VERSION_MSG = "Server version: ";
+  private static final String SERVER_VERSION_MSG = "For PaperMC version: ";
   private static final String DISABLED_MSG = "Plugin successfully Disabled";
   private static final String ENABLED_MSG = "Plugin successfully Enabled";
   private static final String COMP_VERSION_MSG = "This plugin is only compatible with Minecraft version 1.20.6";
+  private static final String INITIALIZING = "Initializing";
+  private static final String INITIALIZED = "Initialized";
   private static final String VERSION = Bukkit.getBukkitVersion();
 
   private static IllyriaCore instance;
@@ -85,24 +87,24 @@ public class IllyriaCore extends JavaPlugin {
     int modulesLoaded = 0;
 
     if (conf.getBoolean(Config.CUSTOM_ITEM_HANDLER)) {
-      getLogger().info(Config.INITIALIZING + Config.CUSTOM_ITEM_HANDLER);
+      getLogger().info(INITIALIZING + Config.CUSTOM_ITEM_HANDLER);
       CustomItemHandler.init();
       UpdateCustomItemsCmd.init(getLifecycleManager());
-      getLogger().info(Config.CUSTOM_ITEM_HANDLER + Config.INITIALIZED);
+      getLogger().info(Config.CUSTOM_ITEM_HANDLER + INITIALIZED);
       modulesLoaded++;
     }
 
     if (conf.getBoolean(Config.IMMUNITY_HANDLER)) {
-      getLogger().info(Config.INITIALIZING + Config.IMMUNITY_HANDLER);
+      getLogger().info(INITIALIZING + Config.IMMUNITY_HANDLER);
       getServer().getPluginManager().registerEvents(new ImmunityHandler(), this);
-      getLogger().info(Config.IMMUNITY_HANDLER + Config.INITIALIZED);
+      getLogger().info(Config.IMMUNITY_HANDLER + INITIALIZED);
       modulesLoaded++;
     }
 
     if (conf.getBoolean(Config.CUSTOM_ANVIL_HANDLER)) {
-      getLogger().info(Config.INITIALIZING + Config.CUSTOM_ANVIL_HANDLER);
+      getLogger().info(INITIALIZING + Config.CUSTOM_ANVIL_HANDLER);
       getServer().getPluginManager().registerEvents(new CustomAnvilHandler(), this);
-      getLogger().info(Config.CUSTOM_ANVIL_HANDLER + Config.INITIALIZED);
+      getLogger().info(Config.CUSTOM_ANVIL_HANDLER + INITIALIZED);
       modulesLoaded++;
     }
 
