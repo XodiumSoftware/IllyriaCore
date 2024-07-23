@@ -34,16 +34,13 @@ public class CustomAnvilHandler implements Listener {
         AnvilInventory anvilInventory = e.getInventory();
         Optional<ItemStack> firstItem = Optional.ofNullable(anvilInventory.getItem(0));
         Optional<ItemStack> secondItem = Optional.ofNullable(anvilInventory.getItem(1));
-
         if (!firstItem.isPresent() || !secondItem.isPresent()) {
             return;
         }
-
         if (firstItem.get().getType() != Material.ENCHANTED_BOOK
                 || secondItem.get().getType() != Material.ENCHANTED_BOOK) {
             return;
         }
-
         Iterator<Enchantment> enchantments = Registry.ENCHANTMENT.iterator();
         while (enchantments.hasNext()) {
             Enchantment enchantment = enchantments.next();

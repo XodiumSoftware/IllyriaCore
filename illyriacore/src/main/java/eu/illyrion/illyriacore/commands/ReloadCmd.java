@@ -6,9 +6,9 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import eu.illyrion.illyriacore.IllyriaCore;
-import eu.illyrion.illyriacore.configs.Permissions;
+import eu.illyrion.illyriacore.interfaces.PermissionsInterface;
 
-public class ReloadCmd implements CommandExecutor {
+public class ReloadCmd implements CommandExecutor, PermissionsInterface {
 
     private static final String HAS_RELOADED_MSG = "IllyriaUtils configuration has been reloaded.";
 
@@ -16,7 +16,7 @@ public class ReloadCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender cs, @NotNull Command cmd, @NotNull String alias,
             @NotNull String[] args) {
-        if (!cs.hasPermission(Permissions.RELOAD)) {
+        if (!cs.hasPermission(RELOAD)) {
             cs.sendMessage(cmd.getPermission());
             return true;
         }

@@ -33,7 +33,6 @@ public class Utils {
             int major = Integer.parseInt(parts[0]);
             int minor = Integer.parseInt(parts[1]);
             int patch = Integer.parseInt(parts[2].split("-")[0]);
-
             return (major > COMP_MAJOR) || (major == COMP_MAJOR && minor > COMP_MINOR)
                     || (major == COMP_MAJOR && minor == COMP_MINOR && patch >= COMP_PATCH);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {

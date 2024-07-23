@@ -17,7 +17,6 @@ public class ModuleHandler {
         IllyriaCore plugin = IllyriaCore.getInstance();
         FileConfiguration conf = Config.init();
         int modulesLoaded = 0;
-
         if (conf.getBoolean(Config.CUSTOM_ITEM_HANDLER)) {
             plugin.getLogger().info(INITIALIZING + Config.CUSTOM_ITEM_HANDLER);
             CustomItemHandler.init();
@@ -25,21 +24,18 @@ public class ModuleHandler {
             plugin.getLogger().info(Config.CUSTOM_ITEM_HANDLER + INITIALIZED);
             modulesLoaded++;
         }
-
         if (conf.getBoolean(Config.IMMUNITY_HANDLER)) {
             plugin.getLogger().info(INITIALIZING + Config.IMMUNITY_HANDLER);
             plugin.getServer().getPluginManager().registerEvents(new ImmunityHandler(), plugin);
             plugin.getLogger().info(Config.IMMUNITY_HANDLER + INITIALIZED);
             modulesLoaded++;
         }
-
         if (conf.getBoolean(Config.CUSTOM_ANVIL_HANDLER)) {
             plugin.getLogger().info(INITIALIZING + Config.CUSTOM_ANVIL_HANDLER);
             plugin.getServer().getPluginManager().registerEvents(new CustomAnvilHandler(), plugin);
             plugin.getLogger().info(Config.CUSTOM_ANVIL_HANDLER + INITIALIZED);
             modulesLoaded++;
         }
-
         plugin.getLogger().info("[" + modulesLoaded + "] module(s) loaded.");
     }
 }
