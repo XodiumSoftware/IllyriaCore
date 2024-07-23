@@ -10,11 +10,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import eu.illyrion.illyriacore.IllyriaCore;
 import eu.illyrion.illyriacore.configs.Config;
+import eu.illyrion.illyriacore.interfaces.ConfigInferface;
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 
-public class ImmunityHandler implements Listener {
+public class ImmunityHandler implements Listener, ConfigInferface {
 
     private static final float BOSS_BAR_INITIAL_PROGRESS = 1.0f;
     private static final float BOSS_BAR_PROGRESS = 10.0f;
@@ -55,7 +56,7 @@ public class ImmunityHandler implements Listener {
                 }
             }
         }.runTaskLater(IllyriaCore.getInstance(),
-                Tick.tick().fromDuration(Duration.ofSeconds(conf.getInt(Config.IMMUNITY_TIMER_DURATION))));
+                Tick.tick().fromDuration(Duration.ofSeconds(conf.getInt(IMMUNITY_TIMER_DURATION))));
     }
 
     /**
@@ -75,7 +76,7 @@ public class ImmunityHandler implements Listener {
      * @return the created boss bar
      */
     private BossBar createBossBar() {
-        final Component name = Component.text(conf.getString(Config.IMMUNITY_TIMER));
+        final Component name = Component.text(conf.getString(IMMUNITY_TIMER));
         return BossBar.bossBar(name, BOSS_BAR_INITIAL_PROGRESS, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
 
@@ -87,7 +88,7 @@ public class ImmunityHandler implements Listener {
      */
     private void startBossBarCountdown(Player p, BossBar bossBar) {
         new BukkitRunnable() {
-            private int timeLeft = conf.getInt(Config.IMMUNITY_TIMER_DURATION);
+            private int timeLeft = conf.getInt(IMMUNITY_TIMER_DURATION);
 
             @Override
             public void run() {

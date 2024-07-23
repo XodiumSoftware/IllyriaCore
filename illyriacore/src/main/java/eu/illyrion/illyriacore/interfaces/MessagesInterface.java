@@ -14,6 +14,8 @@ public interface MessagesInterface {
     String INVALID_VERSION_FORMAT_MSG = "Invalid version format: ";
     // ReloadCommand
     String RELOADING = "Reloading the plugin...";
+    // ModuleHandler
+    String LOADING = "Loading: ";
     // UpdateCustomItemsCommand
     String UPDATING_CUSTOM_ITEMS = "Updating custom items...";
 }

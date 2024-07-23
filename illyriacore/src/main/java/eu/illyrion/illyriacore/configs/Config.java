@@ -36,7 +36,7 @@ public class Config implements ConfigInferface {
         conf.addDefault(IMMUNITY_HANDLER, false);
         conf.addDefault(CUSTOM_ANVIL_HANDLER, false);
 
-        conf.addDefault(IMMUNITY_TIMER, "Immunity Timer");
+        conf.addDefault(IMMUNITY_TIMER, "Immunity");
         conf.addDefault(IMMUNITY_TIMER_DURATION, 10);
 
         conf.addDefault(DEBUG, false);
