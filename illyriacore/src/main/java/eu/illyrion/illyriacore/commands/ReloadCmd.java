@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import eu.illyrion.illyriacore.IllyriaCore;
-import eu.illyrion.illyriacore.config.Permissions;
+import eu.illyrion.illyriacore.configs.Permissions;
 
 public class ReloadCmd implements CommandExecutor {
 

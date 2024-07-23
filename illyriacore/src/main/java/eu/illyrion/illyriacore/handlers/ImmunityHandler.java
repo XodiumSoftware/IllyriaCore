@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import eu.illyrion.illyriacore.IllyriaCore;
-import eu.illyrion.illyriacore.config.Config;
+import eu.illyrion.illyriacore.configs.Config;
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;

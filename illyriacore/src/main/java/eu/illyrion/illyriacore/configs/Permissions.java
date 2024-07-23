@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.config;
+package eu.illyrion.illyriacore.configs;
 
 public class Permissions {
 

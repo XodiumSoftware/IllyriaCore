@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.config;
+package eu.illyrion.illyriacore.configs;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class Config {
     // TODO: make the config.yml be generated without having it in the resources
     // folder
 
-    private static final String CONFIG_FILE = "config.yml";
+    public static final String CONFIG_FILE = "config.yml";
     // General
     private static final String GENERAL_PREFIX = "general.";
     public static final String CHAT_PREFIX = GENERAL_PREFIX + "prefix";

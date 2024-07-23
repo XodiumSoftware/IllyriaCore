@@ -5,7 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.illyrion.illyriacore.commands.UpdateCustomItemsCmd;
-import eu.illyrion.illyriacore.config.Config;
+import eu.illyrion.illyriacore.configs.Config;
 import eu.illyrion.illyriacore.handlers.CustomAnvilHandler;
 import eu.illyrion.illyriacore.handlers.CustomItemHandler;
 import eu.illyrion.illyriacore.handlers.ImmunityHandler;
@@ -33,6 +33,15 @@ public class IllyriaCore extends JavaPlugin {
    */
   public static IllyriaCore getInstance() {
     return instance;
+  }
+
+  /**
+   * Sets the instance of the IllyriaCore class.
+   *
+   * @param instance the instance to set
+   */
+  public static void setInstance(IllyriaCore instance) {
+    IllyriaCore.instance = instance;
   }
 
   /**
