@@ -8,14 +8,13 @@ import java.util.Map;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import eu.illyrion.illyriacore.interfaces.MessagesInterface;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 
-public class IllyriaUtils {
-
-    private static final String INVALID_VERSION_FORMAT_MSG = "Invalid version format: ";
+public class IllyriaUtils implements MessagesInterface {
 
     private static final int COMP_MAJOR = 1;
     private static final int COMP_MINOR = 20;
