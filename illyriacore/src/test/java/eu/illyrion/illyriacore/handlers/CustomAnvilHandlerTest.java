@@ -40,18 +40,18 @@ public class CustomAnvilHandlerTest {
         ItemStack firstItem = mock(ItemStack.class);
         ItemStack secondItem = mock(ItemStack.class);
         Enchantment enchantment = mock(Enchantment.class);
+
         when(firstItem.getType()).thenReturn(Material.ENCHANTED_BOOK);
         when(secondItem.getType()).thenReturn(Material.ENCHANTED_BOOK);
+
         when(firstItem.getEnchantmentLevel(enchantment)).thenReturn(1);
         when(secondItem.getEnchantmentLevel(enchantment)).thenReturn(1);
-        when(enchantment.getMaxLevel()).thenReturn(5);
 
         @SuppressWarnings("unchecked")
         Iterator<Enchantment> iterator = mock(Iterator.class);
         when(iterator.hasNext()).thenReturn(true, false);
         when(iterator.next()).thenReturn(enchantment);
         when(Registry.ENCHANTMENT.iterator()).thenReturn(iterator);
-
         when(anvilInventory.getItem(0)).thenReturn(firstItem);
         when(anvilInventory.getItem(1)).thenReturn(secondItem);
 
@@ -77,14 +77,13 @@ public class CustomAnvilHandlerTest {
     public void testOnPrepareAnvil_ItemsNotEnchantedBooks() {
         ItemStack firstItem = mock(ItemStack.class);
         ItemStack secondItem = mock(ItemStack.class);
+
         when(firstItem.getType()).thenReturn(Material.DIAMOND_SWORD);
         when(secondItem.getType()).thenReturn(Material.DIAMOND_SWORD);
-
         when(anvilInventory.getItem(0)).thenReturn(firstItem);
         when(anvilInventory.getItem(1)).thenReturn(secondItem);
 
         customAnvilHandler.onPrepareAnvil(prepareAnvilEvent);
-
         assertNull(prepareAnvilEvent.getResult());
     }
 }
