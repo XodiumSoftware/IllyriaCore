@@ -37,6 +37,9 @@ public class ConfigTest implements ConfigInferface {
             plugin.saveResource(CONFIG_FILE, false);
         }
 
+        plugin.reloadConfig();
+        fileConfiguration = plugin.getConfig();
+
         FileConfiguration result = Config.init();
 
         assertEquals(result.saveToString(), fileConfiguration.saveToString());
