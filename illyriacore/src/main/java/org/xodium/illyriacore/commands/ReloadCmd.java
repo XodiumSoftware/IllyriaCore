@@ -1,12 +1,11 @@
-package eu.illyrion.illyriacore.commands;
+package org.xodium.illyriacore.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-
-import eu.illyrion.illyriacore.IllyriaCore;
-import eu.illyrion.illyriacore.config.Permissions;
+import org.xodium.illyriacore.IllyriaCore;
+import org.xodium.illyriacore.config.Permissions;
 
 public class ReloadCmd implements CommandExecutor {
 

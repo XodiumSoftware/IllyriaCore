@@ -1,15 +1,14 @@
-package eu.illyrion.illyriacore;
+package org.xodium.illyriacore;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import eu.illyrion.illyriacore.commands.UpdateCustomItemsCmd;
-import eu.illyrion.illyriacore.config.Config;
-import eu.illyrion.illyriacore.handlers.CustomAnvilHandler;
-import eu.illyrion.illyriacore.handlers.CustomItemHandler;
-import eu.illyrion.illyriacore.handlers.ImmunityHandler;
-import eu.illyrion.illyriacore.utils.Utils;
+import org.xodium.illyriacore.commands.UpdateCustomItemsCmd;
+import org.xodium.illyriacore.config.Config;
+import org.xodium.illyriacore.handlers.CustomAnvilHandler;
+import org.xodium.illyriacore.handlers.CustomItemHandler;
+import org.xodium.illyriacore.handlers.ImmunityHandler;
+import org.xodium.illyriacore.utils.Utils;
 
 public class IllyriaCore extends JavaPlugin {
 

@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.handlers;
+package org.xodium.illyriacore.handlers;
 
 import java.util.Iterator;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.commands;
+package org.xodium.illyriacore.commands;
 
 import com.mojang.brigadier.Command;
 

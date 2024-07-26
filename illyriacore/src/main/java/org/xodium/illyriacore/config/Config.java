@@ -1,11 +1,11 @@
-package eu.illyrion.illyriacore.config;
+package org.xodium.illyriacore.config;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import eu.illyrion.illyriacore.IllyriaCore;
+import org.xodium.illyriacore.IllyriaCore;
 
 public class Config {
 

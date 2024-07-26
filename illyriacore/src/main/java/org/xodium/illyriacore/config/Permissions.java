@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.config;
+package org.xodium.illyriacore.config;
 
 public class Permissions {
 

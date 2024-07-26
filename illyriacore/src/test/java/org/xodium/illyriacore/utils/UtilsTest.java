@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.utils;
+package org.xodium.illyriacore.utils;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

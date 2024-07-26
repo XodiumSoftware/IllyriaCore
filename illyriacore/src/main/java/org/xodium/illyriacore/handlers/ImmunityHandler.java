@@ -1,4 +1,4 @@
-package eu.illyrion.illyriacore.handlers;
+package org.xodium.illyriacore.handlers;
 
 import java.time.Duration;
 
@@ -8,8 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import eu.illyrion.illyriacore.IllyriaCore;
-import eu.illyrion.illyriacore.config.Config;
+import org.xodium.illyriacore.IllyriaCore;
+import org.xodium.illyriacore.config.Config;
+
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
