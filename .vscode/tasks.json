@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "mvn package",
       "options": {
-        "cwd": "${workspaceFolder}/illyriacore"
+        "cwd": "${workspaceFolder}"
       },
       "group": {
         "kind": "build",
