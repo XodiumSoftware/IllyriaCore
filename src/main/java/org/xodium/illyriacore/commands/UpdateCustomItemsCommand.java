@@ -1,8 +1,9 @@
 package org.xodium.illyriacore.commands;
 
+import org.xodium.illyriacore.interfaces.MessagesInterface;
+
 import com.mojang.brigadier.Command;
 
-import eu.illyrion.illyriacore.interfaces.MessagesInterface;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;

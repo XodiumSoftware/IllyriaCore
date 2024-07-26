@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import eu.illyrion.illyriacore.interfaces.MessagesInterface;
+import org.xodium.illyriacore.interfaces.MessagesInterface;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
