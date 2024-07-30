@@ -40,6 +40,9 @@ jobs:
           distribution: "adopt"
           java-version: "21"
 
+      - id: print_maven_version
+        run: mvn -v
+
       - id: cache_maven_packages
         name: Cache Maven packages
         uses: actions/cache@main
@@ -51,7 +54,7 @@ jobs:
       - id: get_version
         name: Get version
         run: |
-          VERSION=$(mvn -q \
+          VERSION=$(mvn \
             -Dexec.executable=echo \
             -Dexec.args='${project.version}' \
             --non-recursive \
