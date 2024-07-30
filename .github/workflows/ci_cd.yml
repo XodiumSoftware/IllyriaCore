@@ -44,7 +44,12 @@ jobs:
 
       - id: get_version
         name: Get version
-        run: VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" pom.xml) >> $GITHUB_ENV
+        run: |
+          VERSION=$(mvn \
+            -Dexec.executable=echo \
+            -Dexec.args='${project.version}' \
+            --non-recursive \
+            exec:exec | grep -v 'Downloading from') >> $GITHUB_ENV
 
       - id: build_jar
         name: Build with Maven
