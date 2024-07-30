@@ -43,8 +43,10 @@ jobs:
           restore-keys: ${{ runner.os }}-maven-
 
       - id: get_version
-        name: Get version
-        run: VERSION=$( mvn help:evaluate -Dexpression=project.version -DforceStdout ) >> $GITHUB_ENV
+        name: Get Version
+        uses: dostonhamrakulov/maven-artifact-version-extractor@master
+        with:
+          file_path: ${{ github.workspace }}/pom.xml
 
       - id: build_jar
         name: Build with Maven
