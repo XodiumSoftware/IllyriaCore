@@ -43,4 +43,5 @@
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
+  "java.debug.settings.onBuildFailureProceed": true,
 }
