@@ -113,6 +113,10 @@
 					<version>2.8.2</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-help-plugin</artifactId>
+					<version>3.4.1</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-shade-plugin</artifactId>
 					<version>3.3.0</version>
 					<executions>
