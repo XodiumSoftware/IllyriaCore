@@ -44,8 +44,13 @@ jobs:
 
       - id: get_version
         name: Get version
-        run: echo "VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" pom.xml)" >> $GITHUB_ENV
-        shell: bash
+        run: |
+          VERSION=$(mvn -q \
+            -Dexec.executable=echo \
+            -Dexec.args='${project.version}' \
+            --non-recursive \
+            exec:exec)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - id: build
         name: Build with Maven
