@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@main
 
       - id: setup-jdk
-        name: Set up JDK 21
+        name: Set up JDK
         uses: actions/setup-java@main
         with:
           distribution: "adopt"
@@ -48,6 +48,7 @@ jobs:
       - id: build
         name: Build with Maven
         run: mvn package
+        shell: bash
 
       - id: create_release
         name: Create Release
@@ -59,4 +60,4 @@ jobs:
           files: target/*.jar
           generate_release_notes: true
           prerelease: ${{ contains(github.event.head_commit.message, '.pre') }}
-          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
