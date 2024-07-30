@@ -8,7 +8,6 @@ public interface ConfigInferface {
     String CHAT_PREFIX = GENERAL_PREFIX + "chatPrefix";
     // Modules
     String MODULES_PREFIX = "modules.";
-    String CUSTOM_ITEM_HANDLER = MODULES_PREFIX + "CustomItems";
     String IMMUNITY_HANDLER = MODULES_PREFIX + "OnJoinImmunity";
     String CUSTOM_ANVIL_HANDLER = MODULES_PREFIX + "CustomAnvil";
     // Localization

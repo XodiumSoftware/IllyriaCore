@@ -32,7 +32,6 @@ public class Config implements ConfigInferface {
 
         conf.addDefault(CHAT_PREFIX, "[IllyriaUtils]");
 
-        conf.addDefault(CUSTOM_ITEM_HANDLER, false);
         conf.addDefault(IMMUNITY_HANDLER, false);
         conf.addDefault(CUSTOM_ANVIL_HANDLER, false);
 
