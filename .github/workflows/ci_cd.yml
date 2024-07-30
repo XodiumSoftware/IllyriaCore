@@ -27,21 +27,12 @@ jobs:
         name: Checkout
         uses: actions/checkout@main
 
-      - id: debug_print_structure
-        run: ls -R
-
-      - id: print_pom
-        run: cat pom.xml
-
       - id: setup_jdk
         name: Set up JDK
         uses: actions/setup-java@main
         with:
           distribution: "adopt"
           java-version: "21"
-
-      - id: print_maven_version
-        run: mvn -v
 
       - id: cache_maven_packages
         name: Cache Maven packages
@@ -53,13 +44,7 @@ jobs:
 
       - id: get_version
         name: Get version
-        run: |
-          VERSION=$(mvn \
-            -Dexec.executable=echo \
-            -Dexec.args='${project.version}' \
-            --non-recursive \
-            exec:exec)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+        run: VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" pom.xml) >> $GITHUB_ENV
 
       - id: build_jar
         name: Build with Maven
