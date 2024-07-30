@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  packages: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,6 +19,8 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '.deploy')
     environment:
       name: ${{ github.ref_name }}
+    outputs:
+      VERSION: ${{ steps.get_version.outputs.VERSION }}
     steps:
       - id: checkout
         name: Checkout
@@ -40,22 +41,22 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
-      # - id: get_version
-      #   name: Get version
-      #   run: echo "VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
+      - id: get_version
+        name: Get version
+        run: echo "VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" pom.xml)" >> $GITHUB_ENV
 
       - id: build
         name: Build with Maven
         run: mvn package
 
-      # - id: create_release
-      #   name: Create Release
-      #   uses: softprops/action-gh-release@master
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     draft: ${{ contains(github.event.head_commit.message, '.draft') }}
-      #     files: target/${VERSION}.jar
-      #     generate_release_notes: true
-      #     prerelease: ${{ contains(github.event.head_commit.message, '.pre') }}
-      #     tag_name: $VERSION
+      - id: create_release
+        name: Create Release
+        uses: softprops/action-gh-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: ${{ contains(github.event.head_commit.message, '.draft') }}
+          files: target/*.jar
+          generate_release_notes: true
+          prerelease: ${{ contains(github.event.head_commit.message, '.pre') }}
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
