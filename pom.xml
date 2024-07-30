@@ -9,7 +9,7 @@
 	<artifactId>illyriacore</artifactId>
 	<name>IllyriaCore</name>
 	<description>Core plugin for the IllyriaRPG private server.</description>
-	<version>0.0.15-SNAPSHOT</version>
+	<version>0.0.15</version>
 
 	<properties>
 		<project.api.version>1.15</project.api.version>
