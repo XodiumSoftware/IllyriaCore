@@ -27,14 +27,20 @@ jobs:
         name: Checkout
         uses: actions/checkout@main
 
-      - id: setup-jdk
+      - id: debug_print_structure
+        run: ls -R
+
+      - id: print_pom
+        run: cat pom.xml
+
+      - id: setup_jdk
         name: Set up JDK
         uses: actions/setup-java@main
         with:
           distribution: "adopt"
           java-version: "21"
 
-      - id: cache-maven-packages
+      - id: cache_maven_packages
         name: Cache Maven packages
         uses: actions/cache@main
         with:
@@ -52,7 +58,7 @@ jobs:
             exec:exec)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - id: build
+      - id: build_jar
         name: Build with Maven
         run: mvn package
 
