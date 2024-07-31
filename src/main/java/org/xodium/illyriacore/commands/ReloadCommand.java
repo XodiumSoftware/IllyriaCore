@@ -2,16 +2,17 @@ package org.xodium.illyriacore.commands;
 
 import com.mojang.brigadier.Command;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.interfaces.MessagesInterface;
+import org.xodium.illyriacore.interfaces.PermissionsInterface;
+
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
-public class ReloadCommand implements MessagesInterface {
-
-    // TODO: add permission check
+public class ReloadCommand implements MessagesInterface, PermissionsInterface {
 
     /**
      * Initializes the ReloadCmd by registering it as a command handler in the
@@ -25,6 +26,10 @@ public class ReloadCommand implements MessagesInterface {
             final Commands cmds = e.registrar();
             cmds.register(
                     Commands.literal("reload")
+                            .requires(source -> {
+                                CommandSender sender = source.getSender();
+                                return sender.hasPermission(RELOAD);
+                            })
                             .executes(ctx -> {
                                 ctx.getSource().getSender().sendMessage(RELOADING);
                                 plugin.reload();

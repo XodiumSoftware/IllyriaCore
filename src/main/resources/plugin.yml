@@ -8,7 +8,7 @@ authors:
   - IllyrionSoftware
 load: ${project.load}
 commands:
-  iutils:
+  icore:
     description: Reloads the configuration
     permission: illyriacore.reload
     usage: /<command>
