@@ -31,7 +31,7 @@ public class Config implements ConfigInferface {
         }
         FileConfiguration conf = YamlConfiguration.loadConfiguration(confFile);
 
-        conf.addDefault(CHAT_PREFIX, "[IllyriaUtils]");
+        conf.addDefault(CHAT_PREFIX, "[IllyriaCore]");
 
         conf.addDefault(IMMUNITY_HANDLER, false);
         conf.addDefault(CUSTOM_ANVIL_HANDLER, false);

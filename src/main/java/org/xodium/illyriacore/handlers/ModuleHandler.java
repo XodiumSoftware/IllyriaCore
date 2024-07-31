@@ -26,7 +26,7 @@ public class ModuleHandler implements MessagesInterface, ConfigInferface {
         for (Map.Entry<String, Listener> entry : modules.entrySet()) {
             if (conf.getBoolean(entry.getKey())) {
                 plugin.getServer().getPluginManager().registerEvents(entry.getValue(), plugin);
-                plugin.getLogger().info(LOADING + conf.getString(entry.getKey()));
+                plugin.getLogger().info(LOADING + entry.getKey());
                 modulesLoaded++;
             }
         }
