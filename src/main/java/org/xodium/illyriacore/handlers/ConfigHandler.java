@@ -39,7 +39,6 @@ public class ConfigHandler implements ConfigInferface, MessagesInterface {
         try {
             plugin.getLogger().info(LOADING + ANSI_YELLOW + CONFIG_FILE + ANSI_RESET);
             conf = loader.load();
-            plugin.getLogger().info(LOADED + CONFIG_HANDLER);
         } catch (ConfigurateException e) {
             e.printStackTrace();
             throw e;
@@ -57,7 +56,7 @@ public class ConfigHandler implements ConfigInferface, MessagesInterface {
             throw e;
         }
 
-        plugin.getLogger().info(String.format("Configurations set: %d", configurationsSet));
+        plugin.getLogger().info(String.format(LOADED + CONFIGS_LOADED, configurationsSet));
         return conf;
     }
 }
