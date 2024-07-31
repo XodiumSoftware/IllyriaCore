@@ -12,9 +12,9 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
 
   @Override
   public void onEnable() {
-    getLogger().info(SERVER_VERSION_MSG + VERSION);
-    if (!IllyriaUtils.isCompatible(VERSION)) {
-      getLogger().severe(COMP_VERSION_MSG);
+    getLogger().info(SERVER_VERSION + BUKKIT_VERSION);
+    if (!IllyriaUtils.isCompatible(BUKKIT_VERSION)) {
+      getLogger().severe(COMP_VERSION);
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
@@ -23,7 +23,7 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
       moduleHandler.init(this, Config.init());
       ReloadCommand.init(getLifecycleManager());
       saveDefaultConfig();
-      getLogger().info(ENABLED_MSG);
+      getLogger().info(PLUGIN_ENABLED);
     } catch (ConfigurateException e) {
       e.printStackTrace();
     }
@@ -35,6 +35,7 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
       reloadConfig();
       ModuleHandler moduleHandler = new ModuleHandler();
       moduleHandler.init(this, Config.init());
+      getLogger().info(PLUGIN_RELOADED);
     } catch (ConfigurateException e) {
       e.printStackTrace();
     }
@@ -42,6 +43,6 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
 
   @Override
   public void onDisable() {
-    getLogger().info(DISABLED_MSG);
+    getLogger().info(PLUGIN_DISABLED);
   }
 }

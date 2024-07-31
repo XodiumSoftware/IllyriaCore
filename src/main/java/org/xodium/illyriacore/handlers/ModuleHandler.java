@@ -5,7 +5,6 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.interfaces.ConfigInferface;
 import org.xodium.illyriacore.interfaces.MessagesInterface;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,10 +23,10 @@ public class ModuleHandler implements MessagesInterface, ConfigInferface {
         for (Map.Entry<String, Listener> entry : modules.entrySet()) {
             if (conf.node(MODULES_PREFIX, entry.getKey()).getBoolean()) {
                 plugin.getServer().getPluginManager().registerEvents(entry.getValue(), plugin);
-                plugin.getLogger().info(LOADING + entry.getKey());
+                plugin.getLogger().info(LOADING + ANSI_YELLOW + entry.getKey() + ANSI_RESET);
                 modulesLoaded++;
             }
         }
-        plugin.getLogger().info(String.format(MODULES_LOADED, modulesLoaded));
+        plugin.getLogger().info(String.format(LOADED + MODULES_LOADED, modulesLoaded));
     }
 }

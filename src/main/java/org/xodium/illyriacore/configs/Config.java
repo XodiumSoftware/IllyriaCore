@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 
 public class Config implements ConfigInferface, MessagesInterface {
 
+    // TODO: Make this a handler.
+
     /**
      * Initializes the configuration for the IllyriaCore plugin.
      * This method loads the configuration from the specified file,
@@ -35,8 +37,9 @@ public class Config implements ConfigInferface, MessagesInterface {
         CommentedConfigurationNode conf;
 
         try {
+            plugin.getLogger().info(LOADING + ANSI_YELLOW + CONFIG_FILE + ANSI_RESET);
             conf = loader.load();
-            plugin.getLogger().info(CONFIG_LOADED_MSG);
+            plugin.getLogger().info(LOADED + CONFIG_HANDLER);
         } catch (ConfigurateException e) {
             e.printStackTrace();
             throw e;
@@ -59,7 +62,6 @@ public class Config implements ConfigInferface, MessagesInterface {
 
         try {
             loader.save(conf);
-            plugin.getLogger().info(CONFIG_SAVED_MSG);
         } catch (ConfigurateException e) {
             e.printStackTrace();
             throw e;
