@@ -14,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class CustomAnvilHandler implements Listener {
 
+    // TODO: Add logging to check whats wrong.
+
     /**
      * Handles the PrepareAnvilEvent, which is triggered when a player prepares an
      * anvil.

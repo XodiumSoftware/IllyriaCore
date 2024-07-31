@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 
 public class Config implements ConfigInferface, MessagesInterface {
 
-    // TODO: Make this a handler.
+    // TODO: Make this a handler. and add counter.
 
     /**
      * Initializes the configuration for the IllyriaCore plugin.

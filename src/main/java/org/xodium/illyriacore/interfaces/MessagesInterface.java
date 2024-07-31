@@ -20,5 +20,6 @@ public interface MessagesInterface extends ANSIColorsInterface {
     // ModuleHandler
     String MODULES_LOADED = ANSI_PURPLE + "[" + ANSI_RESET + "%d" + ANSI_PURPLE + "] Module(s)" + ANSI_RESET;
     // Config
-    String CONFIG_HANDLER = ANSI_PURPLE + "Config(s)" + ANSI_RESET;
+    // TODO: See Config to set %d
+    String CONFIG_HANDLER = ANSI_PURPLE + "[" + ANSI_RESET + "%d" + ANSI_PURPLE + "] Config(s)" + ANSI_RESET;
 }
