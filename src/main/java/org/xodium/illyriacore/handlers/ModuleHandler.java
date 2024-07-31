@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class ModuleHandler implements MessagesInterface, ConfigInferface {
 
-    private final Map<String, Listener> modules = new HashMap<>();
+    private static final Map<String, Listener> modules = new HashMap<>();
 
     public ModuleHandler() {
         modules.put(IMMUNITY_HANDLER, new ImmunityHandler());
         modules.put(CUSTOM_ANVIL_HANDLER, new CustomAnvilHandler());
     }
 
-    public void init(IllyriaCore plugin, CommentedConfigurationNode conf) {
+    public static void init(IllyriaCore plugin, CommentedConfigurationNode conf) {
         int modulesLoaded = 0;
 
         for (Map.Entry<String, Listener> entry : modules.entrySet()) {

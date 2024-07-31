@@ -1,9 +1,10 @@
 package org.xodium.illyriacore;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.xodium.illyriacore.commands.ReloadCommand;
-import org.xodium.illyriacore.configs.Config;
+import org.xodium.illyriacore.handlers.ConfigHandler;
 import org.xodium.illyriacore.handlers.ModuleHandler;
 import org.xodium.illyriacore.interfaces.MessagesInterface;
 import org.xodium.illyriacore.utils.IllyriaUtils;
@@ -19,9 +20,9 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
       return;
     }
     try {
-      ModuleHandler moduleHandler = new ModuleHandler();
-      moduleHandler.init(this, Config.init());
-      ReloadCommand.init(getLifecycleManager());
+      CommentedConfigurationNode conf = ConfigHandler.init(this);
+      ModuleHandler.init(this, conf);
+      ReloadCommand.init(getLifecycleManager(), conf);
       saveDefaultConfig();
       getLogger().info(PLUGIN_ENABLED);
     } catch (ConfigurateException e) {

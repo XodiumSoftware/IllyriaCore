@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.xodium.illyriacore.IllyriaCore;
-import org.xodium.illyriacore.configs.Config;
 import org.xodium.illyriacore.interfaces.ConfigInferface;
 import org.xodium.illyriacore.utils.IllyriaUtils;
 
@@ -64,7 +63,8 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
      * @throws ConfigurateException
      */
     public void makePlayerInvulnerable(Player p) throws ConfigurateException {
-        CommentedConfigurationNode conf = Config.init();
+        IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
+        CommentedConfigurationNode conf = ConfigHandler.init(plugin);
         p.setInvulnerable(true);
         new BukkitRunnable() {
             @Override
@@ -92,7 +92,8 @@ class BossBarManager implements ConfigInferface {
      * @throws ConfigurateException
      */
     public void showCountdownBossBar(Player p) throws ConfigurateException {
-        CommentedConfigurationNode conf = Config.init();
+        IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
+        CommentedConfigurationNode conf = ConfigHandler.init(plugin);
         final BossBar bossBar = IllyriaUtils.createBossBar(
                 conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_TITLE).getString(), 1.0f,
                 BossBar.Color.WHITE,
