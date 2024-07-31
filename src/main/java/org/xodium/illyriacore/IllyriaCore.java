@@ -56,7 +56,7 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
-    ModuleHandler.init();
+    ModuleHandler.init(this);
     saveDefaultConfig();
     getLogger().info(ENABLED_MSG);
   }

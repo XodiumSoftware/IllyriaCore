@@ -15,19 +15,21 @@ import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 
-public class ImmunityHandler implements Listener, ConfigInferface {
+public class ImmunityHandler implements Listener {
 
-    private static final float BOSS_BAR_INITIAL_PROGRESS = 1.0f;
-    private static final float BOSS_BAR_PROGRESS = 10.0f;
+    private final PlayerInvulnerabilityManager invulnerabilityManager;
+    private final BossBarManager bossBarManager;
+    private final FileConfiguration conf;
 
-    private static final long INITIAL_DELAY = 0L;
-    private static final long DELAY = 20L;
-
-    private final FileConfiguration conf = Config.init();
+    public ImmunityHandler() {
+        this.conf = Config.init();
+        this.invulnerabilityManager = new PlayerInvulnerabilityManager(conf);
+        this.bossBarManager = new BossBarManager(conf);
+    }
 
     /**
      * Handles the player join event.
-     * Makes the player invulnerable and shows the countdown boss bar.
+     * Makes the player invulnerable and shows a countdown boss bar.
      *
      * @param e The PlayerJoinEvent object representing the player join event.
      */
@@ -35,9 +37,18 @@ public class ImmunityHandler implements Listener, ConfigInferface {
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         if (p.isOnline()) {
-            makePlayerInvulnerable(p);
-            showCountdownBossBar(p);
+            invulnerabilityManager.makePlayerInvulnerable(p);
+            bossBarManager.showCountdownBossBar(p);
         }
+    }
+}
+
+class PlayerInvulnerabilityManager implements ConfigInferface {
+
+    private final FileConfiguration conf;
+
+    public PlayerInvulnerabilityManager(FileConfiguration conf) {
+        this.conf = conf;
     }
 
     /**
@@ -58,6 +69,16 @@ public class ImmunityHandler implements Listener, ConfigInferface {
         }.runTaskLater(IllyriaCore.getInstance(),
                 Tick.tick().fromDuration(Duration.ofSeconds(conf.getInt(IMMUNITY_TIMER_DURATION))));
     }
+}
+
+class BossBarManager implements ConfigInferface {
+
+    private static final int TICKS_PER_SECOND = 20;
+    private final FileConfiguration conf;
+
+    public BossBarManager(FileConfiguration conf) {
+        this.conf = conf;
+    }
 
     /**
      * Shows a countdown boss bar to the specified player.
@@ -77,7 +98,7 @@ public class ImmunityHandler implements Listener, ConfigInferface {
      */
     private BossBar createBossBar() {
         final Component name = Component.text(conf.getString(IMMUNITY_TIMER));
-        return BossBar.bossBar(name, BOSS_BAR_INITIAL_PROGRESS, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+        return BossBar.bossBar(name, 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
 
     /**
@@ -87,8 +108,11 @@ public class ImmunityHandler implements Listener, ConfigInferface {
      * @param bossBar The boss bar to be displayed.
      */
     private void startBossBarCountdown(Player p, BossBar bossBar) {
+        long initialDelay = conf.getInt(IMMUNITY_TIMER_DURATION);
+        long delay = conf.getInt(IMMUNITY_TIMER_DURATION) / TICKS_PER_SECOND;
+
         new BukkitRunnable() {
-            private int timeLeft = conf.getInt(IMMUNITY_TIMER_DURATION);
+            int timeLeft = conf.getInt(IMMUNITY_TIMER_DURATION);
 
             @Override
             public void run() {
@@ -96,10 +120,10 @@ public class ImmunityHandler implements Listener, ConfigInferface {
                     p.hideBossBar(bossBar);
                     this.cancel();
                 } else {
-                    bossBar.progress(timeLeft / BOSS_BAR_PROGRESS);
+                    bossBar.progress((float) timeLeft / conf.getInt(IMMUNITY_TIMER_DURATION));
                     timeLeft--;
                 }
             }
-        }.runTaskTimer(IllyriaCore.getInstance(), INITIAL_DELAY, DELAY);
+        }.runTaskTimer(IllyriaCore.getInstance(), initialDelay, delay);
     }
 }
