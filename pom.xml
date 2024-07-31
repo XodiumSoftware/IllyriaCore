@@ -9,7 +9,7 @@
 	<artifactId>illyriacore</artifactId>
 	<name>IllyriaCore</name>
 	<description>Core plugin for the IllyriaRPG private server.</description>
-	<version>0.0.16</version>
+	<version>0.0.18</version>
 
 	<properties>
 		<project.api.version>1.15</project.api.version>
@@ -70,6 +70,11 @@
 			<version>3.93.2</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.spongepowered</groupId>
+			<artifactId>configurate-yaml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -111,10 +116,6 @@
 				<plugin>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.8.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-help-plugin</artifactId>
-					<version>3.4.1</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-shade-plugin</artifactId>

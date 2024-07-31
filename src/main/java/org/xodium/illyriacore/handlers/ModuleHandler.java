@@ -1,7 +1,7 @@
 package org.xodium.illyriacore.handlers;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.configs.Config;
 import org.xodium.illyriacore.interfaces.ConfigInferface;
@@ -20,11 +20,11 @@ public class ModuleHandler implements MessagesInterface, ConfigInferface {
         modules.put(Config.CUSTOM_ANVIL_HANDLER, new CustomAnvilHandler());
     }
 
-    public void init(IllyriaCore plugin, FileConfiguration conf) {
+    public void init(IllyriaCore plugin, CommentedConfigurationNode conf) {
         int modulesLoaded = 0;
 
         for (Map.Entry<String, Listener> entry : modules.entrySet()) {
-            if (conf.getBoolean(entry.getKey())) {
+            if (conf.node(entry.getKey()).getBoolean()) {
                 plugin.getServer().getPluginManager().registerEvents(entry.getValue(), plugin);
                 plugin.getLogger().info(LOADING + entry.getKey());
                 modulesLoaded++;

@@ -2,13 +2,14 @@ package org.xodium.illyriacore.handlers;
 
 import java.time.Duration;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurateException;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.configs.Config;
 import org.xodium.illyriacore.interfaces.ConfigInferface;
@@ -20,12 +21,10 @@ public class ImmunityHandler implements Listener {
 
     private final PlayerInvulnerabilityManager invulnerabilityManager;
     private final BossBarManager bossBarManager;
-    private final FileConfiguration conf;
 
     public ImmunityHandler() {
-        this.conf = Config.init();
-        this.invulnerabilityManager = new PlayerInvulnerabilityManager(conf);
-        this.bossBarManager = new BossBarManager(conf);
+        this.invulnerabilityManager = new PlayerInvulnerabilityManager();
+        this.bossBarManager = new BossBarManager();
     }
 
     /**
@@ -33,9 +32,10 @@ public class ImmunityHandler implements Listener {
      * Makes the player invulnerable and shows a countdown boss bar.
      *
      * @param e The PlayerJoinEvent object representing the player join event.
+     * @throws ConfigurateException
      */
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) throws ConfigurateException {
         Player p = e.getPlayer();
         if (p.isOnline()) {
             invulnerabilityManager.makePlayerInvulnerable(p);
@@ -46,19 +46,15 @@ public class ImmunityHandler implements Listener {
 
 class PlayerInvulnerabilityManager implements ConfigInferface {
 
-    private final FileConfiguration conf;
-
-    public PlayerInvulnerabilityManager(FileConfiguration conf) {
-        this.conf = conf;
-    }
-
     /**
      * Makes the specified player invulnerable for a certain duration.
      * After the duration expires, the player's invulnerability is removed.
      *
      * @param p The player to make invulnerable.
+     * @throws ConfigurateException
      */
-    public void makePlayerInvulnerable(Player p) {
+    public void makePlayerInvulnerable(Player p) throws ConfigurateException {
+        CommentedConfigurationNode conf = Config.init();
         p.setInvulnerable(true);
         new BukkitRunnable() {
             @Override
@@ -68,25 +64,21 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
                 }
             }
         }.runTaskLater(JavaPlugin.getPlugin(IllyriaCore.class),
-                Tick.tick().fromDuration(Duration.ofSeconds(conf.getInt(IMMUNITY_TIMER_DURATION))));
+                Tick.tick().fromDuration(Duration.ofSeconds(conf.node(IMMUNITY_TIMER_DURATION).getInt())));
     }
 }
 
 class BossBarManager implements ConfigInferface {
 
     private static final int TICKS_PER_SECOND = 20;
-    private final FileConfiguration conf;
-
-    public BossBarManager(FileConfiguration conf) {
-        this.conf = conf;
-    }
 
     /**
      * Shows a countdown boss bar to the specified player.
      *
      * @param p the player to show the boss bar to
+     * @throws ConfigurateException
      */
-    public void showCountdownBossBar(Player p) {
+    public void showCountdownBossBar(Player p) throws ConfigurateException {
         final BossBar bossBar = createBossBar();
         p.showBossBar(bossBar);
         startBossBarCountdown(p, bossBar);
@@ -96,8 +88,10 @@ class BossBarManager implements ConfigInferface {
      * Creates a boss bar with the specified name and initial progress.
      *
      * @return the created boss bar
+     * @throws ConfigurateException
      */
-    private BossBar createBossBar() {
+    private BossBar createBossBar() throws ConfigurateException {
+        CommentedConfigurationNode conf = Config.init();
         final Component name = Component.text(conf.getString(IMMUNITY_TIMER_TITLE));
         return BossBar.bossBar(name, 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
@@ -107,13 +101,15 @@ class BossBarManager implements ConfigInferface {
      *
      * @param p       The player for whom the boss bar is displayed.
      * @param bossBar The boss bar to be displayed.
+     * @throws ConfigurateException
      */
-    private void startBossBarCountdown(Player p, BossBar bossBar) {
-        long initialDelay = conf.getInt(IMMUNITY_TIMER_DURATION);
-        long delay = conf.getInt(IMMUNITY_TIMER_DURATION) / TICKS_PER_SECOND;
+    private void startBossBarCountdown(Player p, BossBar bossBar) throws ConfigurateException {
+        CommentedConfigurationNode conf = Config.init();
+        long initialDelay = conf.node(IMMUNITY_TIMER_DURATION).getInt();
+        long delay = conf.node(IMMUNITY_TIMER_DURATION).getInt() / TICKS_PER_SECOND;
 
         new BukkitRunnable() {
-            int timeLeft = conf.getInt(IMMUNITY_TIMER_DURATION);
+            int timeLeft = conf.node(IMMUNITY_TIMER_DURATION).getInt();
 
             @Override
             public void run() {
@@ -121,7 +117,7 @@ class BossBarManager implements ConfigInferface {
                     p.hideBossBar(bossBar);
                     this.cancel();
                 } else {
-                    bossBar.progress((float) timeLeft / conf.getInt(IMMUNITY_TIMER_DURATION));
+                    bossBar.progress((float) timeLeft / conf.node(IMMUNITY_TIMER_DURATION).getInt());
                     timeLeft--;
                 }
             }
