@@ -64,7 +64,8 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
      */
     public void makePlayerInvulnerable(Player p) throws ConfigurateException {
         IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
-        CommentedConfigurationNode conf = ConfigHandler.init(plugin);
+        ConfigHandler configHandler = new ConfigHandler();
+        CommentedConfigurationNode conf = configHandler.init(plugin);
         p.setInvulnerable(true);
         new BukkitRunnable() {
             @Override
@@ -75,7 +76,7 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
             }
         }.runTaskLater(JavaPlugin.getPlugin(IllyriaCore.class),
                 Tick.tick().fromDuration(
-                        Duration.ofSeconds(conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt())));
+                        Duration.ofSeconds(conf.node(LOC_PREFIX, IMMUNITY_TIMER_DURATION).getInt())));
     }
 }
 
@@ -93,9 +94,10 @@ class BossBarManager implements ConfigInferface {
      */
     public void showCountdownBossBar(Player p) throws ConfigurateException {
         IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
-        CommentedConfigurationNode conf = ConfigHandler.init(plugin);
+        ConfigHandler configHandler = new ConfigHandler();
+        CommentedConfigurationNode conf = configHandler.init(plugin);
         final BossBar bossBar = IllyriaUtils.createBossBar(
-                conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_TITLE).getString(), 1.0f,
+                conf.node(LOC_PREFIX, IMMUNITY_TIMER_TITLE).getString(), 1.0f,
                 BossBar.Color.WHITE,
                 BossBar.Overlay.PROGRESS);
         p.showBossBar(bossBar);
@@ -112,10 +114,10 @@ class BossBarManager implements ConfigInferface {
     private void startBossBarCountdown(Player p, BossBar bossBar, CommentedConfigurationNode conf)
             throws ConfigurateException {
         long initialDelay = 0;
-        long delay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt() * 2;
+        long delay = conf.node(LOC_PREFIX, IMMUNITY_TIMER_DURATION).getInt() * 2;
 
         new BukkitRunnable() {
-            int timeLeft = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
+            int timeLeft = conf.node(LOC_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
             boolean firstTick = true;
 
             @Override
@@ -125,7 +127,7 @@ class BossBarManager implements ConfigInferface {
                     this.cancel();
                 } else {
                     bossBar.progress(
-                            (float) timeLeft / conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt());
+                            (float) timeLeft / conf.node(LOC_PREFIX, IMMUNITY_TIMER_DURATION).getInt());
                     if (!firstTick) {
                         p.playSound(immunityBarSound);
                     }

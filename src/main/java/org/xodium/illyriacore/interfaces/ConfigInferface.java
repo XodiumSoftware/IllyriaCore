@@ -11,7 +11,7 @@ public interface ConfigInferface {
     String IMMUNITY_HANDLER = "OnJoinImmunity";
     String CUSTOM_ANVIL_HANDLER = "CustomAnvil";
     // Localization
-    String LOCALIZATION_PREFIX = "localization";
+    String LOC_PREFIX = "localization";
     String IMMUNITY_TIMER_TITLE = "ImmunityTimerTitle";
     String IMMUNITY_TIMER_DURATION = "ImmunityTimerDuration";
     // Development

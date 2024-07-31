@@ -11,23 +11,24 @@ import org.xodium.illyriacore.interfaces.MessagesInterface;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfigHandler implements ConfigInferface, MessagesInterface {
 
-    private static final Map<String, Object> settings = new HashMap<>();
+    private final Map<List<String>, Object> settings = new HashMap<>();
 
     public ConfigHandler() {
-        settings.put(CHAT_PREFIX, "<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
-        settings.put(IMMUNITY_HANDLER, true);
-        settings.put(CUSTOM_ANVIL_HANDLER, true);
-        settings.put(IMMUNITY_TIMER_TITLE, "Immunity");
-        settings.put(IMMUNITY_TIMER_DURATION, 10);
-        settings.put(DEBUG, false);
-        settings.put(DEBUG_PREFIX, "[DEBUG] ");
+        settings.put(List.of(GENERAL_PREFIX, CHAT_PREFIX), "<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
+        settings.put(List.of(MODULES_PREFIX, IMMUNITY_HANDLER), true);
+        settings.put(List.of(MODULES_PREFIX, CUSTOM_ANVIL_HANDLER), true);
+        settings.put(List.of(LOC_PREFIX, IMMUNITY_TIMER_TITLE), "Immunity");
+        settings.put(List.of(LOC_PREFIX, IMMUNITY_TIMER_DURATION), 10);
+        settings.put(List.of(DEV_PREFIX, DEBUG), false);
+        settings.put(List.of(DEV_PREFIX, DEBUG_PREFIX), "[DEBUG] ");
     }
 
-    public static CommentedConfigurationNode init(IllyriaCore plugin) throws ConfigurateException {
+    public CommentedConfigurationNode init(IllyriaCore plugin) throws ConfigurateException {
         int configurationsSet = 0;
 
         ConfigurationLoader<CommentedConfigurationNode> loader = YamlConfigurationLoader.builder()
@@ -44,8 +45,9 @@ public class ConfigHandler implements ConfigInferface, MessagesInterface {
             throw e;
         }
 
-        for (Map.Entry<String, Object> entry : settings.entrySet()) {
-            conf.node(entry.getKey()).set(entry.getValue());
+        for (Map.Entry<List<String>, Object> entry : settings.entrySet()) {
+            CommentedConfigurationNode node = conf.node((Object[]) entry.getKey().toArray(new String[0]));
+            node.set(entry.getValue());
             configurationsSet++;
         }
 
