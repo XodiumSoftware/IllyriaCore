@@ -1,13 +1,17 @@
 package org.xodium.illyriacore.handlers;
 
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.xodium.illyriacore.IllyriaCore;
@@ -17,15 +21,19 @@ import org.xodium.illyriacore.utils.IllyriaUtils;
 
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 
 public class ImmunityHandler implements Listener {
 
     private final PlayerInvulnerabilityManager invulnerabilityManager;
     private final BossBarManager bossBarManager;
+    private final DamagePreventionManager damagePreventionManager;
 
     public ImmunityHandler() {
         this.invulnerabilityManager = new PlayerInvulnerabilityManager();
         this.bossBarManager = new BossBarManager();
+        this.damagePreventionManager = new DamagePreventionManager();
     }
 
     /**
@@ -41,6 +49,7 @@ public class ImmunityHandler implements Listener {
         if (p.isOnline()) {
             invulnerabilityManager.makePlayerInvulnerable(p);
             bossBarManager.showCountdownBossBar(p);
+            damagePreventionManager.addInvulnerablePlayer(p);
         }
     }
 }
@@ -72,6 +81,8 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
 
 class BossBarManager implements ConfigInferface {
 
+    private static final @NotNull Sound immunityBarSound = Sound.sound(Key.key("minecraft", "block.note_block.pling"),
+            Sound.Source.MASTER, 1f, 1f);
     private static final int TICKS_PER_SECOND = 20;
 
     /**
@@ -113,9 +124,49 @@ class BossBarManager implements ConfigInferface {
                 } else {
                     bossBar.progress(
                             (float) timeLeft / conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt());
+                    p.playSound(immunityBarSound);
                     timeLeft--;
                 }
             }
         }.runTaskTimer(JavaPlugin.getPlugin(IllyriaCore.class), initialDelay, delay);
+    }
+}
+
+class DamagePreventionManager implements Listener {
+
+    private final Set<Player> invulnerablePlayers = new HashSet<>();
+
+    /**
+     * Adds a player to the set of invulnerable players.
+     *
+     * @param p The player to add.
+     */
+    public void addInvulnerablePlayer(Player p) {
+        invulnerablePlayers.add(p);
+    }
+
+    /**
+     * Removes a player from the set of invulnerable players.
+     *
+     * @param p The player to remove.
+     */
+    public void removeInvulnerablePlayer(Player p) {
+        invulnerablePlayers.remove(p);
+    }
+
+    /**
+     * Handles the EntityDamageByEntityEvent to prevent invulnerable players from
+     * dealing damage.
+     *
+     * @param e The EntityDamageByEntityEvent object representing the damage event.
+     */
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            if (invulnerablePlayers.contains(damager)) {
+                e.setCancelled(true);
+            }
+        }
     }
 }
