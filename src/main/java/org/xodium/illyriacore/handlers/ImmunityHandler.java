@@ -64,7 +64,8 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
                 }
             }
         }.runTaskLater(JavaPlugin.getPlugin(IllyriaCore.class),
-                Tick.tick().fromDuration(Duration.ofSeconds(conf.node(IMMUNITY_TIMER_DURATION).getInt())));
+                Tick.tick().fromDuration(
+                        Duration.ofSeconds(conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt())));
     }
 }
 
@@ -92,7 +93,7 @@ class BossBarManager implements ConfigInferface {
      */
     private BossBar createBossBar() throws ConfigurateException {
         CommentedConfigurationNode conf = Config.init();
-        final Component name = Component.text(conf.getString(IMMUNITY_TIMER_TITLE));
+        final Component name = Component.text(conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_TITLE).getString());
         return BossBar.bossBar(name, 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
 
@@ -105,11 +106,11 @@ class BossBarManager implements ConfigInferface {
      */
     private void startBossBarCountdown(Player p, BossBar bossBar) throws ConfigurateException {
         CommentedConfigurationNode conf = Config.init();
-        long initialDelay = conf.node(IMMUNITY_TIMER_DURATION).getInt();
-        long delay = conf.node(IMMUNITY_TIMER_DURATION).getInt() / TICKS_PER_SECOND;
+        long initialDelay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
+        long delay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt() / TICKS_PER_SECOND;
 
         new BukkitRunnable() {
-            int timeLeft = conf.node(IMMUNITY_TIMER_DURATION).getInt();
+            int timeLeft = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
 
             @Override
             public void run() {
@@ -117,7 +118,8 @@ class BossBarManager implements ConfigInferface {
                     p.hideBossBar(bossBar);
                     this.cancel();
                 } else {
-                    bossBar.progress((float) timeLeft / conf.node(IMMUNITY_TIMER_DURATION).getInt());
+                    bossBar.progress(
+                            (float) timeLeft / conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt());
                     timeLeft--;
                 }
             }
