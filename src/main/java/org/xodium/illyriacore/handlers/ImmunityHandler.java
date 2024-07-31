@@ -35,13 +35,6 @@ public class ImmunityHandler implements Listener {
         this.damagePreventionManager = new DamagePreventionManager();
     }
 
-    /**
-     * Handles the player join event.
-     * Makes the player invulnerable and shows a countdown boss bar.
-     *
-     * @param e The PlayerJoinEvent object representing the player join event.
-     * @throws ConfigurateException
-     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) throws ConfigurateException {
         Player p = e.getPlayer();
@@ -55,13 +48,6 @@ public class ImmunityHandler implements Listener {
 
 class PlayerInvulnerabilityManager implements ConfigInferface {
 
-    /**
-     * Makes the specified player invulnerable for a certain duration.
-     * After the duration expires, the player's invulnerability is removed.
-     *
-     * @param p The player to make invulnerable.
-     * @throws ConfigurateException
-     */
     public void makePlayerInvulnerable(Player p) throws ConfigurateException {
         IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
         ConfigHandler configHandler = new ConfigHandler();
@@ -86,12 +72,6 @@ class BossBarManager implements ConfigInferface {
             Key.key("minecraft", "block.note_block.pling"),
             Sound.Source.MASTER, 1f, 1f);
 
-    /**
-     * Shows a countdown boss bar to the specified player.
-     *
-     * @param p the player to show the boss bar to
-     * @throws ConfigurateException
-     */
     public void showCountdownBossBar(Player p) throws ConfigurateException {
         IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
         ConfigHandler configHandler = new ConfigHandler();
@@ -104,13 +84,6 @@ class BossBarManager implements ConfigInferface {
         startBossBarCountdown(p, bossBar, conf);
     }
 
-    /**
-     * Starts a countdown timer for the boss bar.
-     *
-     * @param p       The player for whom the boss bar is displayed.
-     * @param bossBar The boss bar to be displayed.
-     * @throws ConfigurateException
-     */
     private void startBossBarCountdown(Player p, BossBar bossBar, CommentedConfigurationNode conf)
             throws ConfigurateException {
         long initialDelay = 0;
@@ -143,30 +116,14 @@ class DamagePreventionManager implements Listener {
 
     private final Set<Player> invulnerablePlayers = new HashSet<>();
 
-    /**
-     * Adds a player to the set of invulnerable players.
-     *
-     * @param p The player to add.
-     */
     public void addInvulnerablePlayer(Player p) {
         invulnerablePlayers.add(p);
     }
 
-    /**
-     * Removes a player from the set of invulnerable players.
-     *
-     * @param p The player to remove.
-     */
     public void removeInvulnerablePlayer(Player p) {
         invulnerablePlayers.remove(p);
     }
 
-    /**
-     * Handles the EntityDamageByEntityEvent to prevent invulnerable players from
-     * dealing damage.
-     *
-     * @param e The EntityDamageByEntityEvent object representing the damage event.
-     */
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {

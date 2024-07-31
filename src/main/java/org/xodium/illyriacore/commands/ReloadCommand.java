@@ -18,45 +18,39 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
 public class ReloadCommand implements MessagesInterface, PermissionsInterface, ConfigInferface {
 
-        /**
-         * Initializes the ReloadCmd by registering it as a command handler in the
-         * provided LifecycleEventManager.
-         *
-         * @param manager The lifecycle event manager for the plugin.
-         */
-        public static void init(LifecycleEventManager<org.bukkit.plugin.Plugin> manager,
-                        CommentedConfigurationNode conf) throws ConfigurateException {
-                IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
-                manager.registerEventHandler(LifecycleEvents.COMMANDS, e -> {
-                        final Commands cmds = e.registrar();
-                        cmds.register(
-                                        Commands.literal("icore")
-                                                        .requires(source -> {
-                                                                CommandSender sender = source.getSender();
-                                                                return sender.hasPermission(RELOAD);
-                                                        })
-                                                        .then(Commands.literal("reload")
-                                                                        .executes(ctx -> {
-                                                                                CommandSender sender = ctx.getSource()
-                                                                                                .getSender();
-                                                                                sender.sendMessage(
-                                                                                                IllyriaUtils.formatMsg(
-                                                                                                                conf.node(GENERAL_PREFIX,
-                                                                                                                                CHAT_PREFIX)
-                                                                                                                                .getString()
-                                                                                                                                + "<yellow>Reloading the plugin...<reset>"));
-                                                                                plugin.reload();
-                                                                                sender.sendMessage(
-                                                                                                IllyriaUtils.formatMsg(
-                                                                                                                conf.node(GENERAL_PREFIX,
-                                                                                                                                CHAT_PREFIX)
-                                                                                                                                .getString()
-                                                                                                                                + "<green>Reload complete.<reset>"));
-                                                                                return Command.SINGLE_SUCCESS;
-                                                                        }))
-                                                        .build(),
-                                        "Reloads the plugin");
+	public static void init(LifecycleEventManager<org.bukkit.plugin.Plugin> manager,
+			CommentedConfigurationNode conf) throws ConfigurateException {
+		IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
+		manager.registerEventHandler(LifecycleEvents.COMMANDS, e -> {
+			final Commands cmds = e.registrar();
+			cmds.register(
+					Commands.literal("icore")
+							.requires(source -> {
+								CommandSender sender = source.getSender();
+								return sender.hasPermission(RELOAD);
+							})
+							.then(Commands.literal("reload")
+									.executes(ctx -> {
+										CommandSender sender = ctx.getSource()
+												.getSender();
+										sender.sendMessage(
+												IllyriaUtils.formatMsg(
+														conf.node(GENERAL_PREFIX,
+																CHAT_PREFIX)
+																.getString()
+																+ "<yellow>Reloading the plugin...<reset>"));
+										plugin.reload();
+										sender.sendMessage(
+												IllyriaUtils.formatMsg(
+														conf.node(GENERAL_PREFIX,
+																CHAT_PREFIX)
+																.getString()
+																+ "<green>Reload complete.<reset>"));
+										return Command.SINGLE_SUCCESS;
+									}))
+							.build(),
+					"Reloads the plugin");
 
-                });
-        }
+		});
+	}
 }
