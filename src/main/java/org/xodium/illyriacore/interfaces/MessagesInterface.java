@@ -16,6 +16,7 @@ public interface MessagesInterface {
     String RELOADING = "Reloading the plugin...";
     // ModuleHandler
     String LOADING = "Loading: ";
+    String MODULES_LOADED = "[%d] module(s) loaded";
     // Config
     String CONFIG_LOADED_MSG = "Config loaded";
     String CONFIG_SAVED_MSG = "Config saved";

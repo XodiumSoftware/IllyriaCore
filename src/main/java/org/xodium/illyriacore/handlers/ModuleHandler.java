@@ -12,7 +12,6 @@ import java.util.Map;
 public class ModuleHandler implements MessagesInterface, ConfigInferface {
 
     private final Map<String, Listener> modules = new HashMap<>();
-    private static final String MODULES_LOADED = "[%d] module(s) loaded.";
 
     public ModuleHandler() {
         modules.put(IMMUNITY_HANDLER, new ImmunityHandler());

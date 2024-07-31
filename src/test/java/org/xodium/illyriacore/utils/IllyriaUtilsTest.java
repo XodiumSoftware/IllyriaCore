@@ -1,8 +1,10 @@
 package org.xodium.illyriacore.utils;
 
 import org.junit.jupiter.api.Test;
+import org.spongepowered.configurate.ConfigurateException;
 
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -62,5 +64,20 @@ public class IllyriaUtilsTest {
             Component subTitleComponent = MiniMessage.miniMessage().deserialize(subTitle);
             return title.title().equals(mainTitleComponent) && title.subtitle().equals(subTitleComponent);
         }));
+    }
+
+    @Test
+    public void testCreateBossBar() throws ConfigurateException {
+        String text = "Test BossBar";
+        float progress = 0.5f;
+        BossBar.Color color = BossBar.Color.RED;
+        BossBar.Overlay overlay = BossBar.Overlay.PROGRESS;
+
+        BossBar bossBar = IllyriaUtils.createBossBar(text, progress, color, overlay);
+
+        assertEquals(Component.text(text), bossBar.name());
+        assertEquals(progress, bossBar.progress(), 0.001);
+        assertEquals(color, bossBar.color());
+        assertEquals(overlay, bossBar.overlay());
     }
 }

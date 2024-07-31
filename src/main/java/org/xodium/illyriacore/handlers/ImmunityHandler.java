@@ -13,9 +13,10 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.configs.Config;
 import org.xodium.illyriacore.interfaces.ConfigInferface;
+import org.xodium.illyriacore.utils.IllyriaUtils;
+
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.Component;
 
 public class ImmunityHandler implements Listener {
 
@@ -80,21 +81,13 @@ class BossBarManager implements ConfigInferface {
      * @throws ConfigurateException
      */
     public void showCountdownBossBar(Player p) throws ConfigurateException {
-        final BossBar bossBar = createBossBar();
-        p.showBossBar(bossBar);
-        startBossBarCountdown(p, bossBar);
-    }
-
-    /**
-     * Creates a boss bar with the specified name and initial progress.
-     *
-     * @return the created boss bar
-     * @throws ConfigurateException
-     */
-    private BossBar createBossBar() throws ConfigurateException {
         CommentedConfigurationNode conf = Config.init();
-        final Component name = Component.text(conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_TITLE).getString());
-        return BossBar.bossBar(name, 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+        final BossBar bossBar = IllyriaUtils.createBossBar(
+                conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_TITLE).getString(), 1.0f,
+                BossBar.Color.WHITE,
+                BossBar.Overlay.PROGRESS);
+        p.showBossBar(bossBar);
+        startBossBarCountdown(p, bossBar, conf);
     }
 
     /**
@@ -104,8 +97,8 @@ class BossBarManager implements ConfigInferface {
      * @param bossBar The boss bar to be displayed.
      * @throws ConfigurateException
      */
-    private void startBossBarCountdown(Player p, BossBar bossBar) throws ConfigurateException {
-        CommentedConfigurationNode conf = Config.init();
+    private void startBossBarCountdown(Player p, BossBar bossBar, CommentedConfigurationNode conf)
+            throws ConfigurateException {
         long initialDelay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
         long delay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt() / TICKS_PER_SECOND;
 

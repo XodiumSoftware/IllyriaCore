@@ -11,6 +11,8 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
 public class ReloadCommand implements MessagesInterface {
 
+    // TODO: add permission check
+
     /**
      * Initializes the ReloadCmd by registering it as a command handler in the
      * provided LifecycleEventManager.
