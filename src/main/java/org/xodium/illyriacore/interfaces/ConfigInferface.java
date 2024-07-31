@@ -5,17 +5,17 @@ public interface ConfigInferface {
     String CONFIG_FILE = "config.yml";
     // General
     String GENERAL_PREFIX = "general.";
-    String CHAT_PREFIX = GENERAL_PREFIX + "chatPrefix";
+    String CHAT_PREFIX = "chatPrefix";
     // Modules
     String MODULES_PREFIX = "modules.";
-    String IMMUNITY_HANDLER = MODULES_PREFIX + "OnJoinImmunity";
-    String CUSTOM_ANVIL_HANDLER = MODULES_PREFIX + "CustomAnvil";
+    String IMMUNITY_HANDLER = "OnJoinImmunity";
+    String CUSTOM_ANVIL_HANDLER = "CustomAnvil";
     // Localization
     String LOCALIZATION_PREFIX = "localization.";
-    String IMMUNITY_TIMER_TITLE = LOCALIZATION_PREFIX + "ImmunityTimerTitle";
-    String IMMUNITY_TIMER_DURATION = LOCALIZATION_PREFIX + "ImmunityTimerDuration";
+    String IMMUNITY_TIMER_TITLE = "ImmunityTimerTitle";
+    String IMMUNITY_TIMER_DURATION = "ImmunityTimerDuration";
     // Development
     String DEV_PREFIX = "development.";
-    String DEBUG = DEV_PREFIX + "Debug";
-    String DEBUG_PREFIX = DEV_PREFIX + "debugPrefix";
+    String DEBUG = "Debug";
+    String DEBUG_PREFIX = "debugPrefix";
 }
