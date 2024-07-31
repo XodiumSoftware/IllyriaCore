@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.interfaces.ConfigInferface;
 
@@ -17,13 +18,13 @@ public class Config implements ConfigInferface {
      * This method sets default values for various configuration options.
      */
     public static FileConfiguration init() {
-        IllyriaCore plugin = IllyriaCore.getInstance();
+        IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
         File confFile = new File(plugin.getDataFolder(), CONFIG_FILE);
         if (!confFile.exists()) {
             try {
                 confFile.getParentFile().mkdirs();
                 confFile.createNewFile();
-                IllyriaCore.getInstance().saveResource(CONFIG_FILE, false);
+                plugin.saveResource(CONFIG_FILE, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }

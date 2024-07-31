@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.configs.Config;
@@ -66,7 +67,7 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
                     p.setInvulnerable(false);
                 }
             }
-        }.runTaskLater(IllyriaCore.getInstance(),
+        }.runTaskLater(JavaPlugin.getPlugin(IllyriaCore.class),
                 Tick.tick().fromDuration(Duration.ofSeconds(conf.getInt(IMMUNITY_TIMER_DURATION))));
     }
 }
@@ -124,6 +125,6 @@ class BossBarManager implements ConfigInferface {
                     timeLeft--;
                 }
             }
-        }.runTaskTimer(IllyriaCore.getInstance(), initialDelay, delay);
+        }.runTaskTimer(JavaPlugin.getPlugin(IllyriaCore.class), initialDelay, delay);
     }
 }
