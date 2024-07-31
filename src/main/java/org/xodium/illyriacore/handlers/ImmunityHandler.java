@@ -81,9 +81,9 @@ class PlayerInvulnerabilityManager implements ConfigInferface {
 
 class BossBarManager implements ConfigInferface {
 
-    private static final @NotNull Sound immunityBarSound = Sound.sound(Key.key("minecraft", "block.note_block.pling"),
+    private static final @NotNull Sound immunityBarSound = Sound.sound(
+            Key.key("minecraft", "block.note_block.pling"),
             Sound.Source.MASTER, 1f, 1f);
-    private static final int TICKS_PER_SECOND = 20;
 
     /**
      * Shows a countdown boss bar to the specified player.
@@ -110,8 +110,8 @@ class BossBarManager implements ConfigInferface {
      */
     private void startBossBarCountdown(Player p, BossBar bossBar, CommentedConfigurationNode conf)
             throws ConfigurateException {
-        long initialDelay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
-        long delay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt() / TICKS_PER_SECOND;
+        long initialDelay = 0;
+        long delay = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt() * 2;
 
         new BukkitRunnable() {
             int timeLeft = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
