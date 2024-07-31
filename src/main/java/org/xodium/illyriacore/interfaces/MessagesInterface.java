@@ -15,8 +15,6 @@ public interface MessagesInterface extends ANSIColorsInterface {
     String BUKKIT_VERSION = Bukkit.getBukkitVersion() + ANSI_RESET;
     // IllyriaUtils
     String INVALID_VERSION_FORMAT = ANSI_RED + "Invalid version format: " + ANSI_RESET;
-    // ReloadCommand
-    String RELOADING = ANSI_CYAN + "Reloading the plugin..." + ANSI_RESET;
     // ModuleHandler
     String MODULES_LOADED = ANSI_PURPLE + "[" + ANSI_RESET + "%d" + ANSI_PURPLE + "] Module(s)" + ANSI_RESET;
     // Config

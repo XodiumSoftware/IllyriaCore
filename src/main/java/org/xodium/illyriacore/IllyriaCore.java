@@ -30,15 +30,9 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
   }
 
   public void reload() {
-    try {
-      saveDefaultConfig();
-      reloadConfig();
-      ModuleHandler moduleHandler = new ModuleHandler();
-      moduleHandler.init(this, Config.init());
-      getLogger().info(PLUGIN_RELOADED);
-    } catch (ConfigurateException e) {
-      e.printStackTrace();
-    }
+    saveDefaultConfig();
+    reloadConfig();
+    getLogger().info(PLUGIN_RELOADED);
   }
 
   @Override

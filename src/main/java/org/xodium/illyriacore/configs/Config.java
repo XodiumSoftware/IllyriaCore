@@ -46,7 +46,7 @@ public class Config implements ConfigInferface, MessagesInterface {
         }
 
         conf.node(GENERAL_PREFIX).commentIfAbsent("General settings.");
-        conf.node(GENERAL_PREFIX, CHAT_PREFIX).set("[IllyriaCore]");
+        conf.node(GENERAL_PREFIX, CHAT_PREFIX).set("<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
 
         conf.node(MODULES_PREFIX).commentIfAbsent("Modules to load, set to true to enable.");
         conf.node(MODULES_PREFIX, IMMUNITY_HANDLER).set(true);

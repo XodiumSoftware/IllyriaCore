@@ -71,7 +71,7 @@ public class IllyriaUtils implements MessagesInterface {
      * @param msg the message to be formatted
      * @return the formatted message as a string
      */
-    public static String formatMsg(String msg) {
-        return MiniMessage.miniMessage().deserialize(msg).toString();
+    public static Component formatMsg(String msg) {
+        return MiniMessage.miniMessage().deserialize(msg);
     }
 }

@@ -115,6 +115,7 @@ class BossBarManager implements ConfigInferface {
 
         new BukkitRunnable() {
             int timeLeft = conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt();
+            boolean firstTick = true;
 
             @Override
             public void run() {
@@ -124,7 +125,10 @@ class BossBarManager implements ConfigInferface {
                 } else {
                     bossBar.progress(
                             (float) timeLeft / conf.node(LOCALIZATION_PREFIX, IMMUNITY_TIMER_DURATION).getInt());
-                    p.playSound(immunityBarSound);
+                    if (!firstTick) {
+                        p.playSound(immunityBarSound);
+                    }
+                    firstTick = false;
                     timeLeft--;
                 }
             }
