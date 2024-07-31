@@ -98,7 +98,7 @@ class BossBarManager implements ConfigInferface {
      * @return the created boss bar
      */
     private BossBar createBossBar() {
-        final Component name = Component.text(conf.getString(IMMUNITY_TIMER));
+        final Component name = Component.text(conf.getString(IMMUNITY_TIMER_TITLE));
         return BossBar.bossBar(name, 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
 

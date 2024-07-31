@@ -12,7 +12,7 @@ public interface ConfigInferface {
     String CUSTOM_ANVIL_HANDLER = MODULES_PREFIX + "CustomAnvil";
     // Localization
     String LOCALIZATION_PREFIX = "localization.";
-    String IMMUNITY_TIMER = LOCALIZATION_PREFIX + "ImmunityTimer";
+    String IMMUNITY_TIMER_TITLE = LOCALIZATION_PREFIX + "ImmunityTimerTitle";
     String IMMUNITY_TIMER_DURATION = LOCALIZATION_PREFIX + "ImmunityTimerDuration";
     // Development
     String DEV_PREFIX = "development.";
