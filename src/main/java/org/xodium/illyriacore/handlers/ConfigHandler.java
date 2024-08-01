@@ -22,10 +22,9 @@ public class ConfigHandler implements ConfigInferface, MessagesInterface {
         settings.put(List.of(GENERAL_PREFIX, CHAT_PREFIX), "<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
         settings.put(List.of(MODULES_PREFIX, IMMUNITY_HANDLER), true);
         settings.put(List.of(MODULES_PREFIX, CUSTOM_ANVIL_HANDLER), true);
-        settings.put(List.of(LOC_PREFIX, IMMUNITY_TIMER_TITLE), "Immunity");
+        settings.put(List.of(LOC_PREFIX, IMMUNITY_TIMER_TITLE), "<white>Immunity<reset>");
         settings.put(List.of(LOC_PREFIX, IMMUNITY_TIMER_DURATION), 10);
         settings.put(List.of(DEV_PREFIX, DEBUG), false);
-        settings.put(List.of(DEV_PREFIX, DEBUG_PREFIX), "[DEBUG] ");
     }
 
     public CommentedConfigurationNode init(IllyriaCore plugin) throws ConfigurateException {
