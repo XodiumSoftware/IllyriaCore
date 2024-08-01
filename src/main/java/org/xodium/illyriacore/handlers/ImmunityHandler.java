@@ -37,10 +37,12 @@ public class ImmunityHandler implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) throws ConfigurateException {
+        IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
         Player p = e.getPlayer();
         if (p.isOnline()) {
-            invulnerabilityManager.makePlayerInvulnerable(p);
-            bossBarManager.showCountdownBossBar(p);
+            CommentedConfigurationNode conf = new ConfigHandler().init(plugin);
+            invulnerabilityManager.makePlayerInvulnerable(p, plugin, conf);
+            bossBarManager.showCountdownBossBar(p, plugin, conf);
             damagePreventionManager.addInvulnerablePlayer(p);
         }
     }
@@ -48,10 +50,8 @@ public class ImmunityHandler implements Listener {
 
 class PlayerInvulnerabilityManager implements ConfigInferface {
 
-    public void makePlayerInvulnerable(Player p) throws ConfigurateException {
-        IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
-        ConfigHandler configHandler = new ConfigHandler();
-        CommentedConfigurationNode conf = configHandler.init(plugin);
+    public void makePlayerInvulnerable(Player p, IllyriaCore plugin, CommentedConfigurationNode conf)
+            throws ConfigurateException {
         p.setInvulnerable(true);
         new BukkitRunnable() {
             @Override
@@ -72,19 +72,17 @@ class BossBarManager implements ConfigInferface {
             Key.key("minecraft", "block.note_block.pling"),
             Sound.Source.MASTER, 1f, 1f);
 
-    public void showCountdownBossBar(Player p) throws ConfigurateException {
-        IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);
-        ConfigHandler configHandler = new ConfigHandler();
-        CommentedConfigurationNode conf = configHandler.init(plugin);
+    public void showCountdownBossBar(Player p, IllyriaCore plugin, CommentedConfigurationNode conf)
+            throws ConfigurateException {
         final BossBar bossBar = IllyriaUtils.createBossBar(
                 conf.node(LOC_PREFIX, IMMUNITY_TIMER_TITLE).getString(), 1.0f,
                 BossBar.Color.WHITE,
                 BossBar.Overlay.PROGRESS);
         p.showBossBar(bossBar);
-        startBossBarCountdown(p, bossBar, conf);
+        startBossBarCountdown(p, plugin, bossBar, conf);
     }
 
-    private void startBossBarCountdown(Player p, BossBar bossBar, CommentedConfigurationNode conf)
+    private void startBossBarCountdown(Player p, IllyriaCore plugin, BossBar bossBar, CommentedConfigurationNode conf)
             throws ConfigurateException {
         long initialDelay = 0;
         long delay = conf.node(LOC_PREFIX, IMMUNITY_TIMER_DURATION).getInt() * 2;
@@ -108,28 +106,30 @@ class BossBarManager implements ConfigInferface {
                     timeLeft--;
                 }
             }
-        }.runTaskTimer(JavaPlugin.getPlugin(IllyriaCore.class), initialDelay, delay);
+        }.runTaskTimer(plugin, initialDelay, delay);
     }
 }
 
 class DamagePreventionManager implements Listener {
 
-    private final Set<Player> invulnerablePlayers = new HashSet<>();
+    private final Set<Player> invulnerableP = new HashSet<>();
 
-    public void addInvulnerablePlayer(Player p) {
-        invulnerablePlayers.add(p);
+    public synchronized void addInvulnerablePlayer(Player p) {
+        invulnerableP.add(p);
     }
 
-    public void removeInvulnerablePlayer(Player p) {
-        invulnerablePlayers.remove(p);
+    public synchronized void removeInvulnerablePlayer(Player p) {
+        invulnerableP.remove(p);
     }
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
-            Player damager = (Player) e.getDamager();
-            if (invulnerablePlayers.contains(damager)) {
-                e.setCancelled(true);
+            Player p = (Player) e.getDamager();
+            synchronized (invulnerableP) {
+                if (invulnerableP.contains(p)) {
+                    e.setCancelled(true);
+                }
             }
         }
     }

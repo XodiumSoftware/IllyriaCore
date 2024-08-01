@@ -4,13 +4,15 @@ import java.util.Iterator;
 import java.util.Optional;
 
 import org.bukkit.Material;
-import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
+
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 
 public class CustomAnvilHandler implements Listener {
 
@@ -43,7 +45,8 @@ public class CustomAnvilHandler implements Listener {
                 || secondItem.get().getType() != Material.ENCHANTED_BOOK) {
             return;
         }
-        Iterator<Enchantment> enchantments = Registry.ENCHANTMENT.iterator();
+        RegistryAccess registryAccess = RegistryAccess.registryAccess();
+        Iterator<Enchantment> enchantments = registryAccess.getRegistry(RegistryKey.ENCHANTMENT).iterator();
         while (enchantments.hasNext()) {
             Enchantment enchantment = enchantments.next();
             if (enchantment.getMaxLevel() <= 1) {
