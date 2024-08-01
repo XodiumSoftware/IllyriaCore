@@ -11,29 +11,6 @@ import net.kyori.adventure.title.Title;
 
 public class IllyriaUtils implements MessagesInterface {
 
-    private static final int COMP_MAJOR = 1;
-    private static final int COMP_MINOR = 20;
-    private static final int COMP_PATCH = 6;
-
-    /**
-     * Checks if the given version is compatible with the plugin.
-     *
-     * @param version the version to check
-     * @return true if the version is compatible, false otherwise
-     */
-    public static boolean isCompatible(String version) {
-        try {
-            String[] parts = version.split("\\.");
-            int major = Integer.parseInt(parts[0]);
-            int minor = Integer.parseInt(parts[1]);
-            int patch = Integer.parseInt(parts[2].split("-")[0]);
-            return (major > COMP_MAJOR) || (major == COMP_MAJOR && minor > COMP_MINOR)
-                    || (major == COMP_MAJOR && minor == COMP_MINOR && patch >= COMP_PATCH);
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(INVALID_VERSION_FORMAT + version, e);
-        }
-    }
-
     /**
      * Displays a title to the specified audience.
      *

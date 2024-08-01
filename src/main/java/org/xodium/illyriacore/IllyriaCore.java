@@ -1,5 +1,6 @@
 package org.xodium.illyriacore;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
@@ -7,15 +8,18 @@ import org.xodium.illyriacore.commands.ReloadCommand;
 import org.xodium.illyriacore.handlers.ConfigHandler;
 import org.xodium.illyriacore.handlers.ModuleHandler;
 import org.xodium.illyriacore.interfaces.MessagesInterface;
-import org.xodium.illyriacore.utils.IllyriaUtils;
 
 public class IllyriaCore extends JavaPlugin implements MessagesInterface {
 
+  public static final String PAPERMC_V = "1.21-R0.1-SNAPSHOT";
+  public static final String BUKKIT_V = Bukkit.getBukkitVersion();
+  public static final String COMP_V = ANSI_YELLOW + "Is only compatible with " + PAPERMC_V + ANSI_RESET;
+
   @Override
   public void onEnable() {
-    getLogger().info(SERVER_VERSION + BUKKIT_VERSION);
-    if (!IllyriaUtils.isCompatible(BUKKIT_VERSION)) {
-      getLogger().severe(COMP_VERSION);
+    getLogger().info(SERVER_VERSION + BUKKIT_V);
+    if (!BUKKIT_V.contains(PAPERMC_V)) {
+      getLogger().severe(COMP_V);
       getServer().getPluginManager().disablePlugin(this);
       return;
     }

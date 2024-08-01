@@ -12,7 +12,7 @@
 	<version>0.0.28</version>
 
 	<properties>
-		<project.api.version>1.15</project.api.version>
+		<project.api.version>1.21</project.api.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.load>POSTWORLD</project.load>
 		<project.main>${project.groupId}.${project.name}</project.main>

@@ -9,23 +9,12 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class IllyriaUtilsTest {
-
-    @Test
-    public void testIsCompatible() {
-        assertTrue(IllyriaUtils.isCompatible("2.21.7"));
-        assertTrue(IllyriaUtils.isCompatible("1.21.6"));
-        assertFalse(IllyriaUtils.isCompatible("1.19.6"));
-        assertThrows(IllegalArgumentException.class, () -> IllyriaUtils.isCompatible("1.21"));
-    }
 
     @Test
     public void testShowTitle() {

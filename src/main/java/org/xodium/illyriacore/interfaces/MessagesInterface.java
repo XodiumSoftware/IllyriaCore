@@ -9,10 +9,9 @@ public interface MessagesInterface extends ANSIColorsInterface {
     String PLUGIN_ENABLED = ANSI_GREEN + "Successfully Enabled" + ANSI_RESET;
     String PLUGIN_RELOADED = ANSI_GREEN + "Successfully Reloaded" + ANSI_RESET;
     String PLUGIN_DISABLED = ANSI_GREEN + "Successfully Disabled" + ANSI_RESET;
-    String COMP_VERSION = ANSI_YELLOW + "Is only compatible with Minecraft version 1.21" + ANSI_RESET;
     String LOADING = ANSI_CYAN + "Loading: " + ANSI_RESET;
     String LOADED = ANSI_CYAN + "Loaded: " + ANSI_RESET;
-    String BUKKIT_VERSION = Bukkit.getBukkitVersion() + ANSI_RESET;
+    String BUKKIT_VERSION = Bukkit.getBukkitVersion();
     // IllyriaUtils
     String INVALID_VERSION_FORMAT = ANSI_RED + "Invalid version format: " + ANSI_RESET;
     // ModuleHandler
