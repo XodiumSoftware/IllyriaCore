@@ -26,9 +26,12 @@ public class IllyriaCore extends JavaPlugin implements MessagesInterface {
     try {
       ConfigHandler configHandler = new ConfigHandler();
       CommentedConfigurationNode conf = configHandler.init(this);
+
+      ReloadCommand.init(getLifecycleManager(), conf);
+
       ModuleHandler moduleHandler = new ModuleHandler();
       moduleHandler.init(this, conf);
-      ReloadCommand.init(getLifecycleManager(), conf);
+
       saveDefaultConfig();
       getLogger().info(PLUGIN_ENABLED);
     } catch (ConfigurateException e) {

@@ -14,7 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: add versioning
+
 public class ConfigHandler implements ConfigInferface, MessagesInterface {
+
+    private static final int CONFIG_V = 1;
+    private static final int CONFIG_CURRENT_V = 1;
 
     private final Map<List<String>, Object> settings = new HashMap<>();
 
@@ -42,6 +47,10 @@ public class ConfigHandler implements ConfigInferface, MessagesInterface {
         } catch (ConfigurateException e) {
             e.printStackTrace();
             throw e;
+        }
+
+        if (conf.node(CONFIG_V).getInt() < CONFIG_CURRENT_V) {
+            conf.node(CONFIG_V).set(CONFIG_CURRENT_V);
         }
 
         for (Map.Entry<List<String>, Object> entry : settings.entrySet()) {
