@@ -14,38 +14,37 @@ public class IllyriaUtils implements MessagesInterface {
     /**
      * Displays a title to the specified audience.
      *
-     * @param target    the audience to display the title to
-     * @param maintitle the main title text (can be null or empty for no main title)
-     * @param subtitle  the subtitle text (can be null or empty for no subtitle)
+     * @param audience  the audience to display the title to
+     * @param maintitle the main title of the title (can be null or empty)
+     * @param subtitle  the subtitle of the title (can be null or empty)
      */
-    public static void showTitle(final @NonNull Audience target, String maintitle, String subtitle) {
-        final Component maintitle_component = formatter(maintitle);
-        final Component subtitle_component = formatter(subtitle);
-        target.showTitle(Title.title(maintitle_component, subtitle_component));
+    public static void showTitle(final @NonNull Audience audience, String maintitle, String subtitle) {
+        audience.showTitle(Title.title(formatter(maintitle), formatter(subtitle)));
     }
 
     /**
      * Creates a BossBar with the specified text, progress, color, and overlay.
      *
-     * @param text     the text to display on the BossBar
+     * @param txt      the text to be displayed on the BossBar (can be null or
+     *                 empty)
      * @param progress the progress of the BossBar (between 0.0 and 1.0)
      * @param color    the color of the BossBar
      * @param overlay  the overlay style of the BossBar
      * @return the created BossBar
      * @throws ConfigurateException if there is an error creating the BossBar
      */
-    public static BossBar createBossBar(String text, float progress, BossBar.Color color,
+    public static BossBar createBossBar(String txt, float progress, BossBar.Color color,
             BossBar.Overlay overlay) throws ConfigurateException {
-        return BossBar.bossBar(formatter(text), progress, color, overlay);
+        return BossBar.bossBar(formatter(txt), progress, color, overlay);
     }
 
     /**
-     * Formats a message using MiniMessage.
+     * Formats the given text into a Minecraft component.
      *
-     * @param msg the message to be formatted
-     * @return the formatted message as a string
+     * @param txt the text to be formatted (can be null or empty)
+     * @return the formatted Minecraft component
      */
-    public static Component formatter(String msg) {
-        return (msg == null || msg.isEmpty()) ? Component.empty() : MiniMessage.miniMessage().deserialize(msg);
+    public static Component formatter(String txt) {
+        return (txt == null || txt.isEmpty()) ? Component.empty() : MiniMessage.miniMessage().deserialize(txt);
     }
 }
