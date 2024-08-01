@@ -34,14 +34,14 @@ public class ReloadCommand implements MessagesInterface, PermissionsInterface, C
 										CommandSender sender = ctx.getSource()
 												.getSender();
 										sender.sendMessage(
-												IllyriaUtils.formatMsg(
+												IllyriaUtils.formatter(
 														conf.node(GENERAL_PREFIX,
 																CHAT_PREFIX)
 																.getString()
 																+ "<yellow>Reloading the plugin...<reset>"));
 										plugin.reload();
 										sender.sendMessage(
-												IllyriaUtils.formatMsg(
+												IllyriaUtils.formatter(
 														conf.node(GENERAL_PREFIX,
 																CHAT_PREFIX)
 																.getString()

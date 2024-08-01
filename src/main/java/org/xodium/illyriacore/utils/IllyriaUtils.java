@@ -19,11 +19,8 @@ public class IllyriaUtils implements MessagesInterface {
      * @param subtitle  the subtitle text (can be null or empty for no subtitle)
      */
     public static void showTitle(final @NonNull Audience target, String maintitle, String subtitle) {
-        final MiniMessage mm = MiniMessage.miniMessage();
-        final Component maintitle_component = (maintitle == null || maintitle.isEmpty()) ? Component.empty()
-                : mm.deserialize(maintitle);
-        final Component subtitle_component = (subtitle == null || subtitle.isEmpty()) ? Component.empty()
-                : mm.deserialize(subtitle);
+        final Component maintitle_component = formatter(maintitle);
+        final Component subtitle_component = formatter(subtitle);
         target.showTitle(Title.title(maintitle_component, subtitle_component));
     }
 
@@ -39,7 +36,7 @@ public class IllyriaUtils implements MessagesInterface {
      */
     public static BossBar createBossBar(String text, float progress, BossBar.Color color,
             BossBar.Overlay overlay) throws ConfigurateException {
-        return BossBar.bossBar(Component.text(text), progress, color, overlay);
+        return BossBar.bossBar(formatter(text), progress, color, overlay);
     }
 
     /**
@@ -48,7 +45,7 @@ public class IllyriaUtils implements MessagesInterface {
      * @param msg the message to be formatted
      * @return the formatted message as a string
      */
-    public static Component formatMsg(String msg) {
-        return MiniMessage.miniMessage().deserialize(msg);
+    public static Component formatter(String msg) {
+        return (msg == null || msg.isEmpty()) ? Component.empty() : MiniMessage.miniMessage().deserialize(msg);
     }
 }

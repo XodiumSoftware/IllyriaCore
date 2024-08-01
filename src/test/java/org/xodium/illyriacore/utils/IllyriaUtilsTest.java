@@ -47,7 +47,7 @@ public class IllyriaUtilsTest {
     }
 
     @Test
-    public void testFormatMsg() {
+    public void testFormatter() {
         String input = "<red>Hello, <blue>world!";
         String expectedOutput = "Hello, world!";
 
