@@ -22,6 +22,8 @@ import org.xodium.illyriacore.utils.IllyriaUtils;
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 
+// TODO: refactor to be more modular and testable.
+
 /**
  * The ImmunityModule class is responsible for managing player immunity
  * features.

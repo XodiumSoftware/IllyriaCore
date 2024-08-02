@@ -15,7 +15,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO: add versioning
+// TODO: adding missing keys to the correct place in the config and not just the end.
+// TODO: add comments on node, have to wait till version 4.20.0.
 
 /**
  * The ConfigHandler class is responsible for handling the configuration
@@ -25,45 +26,47 @@ import java.util.Map;
  */
 public class ConfigHandler {
 
-    private final Map<List<String>, Object> settings = new LinkedHashMap<>() {
+    private final Map<String, Map<List<String>, Object>> settings = new LinkedHashMap<>() {
         {
-            put(List.of(CI.GENERAL_PREFIX, CI.CHAT_PREFIX), "<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
-            put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.MODULE_ENABLED), true);
-            put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_TITLE), "<white>Immunity<reset>");
-            put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION), 10);
-            put(List.of(CI.MODULES_PREFIX, CI.CUSTOM_ANVIL_MODULE, CI.MODULE_ENABLED), true);
+            put(CI.CONFIG_FILE, new LinkedHashMap<>() {
+                {
+                    put(List.of(CI.GENERAL_PREFIX, CI.CHAT_PREFIX), "<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
+                    put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.MODULE_ENABLED), true);
+                    put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_TITLE),
+                            "<white>Immunity<reset>");
+                    put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION), 10);
+                    put(List.of(CI.MODULES_PREFIX, CI.CUSTOM_ANVIL_MODULE, CI.MODULE_ENABLED), true);
+                }
+            });
         }
     };
 
-    /**
-     * Initializes the configuration handler for the IllyriaCore plugin.
-     * 
-     * @param plugin The instance of the IllyriaCore plugin.
-     * @return The initialized CommentedConfigurationNode.
-     * @throws ConfigurateException If there is an error during configuration
-     *                              loading or saving.
-     */
     public CommentedConfigurationNode init(IllyriaCore plugin) throws ConfigurateException {
         int configurationsSet = 0;
-
-        ConfigurationLoader<CommentedConfigurationNode> loader = YamlConfigurationLoader.builder()
-                .path(Paths.get(plugin.getDataFolder().toURI()).resolve(CI.CONFIG_FILE))
-                .nodeStyle(NodeStyle.BLOCK)
-                .build();
-        CommentedConfigurationNode conf;
+        CommentedConfigurationNode conf = null;
 
         try {
-            plugin.getLogger().info(MI.LOADING + ACI.YELLOW + CI.CONFIG_FILE + ACI.RESET);
-            conf = loader.load();
-            for (Map.Entry<List<String>, Object> entry : settings.entrySet()) {
-                CommentedConfigurationNode node = conf.node((Object[]) entry.getKey().toArray(new String[0]));
-                node.set(entry.getValue());
-                configurationsSet++;
+            for (Map.Entry<String, Map<List<String>, Object>> fileEntry : settings.entrySet()) {
+                String configFile = fileEntry.getKey();
+                Map<List<String>, Object> fileSettings = fileEntry.getValue();
+                ConfigurationLoader<CommentedConfigurationNode> loader = YamlConfigurationLoader.builder()
+                        .path(Paths.get(plugin.getDataFolder().toURI()).resolve(configFile))
+                        .nodeStyle(NodeStyle.BLOCK)
+                        .build();
+
+                plugin.getLogger().info(MI.LOADING + ACI.YELLOW + configFile + ACI.RESET);
+                conf = loader.load();
+                for (Map.Entry<List<String>, Object> entry : fileSettings.entrySet()) {
+                    CommentedConfigurationNode node = conf.node((Object[]) entry.getKey().toArray(new String[0]));
+                    node.set(entry.getValue());
+                    configurationsSet++;
+                }
+                if (conf.node(CI.CONFIG_FILE_V).getInt() < CI.CONFIG_FILE_CURRENT_V) {
+                    conf.node(CI.CONFIG_FILE_V).set(CI.CONFIG_FILE_CURRENT_V);
+                    configurationsSet++;
+                }
+                loader.save(conf);
             }
-            if (conf.node(CI.CONFIG_FILE_V).getInt() < CI.CONFIG_FILE_CURRENT_V) {
-                conf.node(CI.CONFIG_FILE_V).set(CI.CONFIG_FILE_CURRENT_V);
-            }
-            loader.save(conf);
         } catch (ConfigurateException e) {
             e.printStackTrace();
             throw e;

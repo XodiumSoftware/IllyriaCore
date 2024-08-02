@@ -22,10 +22,7 @@ public class IllyriaCore extends JavaPlugin {
   public static final String COMP_V = ACI.YELLOW + "Is only compatible with " + PAPERMC_V + ACI.RESET;
 
   /**
-   * Called when the plugin is enabled.
-   * This method initializes the plugin by checking the server version, loading
-   * the configuration,
-   * initializing modules, and saving the default configuration.
+   * {@inheritDoc}
    */
   @Override
   public void onEnable() {
@@ -63,10 +60,7 @@ public class IllyriaCore extends JavaPlugin {
   }
 
   /**
-   * Called when the plugin is being disabled.
-   * This method is automatically called by the server when the plugin is being
-   * unloaded.
-   * It is used to perform any necessary cleanup or finalization tasks.
+   * {@inheritDoc}
    */
   @Override
   public void onDisable() {
