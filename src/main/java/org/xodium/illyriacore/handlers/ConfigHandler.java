@@ -61,10 +61,6 @@ public class ConfigHandler {
                     node.set(entry.getValue());
                     configurationsSet++;
                 }
-                if (conf.node(CI.CONFIG_FILE_V).getInt() < CI.CONFIG_FILE_CURRENT_V) {
-                    conf.node(CI.CONFIG_FILE_V).set(CI.CONFIG_FILE_CURRENT_V);
-                    configurationsSet++;
-                }
                 loader.save(conf);
             }
         } catch (ConfigurateException e) {
