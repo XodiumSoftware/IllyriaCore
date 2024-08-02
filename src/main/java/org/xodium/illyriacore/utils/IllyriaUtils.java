@@ -2,14 +2,16 @@ package org.xodium.illyriacore.utils;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.ConfigurateException;
-import org.xodium.illyriacore.interfaces.MessagesInterface;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 
-public class IllyriaUtils implements MessagesInterface {
+/**
+ * The Illyria Utils class.
+ */
+public class IllyriaUtils {
 
     /**
      * Displays a title to the specified audience.

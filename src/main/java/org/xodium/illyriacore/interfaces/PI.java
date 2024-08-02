@@ -1,6 +1,9 @@
 package org.xodium.illyriacore.interfaces;
 
-public interface PermissionsInterface {
+/**
+ * The Permissions Interface.
+ */
+public interface PI {
 
     // General
     public static final String PERM_PREFIX = "illyriautils.";

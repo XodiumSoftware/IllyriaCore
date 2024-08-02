@@ -1,6 +1,9 @@
 package org.xodium.illyriacore.interfaces;
 
-public interface ConfigInferface {
+/**
+ * The Config Interface.
+ */
+public interface CI {
     // folder
     String CONFIG_FILE = "config.yml";
     // General
@@ -14,8 +17,4 @@ public interface ConfigInferface {
     String LOC_PREFIX = "localization";
     String IMMUNITY_TIMER_TITLE = "ImmunityTimerTitle";
     String IMMUNITY_TIMER_DURATION = "ImmunityTimerDuration";
-    // Development
-    String DEV_PREFIX = "development";
-    String DEBUG = "Debug";
-    String DEBUG_PREFIX = "debugPrefix";
 }
