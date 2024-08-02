@@ -20,12 +20,12 @@ import java.util.Map;
  */
 public class ModuleHandler {
 
-    private final Map<String, Listener> modules = new HashMap<>();
-
-    public ModuleHandler() {
-        modules.put(CI.IMMUNITY_MODULE, new ImmunityModule());
-        modules.put(CI.CUSTOM_ANVIL_MODULE, new CustomAnvilModule());
-    }
+    private final Map<String, Listener> modules = new HashMap<>() {
+        {
+            put(CI.IMMUNITY_MODULE, new ImmunityModule());
+            put(CI.CUSTOM_ANVIL_MODULE, new CustomAnvilModule());
+        }
+    };
 
     /**
      * Initializes the modules based on the provided plugin and configuration.
@@ -37,7 +37,7 @@ public class ModuleHandler {
         int modulesLoaded = 0;
 
         for (Map.Entry<String, Listener> entry : modules.entrySet()) {
-            if (conf.node(CI.MODULES_PREFIX, entry.getKey()).getBoolean()) {
+            if (conf.node(CI.MODULES_PREFIX, entry.getKey(), CI.MODULE_ENABLED).getBoolean()) {
                 plugin.getServer().getPluginManager().registerEvents(entry.getValue(), plugin);
                 plugin.getLogger().info(MI.LOADING + ACI.YELLOW + entry.getKey() + ACI.RESET);
                 modulesLoaded++;
