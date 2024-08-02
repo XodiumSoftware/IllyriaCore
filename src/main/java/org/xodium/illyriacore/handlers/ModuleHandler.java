@@ -6,6 +6,9 @@ import org.xodium.illyriacore.IllyriaCore;
 import org.xodium.illyriacore.interfaces.ACI;
 import org.xodium.illyriacore.interfaces.CI;
 import org.xodium.illyriacore.interfaces.MI;
+import org.xodium.illyriacore.modules.CustomAnvilModule;
+import org.xodium.illyriacore.modules.ImmunityModule;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +17,8 @@ public class ModuleHandler {
     private final Map<String, Listener> modules = new HashMap<>();
 
     public ModuleHandler() {
-        modules.put(CI.IMMUNITY_HANDLER, new ImmunityHandler());
-        modules.put(CI.CUSTOM_ANVIL_HANDLER, new CustomAnvilHandler());
+        modules.put(CI.IMMUNITY_HANDLER, new ImmunityModule());
+        modules.put(CI.CUSTOM_ANVIL_HANDLER, new CustomAnvilModule());
     }
 
     public void init(IllyriaCore plugin, CommentedConfigurationNode conf) {

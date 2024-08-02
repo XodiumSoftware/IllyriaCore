@@ -1,4 +1,4 @@
-package org.xodium.illyriacore.handlers;
+package org.xodium.illyriacore.modules;
 
 import java.time.Duration;
 import java.util.Set;
@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.xodium.illyriacore.IllyriaCore;
+import org.xodium.illyriacore.handlers.ConfigHandler;
 import org.xodium.illyriacore.interfaces.CI;
 import org.xodium.illyriacore.interfaces.SI;
 import org.xodium.illyriacore.utils.IllyriaUtils;
@@ -21,13 +22,13 @@ import org.xodium.illyriacore.utils.IllyriaUtils;
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 
-public class ImmunityHandler implements Listener {
+public class ImmunityModule implements Listener {
 
     private final PlayerInvulnerabilityManager invulnerabilityManager;
     private final BossBarManager bossBarManager;
     private final DamagePreventionManager damagePreventionManager;
 
-    public ImmunityHandler() {
+    public ImmunityModule() {
         this.invulnerabilityManager = new PlayerInvulnerabilityManager();
         this.bossBarManager = new BossBarManager();
         this.damagePreventionManager = new DamagePreventionManager();
@@ -89,7 +90,7 @@ class BossBarManager {
                 } else {
                     bossBar.progress(
                             (float) timeLeft / conf.node(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_DURATION).getInt());
-                    p.playSound(SI.IMMUNITY_BAR_SOUND);
+                    p.playSound(SI.IMMUNITY_BAR);
                 }
                 timeLeft--;
             }

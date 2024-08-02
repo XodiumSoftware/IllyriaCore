@@ -1,4 +1,4 @@
-package org.xodium.illyriacore.handlers;
+package org.xodium.illyriacore.modules;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 
-public class CustomAnvilHandler implements Listener {
+public class CustomAnvilModule implements Listener {
 
     // TODO: Add logging to check whats wrong.
 
