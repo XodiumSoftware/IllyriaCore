@@ -123,11 +123,8 @@ class DamagePreventionManager implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-        Player p = (Player) e.getDamager();
-        if (p instanceof Player) {
-            if (invulnerableP.contains(p)) {
-                e.setCancelled(true);
-            }
+        if (e.getDamager() instanceof Player p && invulnerableP.contains(p)) {
+            e.setCancelled(true);
         }
     }
 }

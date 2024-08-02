@@ -17,6 +17,7 @@ import java.util.Map;
 
 // TODO: adding missing keys to the correct place in the config and not just the end.
 // TODO: add comments on node, have to wait till version 4.20.0.
+// TODO: config count on files and not keys.
 
 /**
  * The ConfigHandler class is responsible for handling the configuration
