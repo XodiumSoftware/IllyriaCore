@@ -17,6 +17,12 @@ import java.util.Map;
 
 // TODO: add versioning
 
+/**
+ * The ConfigHandler class is responsible for handling the configuration
+ * settings of the IllyriaCore plugin.
+ * It provides methods to initialize the configuration, load and save the
+ * configuration file, and set default values for the settings.
+ */
 public class ConfigHandler {
 
     private static final int CONFIG_V = 1;
@@ -26,12 +32,20 @@ public class ConfigHandler {
 
     public ConfigHandler() {
         settings.put(List.of(CI.GENERAL_PREFIX, CI.CHAT_PREFIX), "<gold>[<dark_aqua>IllyriaCore<gold>] <reset>");
-        settings.put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_HANDLER), true);
-        settings.put(List.of(CI.MODULES_PREFIX, CI.CUSTOM_ANVIL_HANDLER), true);
-        settings.put(List.of(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_TITLE), "<white>Immunity<reset>");
-        settings.put(List.of(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_DURATION), 10);
+        settings.put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE), true);
+        settings.put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_TITLE), "<white>Immunity<reset>");
+        settings.put(List.of(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION), 10);
+        settings.put(List.of(CI.MODULES_PREFIX, CI.CUSTOM_ANVIL_MODULE), true);
     }
 
+    /**
+     * Initializes the configuration handler for the IllyriaCore plugin.
+     * 
+     * @param plugin The instance of the IllyriaCore plugin.
+     * @return The initialized CommentedConfigurationNode.
+     * @throws ConfigurateException If there is an error during configuration
+     *                              loading or saving.
+     */
     public CommentedConfigurationNode init(IllyriaCore plugin) throws ConfigurateException {
         int configurationsSet = 0;
 

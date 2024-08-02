@@ -15,8 +15,22 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
+/**
+ * The ReloadCommand class is responsible for initializing the reload command
+ * for the IllyriaCore plugin.
+ * This command allows users to reload the plugin.
+ */
 public class ReloadCommand {
 
+    /**
+     * Initializes the ReloadCommand by registering it with the provided
+     * LifecycleEventManager and
+     * configuring it with the given CommentedConfigurationNode.
+     *
+     * @param manager The LifecycleEventManager to register the ReloadCommand with.
+     * @param conf    The CommentedConfigurationNode used for configuration.
+     * @throws ConfigurateException if there is an error with the configuration.
+     */
     public static void init(LifecycleEventManager<org.bukkit.plugin.Plugin> manager,
             CommentedConfigurationNode conf) throws ConfigurateException {
         IllyriaCore plugin = JavaPlugin.getPlugin(IllyriaCore.class);

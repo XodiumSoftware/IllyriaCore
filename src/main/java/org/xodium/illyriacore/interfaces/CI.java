@@ -11,10 +11,10 @@ public interface CI {
     String CHAT_PREFIX = "chatPrefix";
     // Modules
     String MODULES_PREFIX = "modules";
-    String IMMUNITY_HANDLER = "OnJoinImmunity";
-    String CUSTOM_ANVIL_HANDLER = "CustomAnvil";
-    // Localization
-    String LOC_PREFIX = "localization";
+    // Immunity Module
+    String IMMUNITY_MODULE = "OnJoinImmunity";
     String IMMUNITY_TIMER_TITLE = "ImmunityTimerTitle";
     String IMMUNITY_TIMER_DURATION = "ImmunityTimerDuration";
+    // Custom Anvil Module
+    String CUSTOM_ANVIL_MODULE = "CustomAnvil";
 }

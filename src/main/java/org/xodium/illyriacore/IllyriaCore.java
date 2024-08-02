@@ -29,7 +29,7 @@ public class IllyriaCore extends JavaPlugin {
    */
   @Override
   public void onEnable() {
-    getLogger().info(MI.SERVER_VERSION + BUKKIT_V);
+    getLogger().info(MI.SERVER_V + BUKKIT_V);
     if (!BUKKIT_V.contains(PAPERMC_V)) {
       getLogger().severe(COMP_V);
       getServer().getPluginManager().disablePlugin(this);

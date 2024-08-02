@@ -22,6 +22,12 @@ import org.xodium.illyriacore.utils.IllyriaUtils;
 import io.papermc.paper.util.Tick;
 import net.kyori.adventure.bossbar.BossBar;
 
+/**
+ * The ImmunityModule class is responsible for managing player immunity
+ * features.
+ * It listens for player join events and applies various forms of immunity to
+ * the player.
+ */
 public class ImmunityModule implements Listener {
 
     private final PlayerInvulnerabilityManager invulnerabilityManager;
@@ -61,7 +67,8 @@ class PlayerInvulnerabilityManager {
             }
         }.runTaskLater(JavaPlugin.getPlugin(IllyriaCore.class),
                 Tick.tick().fromDuration(
-                        Duration.ofSeconds(conf.node(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_DURATION).getInt())));
+                        Duration.ofSeconds(conf.node(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION)
+                                .getInt())));
     }
 }
 
@@ -70,7 +77,7 @@ class BossBarManager {
     public void showCountdownBossBar(Player p, IllyriaCore plugin, CommentedConfigurationNode conf)
             throws ConfigurateException {
         final BossBar bossBar = IllyriaUtils.createBossBar(
-                conf.node(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_TITLE).getString(), 1.0f,
+                conf.node(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_TITLE).getString(), 1.0f,
                 BossBar.Color.WHITE,
                 BossBar.Overlay.PROGRESS);
         p.showBossBar(bossBar);
@@ -80,7 +87,7 @@ class BossBarManager {
     private void startBossBarCountdown(Player p, IllyriaCore plugin, BossBar bossBar, CommentedConfigurationNode conf)
             throws ConfigurateException {
         new BukkitRunnable() {
-            int timeLeft = conf.node(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_DURATION).getInt();
+            int timeLeft = conf.node(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION).getInt();
 
             @Override
             public void run() {
@@ -89,12 +96,14 @@ class BossBarManager {
                     this.cancel();
                 } else {
                     bossBar.progress(
-                            (float) timeLeft / conf.node(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_DURATION).getInt());
+                            (float) timeLeft / conf
+                                    .node(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION).getInt());
                     p.playSound(SI.IMMUNITY_BAR);
                 }
                 timeLeft--;
             }
-        }.runTaskTimer(plugin, 0, conf.node(CI.LOC_PREFIX, CI.IMMUNITY_TIMER_DURATION).getInt() * 2);
+        }.runTaskTimer(plugin, 0,
+                conf.node(CI.MODULES_PREFIX, CI.IMMUNITY_MODULE, CI.IMMUNITY_TIMER_DURATION).getInt() * 2);
     }
 }
 

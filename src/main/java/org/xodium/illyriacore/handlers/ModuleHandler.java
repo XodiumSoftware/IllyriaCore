@@ -12,15 +12,27 @@ import org.xodium.illyriacore.modules.ImmunityModule;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The ModuleHandler class is responsible for managing modules in the
+ * IllyriaCore plugin.
+ * It allows modules to be initialized and registered with the server's event
+ * manager.
+ */
 public class ModuleHandler {
 
     private final Map<String, Listener> modules = new HashMap<>();
 
     public ModuleHandler() {
-        modules.put(CI.IMMUNITY_HANDLER, new ImmunityModule());
-        modules.put(CI.CUSTOM_ANVIL_HANDLER, new CustomAnvilModule());
+        modules.put(CI.IMMUNITY_MODULE, new ImmunityModule());
+        modules.put(CI.CUSTOM_ANVIL_MODULE, new CustomAnvilModule());
     }
 
+    /**
+     * Initializes the modules based on the provided plugin and configuration.
+     *
+     * @param plugin The IllyriaCore plugin instance.
+     * @param conf   The configuration node containing module settings.
+     */
     public void init(IllyriaCore plugin, CommentedConfigurationNode conf) {
         int modulesLoaded = 0;
 

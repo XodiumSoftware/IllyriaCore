@@ -14,6 +14,19 @@ import org.bukkit.inventory.ItemStack;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 
+/**
+ * This class represents a custom anvil module that handles the
+ * PrepareAnvilEvent.
+ * It checks if the first and second items in the anvil inventory are enchanted
+ * books.
+ * If they are, it iterates through all enchantments and checks if the minimum
+ * level of the enchantment
+ * in the first item is equal to the maximum level of the enchantment in the
+ * second item.
+ * If the conditions are met, it creates a new ItemStack with an increased level
+ * of the enchantment
+ * and sets it as the result of the event.
+ */
 public class CustomAnvilModule implements Listener {
 
     // TODO: Add logging to check whats wrong.
