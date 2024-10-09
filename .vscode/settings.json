@@ -1,11 +1,9 @@
 {
-  "code-runner.executorMap": {
-    "python": "$pythonPath -u $fullFileName"
-  },
   "code-runner.runInTerminal": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "automatic",
+  "java.debug.settings.onBuildFailureProceed": true,
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },
@@ -21,11 +19,7 @@
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "material-icon-theme.folders.associations": {
-    "illyriacore": "src"
-  },
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
-  "java.debug.settings.onBuildFailureProceed": true,
 }
