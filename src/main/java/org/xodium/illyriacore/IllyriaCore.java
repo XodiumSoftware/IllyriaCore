@@ -17,7 +17,7 @@ public class IllyriaCore extends JavaPlugin implements msg {
     getLogger().info(msg.ILLYRIA_CORE_ENABLED);
 
     Map<EntityType, String> entityPermMap = new HashMap<>();
-    entityPermMap.put(EntityType.ZOMBIE, "zombie.permission.node");
+    entityPermMap.put(EntityType.ENDER_DRAGON, "hmcwraps.");
 
     getServer().getPluginManager().registerEvents(new EventListener(LuckPermsProvider.get(), entityPermMap), this);
   }
