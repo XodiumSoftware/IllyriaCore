@@ -7,6 +7,7 @@ import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.util.Tristate;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -26,23 +27,16 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent e) {
-        EntityType entityType = e.getEntity().getType();
-        if (!entityPermMap.containsKey(entityType)) {
-            return;
-        }
+        Optional.ofNullable(entityPermMap.get(e.getEntity().getType()))
+                .ifPresent(permNodeStr -> handleEntityDeath(e, permNodeStr));
+    }
 
-        if (!(e.getEntity().getKiller() instanceof Player)) {
-            return;
+    private void handleEntityDeath(EntityDeathEvent e, String permNodeStr) {
+        if (e.getEntity().getKiller() instanceof Player) {
+            Player p = e.getEntity().getKiller();
+            Optional.ofNullable(lp.getUserManager().getUser(p.getUniqueId()))
+                    .ifPresent(usr -> addPermissionIfAbsent(usr, permNodeStr));
         }
-
-        Player p = e.getEntity().getKiller();
-        User usr = lp.getUserManager().getUser(p.getUniqueId());
-        if (usr == null) {
-            return;
-        }
-
-        String permNodeStr = entityPermMap.get(entityType);
-        addPermissionIfAbsent(usr, permNodeStr);
     }
 
     private void addPermissionIfAbsent(User usr, String permNodeStr) {
