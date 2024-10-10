@@ -9,8 +9,6 @@ import org.xodium.illyriacore.interfaces.MSG;
 import org.xodium.illyriacore.interfaces.PERM;
 import org.xodium.illyriacore.listeners.EventListener;
 
-import net.luckperms.api.LuckPermsProvider;
-
 public class IllyriaCore extends JavaPlugin {
 
   @Override
@@ -22,13 +20,11 @@ public class IllyriaCore extends JavaPlugin {
 
     getLogger().info(MSG.ILLYRIA_CORE_ENABLED);
 
-    Map<EntityType, String> entityPermMap = Map.of(
+    getServer().getPluginManager().registerEvents(new EventListener(Map.of(
         EntityType.GUARDIAN, PERM.GUARDIAN,
         EntityType.WITHER, PERM.WITHER,
         EntityType.WARDEN, PERM.WARDEN,
-        EntityType.ENDER_DRAGON, PERM.ENDER_DRAGON);
-
-    getServer().getPluginManager().registerEvents(new EventListener(LuckPermsProvider.get(), entityPermMap), this);
+        EntityType.ENDER_DRAGON, PERM.ENDER_DRAGON)), this);
   }
 
   @Override

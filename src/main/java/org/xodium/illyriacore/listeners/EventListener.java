@@ -1,6 +1,7 @@
 package org.xodium.illyriacore.listeners;
 
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeEqualityPredicate;
 import net.luckperms.api.node.types.PermissionNode;
@@ -20,8 +21,8 @@ public class EventListener implements Listener {
     private final LuckPerms lp;
     private final Map<EntityType, String> entityPermMap;
 
-    public EventListener(LuckPerms lp, Map<EntityType, String> entityPermMap) {
-        this.lp = lp;
+    public EventListener(Map<EntityType, String> entityPermMap) {
+        this.lp = LuckPermsProvider.get();
         this.entityPermMap = entityPermMap;
     }
 
