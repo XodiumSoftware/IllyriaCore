@@ -1,6 +1,6 @@
+# Only accepts valid Minecraft entities paired with hmcwraps permissions.
+# This is a sample configuration, you can add more entities and permissions.
 wraps:
-  # Only accepts valid Minecraft entities paired with hmcwraps permissions.
-  # This is a sample configuration, you can add more entities and permissions.
   guardian: "hmcwraps.guardianic_set"
   wither: "hmcwraps.witheric_set"
   warden: "hmcwraps.wardenic_set"
