@@ -42,7 +42,7 @@ public class EventListener implements Listener {
 
     private void addPermissionIfAbsent(User usr, String permNodeStr) {
         PermissionNode permNode = PermissionNode.builder(permNodeStr).build();
-        if (usr.data().contains(permNode, NodeEqualityPredicate.EXACT) == Tristate.FALSE) {
+        if (usr.data().contains(permNode, NodeEqualityPredicate.EXACT) == Tristate.TRUE) {
             usr.data().add(permNode);
             lp.getUserManager().saveUser(usr);
         }
