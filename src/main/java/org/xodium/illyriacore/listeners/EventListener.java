@@ -1,7 +1,6 @@
 package org.xodium.illyriacore.listeners;
 
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeEqualityPredicate;
 import net.luckperms.api.node.types.PermissionNode;
@@ -21,8 +20,8 @@ public class EventListener implements Listener {
     private final LuckPerms lp;
     private final Map<EntityType, String> entityPermMap;
 
-    public EventListener(Map<EntityType, String> entityPermMap) {
-        this.lp = LuckPermsProvider.get();
+    public EventListener(Map<EntityType, String> entityPermMap, LuckPerms lp) {
+        this.lp = lp;
         this.entityPermMap = entityPermMap;
     }
 
@@ -34,8 +33,7 @@ public class EventListener implements Listener {
 
     private void handleEntityDeath(EntityDeathEvent e, String permNodeStr) {
         if (e.getEntity().getKiller() instanceof Player) {
-            Player p = e.getEntity().getKiller();
-            Optional.ofNullable(lp.getUserManager().getUser(p.getUniqueId()))
+            Optional.ofNullable(lp.getUserManager().getUser(e.getEntity().getKiller().getUniqueId()))
                     .ifPresent(usr -> addPermissionIfAbsent(usr, permNodeStr));
         }
     }
