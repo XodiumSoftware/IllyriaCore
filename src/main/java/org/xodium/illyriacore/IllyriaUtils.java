@@ -2,6 +2,8 @@ package org.xodium.illyriacore;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
@@ -11,8 +13,18 @@ import org.xodium.illyriacore.interfaces.DEP;
 import org.xodium.illyriacore.interfaces.MSG;
 
 public class IllyriaUtils {
+
     public static boolean isCompatibleEnv(JavaPlugin plugin) {
-        if (!plugin.getServer().getVersion().contains(DEP.VERSION)) {
+        String version = plugin.getServer().getVersion();
+        Pattern pattern = Pattern.compile(CONST.V_PATTERN);
+        Matcher matcher = pattern.matcher(version);
+        if (matcher.find()) {
+            String serverVersion = matcher.group();
+            if (!serverVersion.equals(DEP.V)) {
+                plugin.getLogger().severe(MSG.WRONG_VERSION);
+                return false;
+            }
+        } else {
             plugin.getLogger().severe(MSG.WRONG_VERSION);
             return false;
         }
@@ -21,7 +33,6 @@ public class IllyriaUtils {
             plugin.getLogger().severe(MSG.LP_MISSING);
             return false;
         }
-
         return true;
     }
 
