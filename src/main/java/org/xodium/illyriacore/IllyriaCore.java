@@ -1,30 +1,24 @@
 package org.xodium.illyriacore;
 
-import java.util.Map;
-
-import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.xodium.illyriacore.interfaces.DEP;
+import org.xodium.illyriacore.interfaces.CONST;
 import org.xodium.illyriacore.interfaces.MSG;
-import org.xodium.illyriacore.interfaces.PERM;
 import org.xodium.illyriacore.listeners.EventListener;
 
 public class IllyriaCore extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    if (!isCompatibleEnv()) {
+    if (!IllyriaUtils.isCompatibleEnv(this)) {
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
+    saveResource(CONST.CONFIG_FILE, false);
+    saveDefaultConfig();
 
     getLogger().info(MSG.ILLYRIA_CORE_ENABLED);
 
-    getServer().getPluginManager().registerEvents(new EventListener(Map.of(
-        EntityType.GUARDIAN, PERM.GUARDIAN,
-        EntityType.WITHER, PERM.WITHER,
-        EntityType.WARDEN, PERM.WARDEN,
-        EntityType.ENDER_DRAGON, PERM.ENDER_DRAGON)), this);
+    getServer().getPluginManager().registerEvents(new EventListener(IllyriaUtils.loadFromConfig(this)), this);
   }
 
   @Override
@@ -32,17 +26,4 @@ public class IllyriaCore extends JavaPlugin {
     getLogger().info(MSG.ILLYRIA_CORE_DISABLED);
   }
 
-  private boolean isCompatibleEnv() {
-    if (!getServer().getVersion().contains(DEP.VERSION)) {
-      getLogger().severe(MSG.WRONG_VERSION);
-      return false;
-    }
-
-    if (getServer().getPluginManager().getPlugin(DEP.LP) == null) {
-      getLogger().severe(MSG.LP_MISSING);
-      return false;
-    }
-
-    return true;
-  }
 }
