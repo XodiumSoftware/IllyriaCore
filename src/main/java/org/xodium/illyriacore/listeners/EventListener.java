@@ -1,14 +1,13 @@
 package org.xodium.illyriacore.listeners;
 
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.data.DataMutateResult;
 import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.NodeEqualityPredicate;
 import net.luckperms.api.node.types.PermissionNode;
-import net.luckperms.api.util.Tristate;
-
 import java.util.Map;
 import java.util.Optional;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,21 +27,24 @@ public class EventListener implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent e) {
         Optional.ofNullable(entityPermMap.get(e.getEntity().getType()))
-                .ifPresent(permNodeStr -> handleEntityDeath(e, permNodeStr));
+                .ifPresent(nodeStr -> handleEntityDeath(e, nodeStr));
     }
 
-    private void handleEntityDeath(EntityDeathEvent e, String permNodeStr) {
+    private void handleEntityDeath(EntityDeathEvent e, String nodeStr) {
         if (e.getEntity().getKiller() instanceof Player) {
-            Optional.ofNullable(lp.getUserManager().getUser(e.getEntity().getKiller().getUniqueId()))
-                    .ifPresent(usr -> addPermissionIfAbsent(usr, permNodeStr));
+            Optional.ofNullable(this.lp.getUserManager().getUser(e.getEntity().getKiller().getUniqueId()))
+                    .ifPresent(usr -> addPermissionIfAbsent(usr, nodeStr));
         }
     }
 
-    private void addPermissionIfAbsent(User usr, String permNodeStr) {
-        PermissionNode permNode = PermissionNode.builder(permNodeStr).build();
-        if (usr.data().contains(permNode, NodeEqualityPredicate.EXACT) == Tristate.TRUE) {
-            usr.data().add(permNode);
-            lp.getUserManager().saveUser(usr).join();
+    private void addPermissionIfAbsent(User usr, String nodeStr) {
+        PermissionNode node = PermissionNode.builder(nodeStr).build();
+        DataMutateResult result = usr.data().add(node);
+        if (result.wasSuccessful()) {
+            Bukkit.getLogger().info("Permission " + nodeStr + " added to " + usr.getUsername());
+        } else {
+            Bukkit.getLogger().info("User " + usr.getUsername() + " already has permission " + nodeStr);
         }
+        lp.getUserManager().saveUser(usr).join();
     }
 }
