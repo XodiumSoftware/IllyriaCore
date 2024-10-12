@@ -36,18 +36,18 @@ public class IllyriaCore extends JavaPlugin {
   private void loadConfig() {
     FileConfiguration config = getConfig();
     config.options().copyDefaults(true);
-
     InputStream defaultConfigStream = getResource(CONST.CONFIG_FILE);
+
     if (defaultConfigStream != null) {
       FileConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultConfigStream));
       Set<String> keys = defaultConfig.getKeys(false);
+
       for (String key : keys) {
         if (!config.contains(key)) {
           config.set(key, defaultConfig.get(key));
         }
       }
     }
-
     saveConfig();
   }
 

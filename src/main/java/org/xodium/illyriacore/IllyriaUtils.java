@@ -39,7 +39,6 @@ public class IllyriaUtils {
     public static Map<EntityType, String> loadFromConfig(JavaPlugin plugin) {
         Map<EntityType, String> entityPerms = new HashMap<>();
         ConfigurationSection wrapsSection = plugin.getConfig().getConfigurationSection(CONST.WRAPS);
-
         if (wrapsSection != null) {
             for (String key : wrapsSection.getKeys(false)) {
                 try {
