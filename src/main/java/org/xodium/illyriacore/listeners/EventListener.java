@@ -42,7 +42,7 @@ public class EventListener implements Listener {
         PermissionNode permNode = PermissionNode.builder(permNodeStr).build();
         if (usr.data().contains(permNode, NodeEqualityPredicate.EXACT) == Tristate.TRUE) {
             usr.data().add(permNode);
-            lp.getUserManager().saveUser(usr);
+            lp.getUserManager().saveUser(usr).join();
         }
     }
 }

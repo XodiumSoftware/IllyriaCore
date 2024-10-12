@@ -29,6 +29,7 @@ public class IllyriaCore extends JavaPlugin {
     if (provider != null) {
       this.lp = provider.getProvider();
     }
+
     loadConfig();
     registerEvents();
 
