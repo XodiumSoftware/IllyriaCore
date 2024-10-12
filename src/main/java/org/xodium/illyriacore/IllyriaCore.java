@@ -31,6 +31,8 @@ public class IllyriaCore extends JavaPlugin {
     getLogger().info(MSG.ILLYRIA_CORE_DISABLED);
   }
 
+  // TODO: the method still adds content to the top-level keys, even tho it
+  // shouldnt.
   private void loadConfig() {
     FileConfiguration config = getConfig();
     config.options().copyDefaults(true);
