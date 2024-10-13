@@ -1,13 +1,11 @@
 package org.xodium.illyriacore.listeners;
 
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.model.data.DataMutateResult;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.PermissionNode;
 import java.util.Map;
 import java.util.Optional;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,12 +37,7 @@ public class EventListener implements Listener {
 
     private void addPermissionIfAbsent(User usr, String nodeStr) {
         PermissionNode node = PermissionNode.builder(nodeStr).build();
-        DataMutateResult result = usr.data().add(node);
-        if (result.wasSuccessful()) {
-            Bukkit.getLogger().info("Permission " + nodeStr + " added to " + usr.getUsername());
-        } else {
-            Bukkit.getLogger().info("User " + usr.getUsername() + " already has permission " + nodeStr);
-        }
+        usr.data().add(node);
         lp.getUserManager().saveUser(usr).join();
     }
 }
