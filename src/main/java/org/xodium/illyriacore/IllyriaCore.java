@@ -1,83 +1,67 @@
 package org.xodium.illyriacore;
 
+import java.io.InputStream;
+import java.util.Set;
+import java.io.InputStreamReader;
+
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.xodium.illyriacore.interfaces.CONST;
+import org.xodium.illyriacore.interfaces.MSG;
+import org.xodium.illyriacore.listeners.EventListener;
 
-import org.xodium.illyriacore.configs.Config;
-import org.xodium.illyriacore.handlers.ModuleHandler;
-import org.xodium.illyriacore.interfaces.MessagesInterface;
-import org.xodium.illyriacore.utils.IllyriaUtils;
+import net.luckperms.api.LuckPerms;
 
-public class IllyriaCore extends JavaPlugin implements MessagesInterface {
+public class IllyriaCore extends JavaPlugin {
+  private LuckPerms lp;
 
-  private final boolean IS_DEBUG = getConfig().getBoolean(Config.DEBUG);
-
-  private static IllyriaCore instance;
-
-  /**
-   * Returns the singleton instance of the IllyriaCore class.
-   *
-   * @return the singleton instance of IllyriaCore
-   */
-  public static IllyriaCore getInstance() {
-    return instance;
-  }
-
-  /**
-   * Prints the specified debug text if debug mode is enabled.
-   *
-   * @param text the debug text to print
-   */
-  public void debug(String text) {
-    if (IS_DEBUG) {
-      getLogger().warning(Config.init().getString(Config.DEBUG_PREFIX) + text);
-    }
-  }
-
-  /**
-   * Returns the current debug mode status.
-   *
-   * @return true if the application is running in debug mode, false otherwise.
-   */
-  public boolean isDebug() {
-    return IS_DEBUG;
-  }
-
-  /**
-   * Called when the plugin is enabled.
-   * Checks if the server version is compatible and initializes custom items.
-   * If the server version is not compatible, the plugin is disabled.
-   */
   @Override
   public void onEnable() {
-    instance = this;
-    getLogger().info(SERVER_VERSION_MSG + VERSION);
-    if (!IllyriaUtils.isCompatible(VERSION)) {
-      getLogger().severe(COMP_VERSION_MSG);
+    if (!IllyriaUtils.isCompatibleEnv(this)) {
       getServer().getPluginManager().disablePlugin(this);
       return;
     }
-    ModuleHandler.init();
-    saveDefaultConfig();
-    getLogger().info(ENABLED_MSG);
+
+    RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+    if (provider != null) {
+      this.lp = provider.getProvider();
+    }
+
+    loadConfig();
+    registerEvents();
+
+    getLogger().info(MSG.ILLYRIA_CORE_ENABLED);
   }
 
-  /**
-   * Reloads the plugin configuration.
-   * This method saves the default configuration and reloads the configuration
-   * from file.
-   */
-  public void reload() {
-    saveDefaultConfig();
-    reloadConfig();
-  }
-
-  /**
-   * Called when the plugin is being disabled.
-   * This method is responsible for performing any necessary cleanup or
-   * finalization tasks.
-   */
   @Override
   public void onDisable() {
-    getLogger().info(DISABLED_MSG);
+    getLogger().info(MSG.ILLYRIA_CORE_DISABLED);
+  }
+
+  // TODO: the method still adds content to the top-level keys, even tho it
+  // shouldnt.
+  private void loadConfig() {
+    FileConfiguration config = getConfig();
+    config.options().copyDefaults(true);
+    InputStream defaultConfigStream = getResource(CONST.CONFIG_FILE);
+
+    if (defaultConfigStream != null) {
+      FileConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultConfigStream));
+      Set<String> keys = defaultConfig.getKeys(false);
+
+      for (String key : keys) {
+        if (!config.contains(key)) {
+          config.set(key, defaultConfig.get(key));
+        }
+      }
+    }
+    saveConfig();
+  }
+
+  private void registerEvents() {
+    getServer().getPluginManager().registerEvents(new EventListener(IllyriaUtils.loadFromConfig(this), lp), this);
   }
 }

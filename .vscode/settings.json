@@ -1,20 +1,9 @@
 {
-  "code-runner.executorMap": {
-    "python": "$pythonPath -u $fullFileName"
-  },
   "code-runner.runInTerminal": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false,
-  "extensions.ignoreRecommendations": true,
-  "git.autofetch": true,
-  "git.enableSmartCommit": true,
-  "github.copilot.enable": {
-    "*": true
-  },
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "automatic",
+  "java.debug.settings.onBuildFailureProceed": true,
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },
@@ -30,18 +19,7 @@
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "material-icon-theme.files.color": "#ef5350",
-  "material-icon-theme.folders.associations": {
-    "illyriacore": "src"
-  },
-  "material-icon-theme.folders.color": "#ef5350",
-  "scm.experimental.showHistoryGraph": true,
-  "terminal.integrated.enableMultiLinePasteWarning": "never",
-  "workbench.colorTheme": "Monokai Dimmed",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.startupEditor": "none",
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
-  "java.debug.settings.onBuildFailureProceed": true,
 }
